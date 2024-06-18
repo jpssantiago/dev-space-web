@@ -11,7 +11,7 @@ type PostCardActionsProps = {
 
 export function PostCardActions({ post }: PostCardActionsProps) {
     return (
-        <div className="flex justify-between items-center w-full h-fit -translate-x-2">
+        <div className="flex items-center gap-5 w-full h-fit -translate-x-2">
                 <PostCardAction
                     icon={Heart}
                     className="group-hover:bg-blue-100 group-hover:text-blue-500"

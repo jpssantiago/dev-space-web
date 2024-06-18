@@ -9,7 +9,7 @@ export function PostCardContent({ post }: PostCardContentProps) {
         <div className="flex flex-col items-start gap-2 size-full">
             <span className="text-[15px] text-gray-800">{post.text}</span>
 
-            {post.files && (
+            {post.files.length > 0 && (
                 <img
                     src={post.files[0]}
                     alt=""
