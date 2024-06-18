@@ -7,4 +7,7 @@ export type Post = {
     author: User
     createdAt: Date
     updatedAt: Date
+    
+    likes: User[]
+    comments: string[] // TComment[]
 }

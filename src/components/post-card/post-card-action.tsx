@@ -3,22 +3,17 @@ import { twMerge } from "tailwind-merge"
 
 type PostCardActionProps = {
     icon: ElementType
-    className?: string
+    backgroundHover?: string
+    iconClassName?: string
+    textHover?: string
     children?: ReactNode
 }
 
-export function PostCardAction({ icon: Icon, className, children }: PostCardActionProps) {
+export function PostCardAction({ icon: Icon, backgroundHover = "hover:bg-blue-100", iconClassName, textHover = "group-hover:text-blue-500", children }: PostCardActionProps) {
     return (
-        <div className="flex justify-start items-center group">
-            <div className={twMerge("text-gray-600 p-2 rounded-full bg-transparent transition-all", className)}>
-                <Icon 
-                    size={16} 
-                />
-            </div>
-
-            <span className="text-xs">
-                {children}
-            </span>
+        <div className={twMerge("flex items-center bg-transparent gap-2 px-2 py-1 rounded-full h-6 transition-all group", backgroundHover)}>
+            <Icon size={16} className={twMerge("transition-all text-gray-600", textHover, iconClassName)} />
+            <span className={twMerge("text-sm transition-all text-gray-600", textHover)}>{children}</span>
         </div>
     )
 }

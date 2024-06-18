@@ -21,18 +21,21 @@ export function PostCard({ post }: PostCardProps) {
         <div 
             className="bg-white hover:bg-gray-100 border-b w-full transition-all cursor-pointer"
         >
-            <div className="flex items-start gap-2 p-2">
-                <UserHoverCard user={post.author}>
-                    <Link href={`/app/profile/${post.author.username}`}>
-                        <UserAvatar user={post.author} className="size-12" />
-                    </Link>
-                </UserHoverCard>
+            <div className="flex flex-col gap-2 p-2">
+                <div className="flex items-start gap-2">
+                    <UserHoverCard user={post.author}>
+                        <Link href={`/app/profile/${post.author.username}`}>
+                            <UserAvatar user={post.author} className="size-12" />
+                        </Link>
+                    </UserHoverCard>
 
-                <div className="flex flex-col gap-1 w-full">
-                    <PostCardHeader post={post} />
-                    <PostCardContent post={post} />
-                    <PostCardActions post={post} />
+                    <div className="flex flex-col gap-1 w-full">
+                        <PostCardHeader post={post} />
+                        <PostCardContent post={post} />
+                    </div>    
                 </div>
+
+                <PostCardActions post={post} />
             </div>
         </div>
     )

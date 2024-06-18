@@ -19,7 +19,9 @@ export async function loadFeed(): Promise<LoadFeedResponse> {
                     following: []
                 },
                 createdAt: new Date(2024, 5, 17, 10, 5),
-                updatedAt: new Date(2024, 5, 17, 10, 5)
+                updatedAt: new Date(2024, 5, 17, 10, 5),
+                likes: [],
+                comments: []
             }, {
                 id: "1",
                 text: "We're making DevSpace from scratch :)",
@@ -34,7 +36,9 @@ export async function loadFeed(): Promise<LoadFeedResponse> {
                     following: []
                 },
                 createdAt: new Date(2024, 5, 17, 11, 53),
-                updatedAt: new Date(2024, 5, 17, 12, 41)
+                updatedAt: new Date(2024, 5, 17, 12, 41),
+                likes: [],
+                comments: []
             }, {
                 id: "2",
                 text: "Haha, its working",
@@ -49,7 +53,9 @@ export async function loadFeed(): Promise<LoadFeedResponse> {
                     following: []
                 },
                 createdAt: new Date(2024, 5, 17, 19, 3),
-                updatedAt: new Date(2024, 5, 17, 19, 3)
+                updatedAt: new Date(2024, 5, 17, 19, 3),
+                likes: [],
+                comments: []
             }
         ]
     }

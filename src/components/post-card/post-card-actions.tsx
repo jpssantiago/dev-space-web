@@ -11,25 +11,34 @@ type PostCardActionsProps = {
 
 export function PostCardActions({ post }: PostCardActionsProps) {
     return (
-        <div className="flex items-center gap-5 w-full h-fit -translate-x-2">
-                <PostCardAction
-                    icon={Heart}
-                    className="group-hover:bg-blue-100 group-hover:text-blue-500"
-                >4,5K</PostCardAction>
+        <div className="flex items-center gap-5 pl-12 w-full">
+            <PostCardAction 
+                icon={Heart}
+                iconClassName=""
+                // text-blue-500 if the user has liked this post.
+            >
+                {post.likes.length}
+            </PostCardAction>
 
-                <AddCommentDialog>
-                    <PostCardAction 
-                        icon={MessageCircle} 
-                        className="group-hover:bg-green-100 group-hover:text-green-600"
-                    >79</PostCardAction>
-                </AddCommentDialog>
+            <AddCommentDialog>
+                <PostCardAction 
+                    icon={MessageCircle} 
+                    backgroundHover="hover:bg-emerald-100"
+                    textHover="group-hover:text-emerald-600"
+                >
+                    {post.comments.length}
+                </PostCardAction>
+            </AddCommentDialog>
 
-                <SharePostDialog>
-                    <PostCardAction 
-                        icon={Link} 
-                        className="group-hover:bg-purple-100 group-hover:text-purple-500"
-                    >Share</PostCardAction>
-                </SharePostDialog>
+            <SharePostDialog>
+                <PostCardAction 
+                    icon={Link} 
+                    backgroundHover="hover:bg-purple-100"
+                    textHover="group-hover:text-purple-500"
+                >
+                    Share
+                </PostCardAction>
+            </SharePostDialog>
         </div>
     )
 }
