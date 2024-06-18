@@ -14,19 +14,13 @@ export function NavBar() {
     const { data: response } = useQuery<LoadUserResponse>({ queryKey: ["user"] })
 
     return (
-        <div className="flex justify-center items-center bg-white border-b w-full h-14">
+        <div className="flex justify-center items-center bg-white border-t border-b w-full h-14">
             <div className="flex w-full h-full">
                 <NavBarLink icon={Home} href="/app/feed" />
 
                 <NavBarLink icon={MessageCircle} href="/app/chat" />
 
-                <NavBarLink icon={User} href="/app/profile" />
-
-                <NotificationsPopover>
-                    <NavBarAction>
-                        <Bell className="text-gray-600" />
-                    </NavBarAction>
-                </NotificationsPopover>
+                <NavBarLink icon={Bell} href="/app/notifications" />
 
                 <NavBarUserPopover>
                     <NavBarAction>

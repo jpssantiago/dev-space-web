@@ -64,7 +64,7 @@ export function UserHoverCard({ user, children }: UserHoverCardProps) {
                                 href={`/app/profile/${user.username}`}
                                 className="font-semibold text-xl hover:text-blue-500 transition-all"
                             >
-                                {user.name} {user.lastName}
+                                {user.name}
                             </Link>
 
                             <div className="flex flex-col text-gray-700">

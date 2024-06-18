@@ -6,14 +6,16 @@ type PostCardContentProps = {
 
 export function PostCardContent({ post }: PostCardContentProps) {
     return (
-        <div className="flex flex-col gap-2 size-full">
-            <span className="text-[15px] text-gray-600">{post.text}</span>
+        <div className="flex flex-col items-start gap-2 size-full">
+            <span className="text-[15px] text-gray-800">{post.text}</span>
 
-            <img
-                src={post.file}
-                alt=""
-                className="rounded-lg max-w-[516px] max-h-[516px] object-contain"
-            />
+            {post.files && (
+                <img
+                    src={post.files[0]}
+                    alt=""
+                    className="mb-2 border rounded-lg max-w-[516px] max-h-[516px] object-contain"
+                />
+            )}
         </div>
     )
 }

@@ -98,7 +98,7 @@ export function EditPostDialog({ post, children }: EditPostDialogProps) {
 
                         <div className="flex flex-col">
                             <span className="text-gray-600 text-sm">Editing as</span>
-                            <span className="font-semibold">{post.author.name} {post.author.lastName}</span>
+                            <span className="font-semibold">{post.author.name}</span>
                         </div>
                     </div>
                 </DialogHeader>
