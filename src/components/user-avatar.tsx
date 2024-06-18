@@ -12,7 +12,7 @@ export function UserAvatar({ user, className }: UserAvatarProps) {
             <AvatarImage src={user?.avatar} />
 
             <AvatarFallback>
-                {user?.name.slice(0, 1)}{user?.lastName.slice(0, 1)}
+                {user?.name.slice(0, 2)}
             </AvatarFallback>
         </Avatar>
     )

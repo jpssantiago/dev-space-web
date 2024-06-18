@@ -7,8 +7,7 @@ export async function loadUser(): Promise<LoadUserResponse> {
         user: {
             id: "0",
             username: "iamjoaosantiago",
-            name: "João",
-            lastName: "Santiago",
+            name: "João Santiago",
             avatar: "https://github.com/jpssantiago.png",
             description: "Founder @ DevSpace",
             followers: [],

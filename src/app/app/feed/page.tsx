@@ -13,11 +13,15 @@ export default function FeedPage() {
     })
 
     return (
-        <div className="flex size-full">
-            {isLoading && <LoadingContainer size={32} />}
+        <div className="flex flex-col">
+            {isLoading && (
+                <div className="h-screen">
+                    <LoadingContainer size={32} />
+                </div>
+            )}
 
             {response && response.feed && (
-                <div className="flex flex-col gap-5 mx-auto max-w-[680px] size-full">
+                <div className="flex flex-col h-full">
                     {response.feed?.map((post, index) => (
                         <PostCard key={index} post={post} />
                     ))}

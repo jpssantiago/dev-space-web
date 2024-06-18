@@ -18,14 +18,18 @@ export default function AppLayout({ children }: AppLayoutProps) {
     })
 
     return (
-        <div className="flex flex-col gap-5 bg-gray-100 w-full h-screen">
-            {isLoading && <LoadingContainer />}
+        <div className="flex flex-col w-full min-h-screen">
+            {isLoading && (
+                <div className="h-screen">
+                    <LoadingContainer />
+                </div>
+            )}
 
             {!isLoading && (
-                <>
+                <div className="flex flex-col mx-auto border-r border-l w-full max-w-[598px] h-full">
                     <NavBar />
                     {children}
-                </>
+                </div>
             )}
         </div>
     )

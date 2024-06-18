@@ -23,7 +23,7 @@ export function NavBarLink({ href, icon: Icon }: NavBarLinkProps) {
                 <div 
                     className={
                         twMerge(
-                            "bottom-0 left-1/2 absolute bg-transparent w-0 h-1 transition-all duration-300",
+                            "bottom-0 left-1/2 absolute bg-transparent w-0 h-[2px] transition-all duration-300",
                             isActive && "bg-blue-500 w-full left-0"
                         )
                     }
