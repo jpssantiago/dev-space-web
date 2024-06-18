@@ -6,9 +6,13 @@ export async function loadUser(): Promise<LoadUserResponse> {
     return {
         user: {
             id: "0",
+            username: "iamjoaosantiago",
             name: "João",
             lastName: "Santiago",
-            avatar: "https://github.com/jpssantiago.png"
+            avatar: "https://github.com/jpssantiago.png",
+            description: "Founder @ DevSpace",
+            followers: [],
+            following: []
         }
     }
 }

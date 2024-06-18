@@ -6,6 +6,7 @@ import localizedFormat from "dayjs/plugin/localizedFormat"
 import relativeTime from "dayjs/plugin/relativeTime"
 import updateLocale from "dayjs/plugin/updateLocale"
 import { Ellipsis } from "lucide-react"
+import Link from "next/link"
 
 import { Post } from "@/models/post"
 import { UserAvatar } from "@/components/user-avatar"
@@ -14,6 +15,7 @@ import { GlobeIconSvg } from "@/assets/globe-icon-svg"
 import { PostAuthorActionsPopover } from "@/components/popovers/post-author-actions-popover"
 import { Button } from "@/components/ui/button"
 import { LoadUserResponse } from "@/responses/user-responses"
+import { UserHoverCard } from "../hover-cards/user-hover-card"
 
 type PostCardHeaderProps = {
     post: Post
@@ -47,12 +49,21 @@ export function PostCardHeader({ post }: PostCardHeaderProps) {
     return (
         <div className="flex justify-between p-5">
             <div className="flex items-center gap-3">
-                <UserAvatar user={post.author} />
+                <UserHoverCard user={post.author}>
+                    <Link href={`/app/profile/${post.author.username}`}>
+                        <UserAvatar user={post.author} />
+                    </Link>
+                </UserHoverCard>
 
                 <div className="flex flex-col">
-                    <span className="font-semibold text-lg">
-                        {post.author.name} {post.author.lastName}
-                    </span>
+                    <UserHoverCard user={post.author}>
+                        <Link 
+                            href={`/app/profile/${post.author.username}`}
+                            className="font-semibold text-lg hover:text-blue-500 transition-all"
+                        >
+                            {post.author.name} {post.author.lastName}
+                        </Link>
+                    </UserHoverCard>
 
                     <div className="flex items-center gap-1 text-gray-600 text-sm">
                         <TooltipItem tooltip={dayjs(post.createdAt).format("LLL")}>
