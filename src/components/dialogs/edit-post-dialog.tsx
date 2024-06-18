@@ -18,7 +18,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { LoadingButton } from "@/components/loading-button"
 import { TooltipItem } from "@/components/tooltip-item"
-import { SelectedImageContent } from "../selected-image-content"
+import { SelectedImageContent } from "@/components/selected-image-content"
 
 type EditPostDialogProps = {
     post: Post

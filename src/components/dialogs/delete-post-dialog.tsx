@@ -51,7 +51,10 @@ export function DeletePostDialog({ post, children }: DeletePostDialogProps) {
             <DialogContent>
                 <DialogHeader>
                     <DialogTitle>Are you sure?</DialogTitle>
-                    <DialogDescription>description goes bru...</DialogDescription>
+                    <DialogDescription>
+                        Your post will be deleted from our servers. 
+                        This action cannot be undone.
+                    </DialogDescription>
                 </DialogHeader>
 
                 <DialogFooter>
