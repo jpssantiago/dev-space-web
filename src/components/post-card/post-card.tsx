@@ -1,7 +1,6 @@
 "use client"
 
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 
 import { Post } from "@/models/post"
 import { UserHoverCard } from "@/components/hover-cards/user-hover-card"
@@ -14,9 +13,7 @@ type PostCardProps = {
     post: Post
 }
 
-export function PostCard({ post }: PostCardProps) {
-    const { push } = useRouter()
-    
+export function PostCard({ post }: PostCardProps) {   
     return (
         <div 
             className="bg-white hover:bg-gray-100 border-b w-full transition-all cursor-pointer"

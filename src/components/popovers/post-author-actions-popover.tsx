@@ -1,11 +1,14 @@
+"use client"
+
 import { ReactNode } from "react"
-import { Pen, Trash } from "lucide-react"
+import { useQuery } from "@tanstack/react-query"
+import { Trash } from "lucide-react"
 
 import { Post } from "@/models/post"
+import { LoadUserResponse } from "@/responses/user-responses"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { PopoverItem } from "@/components/popover-item"
 import { DeletePostDialog } from "@/components/dialogs/delete-post-dialog"
-import { EditPostDialog } from "../dialogs/edit-post-dialog"
 
 type PostAuthorActionsPopoverProps = {
     post: Post
@@ -13,6 +16,12 @@ type PostAuthorActionsPopoverProps = {
 }
 
 export function PostAuthorActionsPopover({ post, children }: PostAuthorActionsPopoverProps) {
+    const { data: response } = useQuery<LoadUserResponse>({ queryKey: ["user"] })
+
+    if (response?.user?.id != post.author.id) {
+        return <div />
+    }
+
     return (
         <Popover>
             <PopoverTrigger asChild>
@@ -20,10 +29,6 @@ export function PostAuthorActionsPopover({ post, children }: PostAuthorActionsPo
             </PopoverTrigger>
 
             <PopoverContent className="p-2">
-                <EditPostDialog post={post}>
-                    <PopoverItem icon={Pen}>Edit post</PopoverItem>
-                </EditPostDialog>
-
                 <DeletePostDialog post={post}>
                     <PopoverItem icon={Trash} variant="destructive">Delete post</PopoverItem>
                 </DeletePostDialog>

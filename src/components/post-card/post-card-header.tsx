@@ -7,7 +7,6 @@ import updateLocale from "dayjs/plugin/updateLocale"
 import { Post } from "@/models/post"
 import { UserHoverCard } from "@/components/hover-cards/user-hover-card"
 import { TooltipItem } from "@/components/tooltip-item"
-import { Button } from "@/components/ui/button"
 import { Ellipsis } from "lucide-react"
 import { PostAuthorActionsPopover } from "../popovers/post-author-actions-popover"
 
@@ -38,16 +37,6 @@ type PostCardHeaderProps = {
 }
 
 export function PostCardHeader({ post }: PostCardHeaderProps) {
-    function getDateTooltip(): string {
-        let tooltip: string = dayjs(post.createdAt).format("LLL")
-
-        if (dayjs(post.updatedAt).to(post.createdAt) != "1s") {
-            return `${tooltip} (last updated ${dayjs().to(post.updatedAt)} ago)`
-        }
-
-        return tooltip
-    }
-
     return (
         <div className="flex justify-between items-center w-full">
             <div className="flex items-center gap-2">
@@ -70,7 +59,7 @@ export function PostCardHeader({ post }: PostCardHeaderProps) {
                     <span>·</span>
 
                     <TooltipItem
-                        tooltip={getDateTooltip()}
+                        tooltip={dayjs(post.createdAt).format("LLL")}
                     >
                         <span className="border-b border-b-transparent hover:border-b-gray-600 h-full text-gray-600 text-sm transition-all">
                             {dayjs().to(post.createdAt)}

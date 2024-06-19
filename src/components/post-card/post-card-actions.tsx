@@ -2,7 +2,7 @@ import { Heart, MessageCircle, Link } from "lucide-react"
 
 import { Post } from "@/models/post"
 import { PostCardAction } from "./post-card-action"
-import { AddCommentDialog } from "@/components/dialogs/add-comment-dialog"
+import { AddReplyDialog } from "@/components/dialogs/add-reply-dialog/add-reply-dialog"
 import { SharePostDialog } from "@/components/dialogs/share-post-dialog"
 
 type PostCardActionsProps = {
@@ -20,7 +20,7 @@ export function PostCardActions({ post }: PostCardActionsProps) {
                 {post.likes.length}
             </PostCardAction>
 
-            <AddCommentDialog post={post}>
+            <AddReplyDialog post={post}>
                 <PostCardAction 
                     icon={MessageCircle} 
                     backgroundHover="hover:bg-emerald-100"
@@ -28,7 +28,7 @@ export function PostCardActions({ post }: PostCardActionsProps) {
                 >
                     {post.comments.length}
                 </PostCardAction>
-            </AddCommentDialog>
+            </AddReplyDialog>
 
             <SharePostDialog post={post}>
                 <PostCardAction 

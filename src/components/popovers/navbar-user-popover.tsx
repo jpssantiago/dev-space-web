@@ -1,12 +1,14 @@
 import { ReactNode } from "react"
 
+import { User } from "@/models/user"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 
 type NavBarUserPopoverProps = {
+    user?: User
     children?: ReactNode
 }
 
-export function NavBarUserPopover({ children }: NavBarUserPopoverProps) {
+export function NavBarUserPopover({ user, children }: NavBarUserPopoverProps) {
     return (
         <Popover>
             <PopoverTrigger className="hover:bg-gray-100 transition-all size-full">
@@ -14,7 +16,11 @@ export function NavBarUserPopover({ children }: NavBarUserPopoverProps) {
             </PopoverTrigger>
 
             <PopoverContent>
-                user
+                {user ? (
+                    "@" + user?.username
+                ) : (
+                    "not authenticated"
+                )}
             </PopoverContent>
         </Popover>
     )

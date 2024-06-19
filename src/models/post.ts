@@ -6,7 +6,6 @@ export type Post = {
     files: string[]
     author: User
     createdAt: Date
-    updatedAt: Date
     
     likes: User[]
     comments: string[] // TComment[]
