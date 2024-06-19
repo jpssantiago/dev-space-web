@@ -20,7 +20,7 @@ export function PostCardActions({ post }: PostCardActionsProps) {
                 {post.likes.length}
             </PostCardAction>
 
-            <AddCommentDialog>
+            <AddCommentDialog post={post}>
                 <PostCardAction 
                     icon={MessageCircle} 
                     backgroundHover="hover:bg-emerald-100"
@@ -30,7 +30,7 @@ export function PostCardActions({ post }: PostCardActionsProps) {
                 </PostCardAction>
             </AddCommentDialog>
 
-            <SharePostDialog>
+            <SharePostDialog post={post}>
                 <PostCardAction 
                     icon={Link} 
                     backgroundHover="hover:bg-purple-100"

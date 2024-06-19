@@ -7,6 +7,9 @@ import updateLocale from "dayjs/plugin/updateLocale"
 import { Post } from "@/models/post"
 import { UserHoverCard } from "@/components/hover-cards/user-hover-card"
 import { TooltipItem } from "@/components/tooltip-item"
+import { Button } from "@/components/ui/button"
+import { Ellipsis } from "lucide-react"
+import { PostAuthorActionsPopover } from "../popovers/post-author-actions-popover"
 
 dayjs.extend(localizedFormat)
 dayjs.extend(relativeTime)
@@ -46,7 +49,7 @@ export function PostCardHeader({ post }: PostCardHeaderProps) {
     }
 
     return (
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center w-full">
             <div className="flex items-center gap-2">
                 <UserHoverCard user={post.author}>
                     <Link
@@ -56,11 +59,11 @@ export function PostCardHeader({ post }: PostCardHeaderProps) {
                     </Link>
                 </UserHoverCard>
 
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-1 h-6">
                     <UserHoverCard user={post.author}>
                         <Link
                             href={`/app/profille/${post.author.username}`}
-                            className="border-b border-b-transparent hover:border-b-gray-600 h-full text-gray-600 text-sm transition-all"
+                            className="border-b border-b-transparent hover:border-b-gray-600 h-5 text-gray-600 text-sm transition-all"
                         >@{post.author.username}</Link>
                     </UserHoverCard>
 
@@ -75,6 +78,12 @@ export function PostCardHeader({ post }: PostCardHeaderProps) {
                     </TooltipItem>
                 </div>
             </div>
+
+            <PostAuthorActionsPopover post={post}>
+                <div className="pr-3">
+                    <Ellipsis size={20} className="text-gray-600 hover:text-blue-500 transition-all" />
+                </div>
+            </PostAuthorActionsPopover>
         </div>
     )
 }

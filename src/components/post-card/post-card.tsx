@@ -29,7 +29,7 @@ export function PostCard({ post }: PostCardProps) {
                         </Link>
                     </UserHoverCard>
 
-                    <div className="flex flex-col gap-1 w-full">
+                    <div className="flex flex-col items-start gap-1 w-full">
                         <PostCardHeader post={post} />
                         <PostCardContent post={post} />
                     </div>    

@@ -8,7 +8,7 @@ export async function loadFeed(): Promise<LoadFeedResponse> {
             {
                 id: "0",
                 text: "This is my first post 🚀",
-                files: [],
+                files: ["https://github.com/jpssantiago.png"],
                 author: {
                     id: "0",
                     username: "iamjoaosantiago",
@@ -42,7 +42,7 @@ export async function loadFeed(): Promise<LoadFeedResponse> {
             }, {
                 id: "2",
                 text: "Haha, its working",
-                files: ["https://github.com/jpssantiago.png"],
+                files: [],
                 author: {
                     id: "0",
                     username: "iamjoaosantiago",

@@ -12,6 +12,10 @@ export default function FeedPage() {
         queryFn: loadFeed
     })
 
+    if (response && response.feed) {
+        response.feed.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+    }
+
     return (
         <div className="flex flex-col">
             {isLoading && (

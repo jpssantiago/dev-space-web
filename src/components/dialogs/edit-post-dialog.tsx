@@ -89,7 +89,7 @@ export function EditPostDialog({ post, children }: EditPostDialogProps) {
 
     return (
         <Dialog open={open} onOpenChange={handleOpenChange}>
-            <DialogTrigger className="size-full">{children}</DialogTrigger>
+            <DialogTrigger className="outline-none size-full">{children}</DialogTrigger>
 
             <DialogContent className="px-0">
                 <DialogHeader>
