@@ -8,6 +8,7 @@ import { UserAvatar } from "@/components/user-avatar"
 import { PostCardHeader } from "./post-card-header"
 import { PostCardContent } from "./post-card-content"
 import { PostCardActions } from "./post-card-actions"
+import { twMerge } from "tailwind-merge"
 
 type PostCardProps = {
     post: Post
@@ -16,9 +17,9 @@ type PostCardProps = {
 export function PostCard({ post }: PostCardProps) {   
     return (
         <div 
-            className="bg-white hover:bg-gray-100 border-b w-full transition-all cursor-pointer"
+            className="bg-white hover:bg-gray-100 p-2 border-b w-full transition-all cursor-pointer"
         >
-            <div className="flex flex-col gap-2 p-2">
+            <div className="flex flex-col gap-2">
                 <div className="flex items-start gap-2">
                     <UserHoverCard user={post.author}>
                         <Link href={`/app/profile/${post.author.username}`}>

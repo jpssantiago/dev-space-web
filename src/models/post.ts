@@ -8,5 +8,5 @@ export type Post = {
     createdAt: Date
     
     likes: User[]
-    comments: string[] // TComment[]
+    replies: Post[]
 }

@@ -26,7 +26,7 @@ export function PostCardActions({ post }: PostCardActionsProps) {
                     backgroundHover="hover:bg-emerald-100"
                     textHover="group-hover:text-emerald-600"
                 >
-                    {post.comments.length}
+                    {post.replies.length}
                 </PostCardAction>
             </AddReplyDialog>
 
