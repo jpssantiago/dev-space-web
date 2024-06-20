@@ -1,13 +1,12 @@
 "use client"
 
 import { FormEvent, useState } from "react"
-import { useQuery } from "@tanstack/react-query"
 import { useImperativeFilePicker } from "use-file-picker"
 import { toast } from "sonner"
 import { ImageUp, Laugh } from "lucide-react"
 
 import { Post } from "@/models/post"
-import { LoadUserResponse } from "@/responses/user-responses"
+import { useUser } from "@/contexts/user-context"
 import { UserAvatar } from "@/components/user-avatar"
 import { Textarea } from "@/components/ui/textarea"
 import { LoadingButton } from "@/components/loading-button"
@@ -23,9 +22,7 @@ export function AddReplyForm({ post, onAddReply }: AddReplyFormProps) {
     const [files, setFiles] = useState<string[]>([])
     const [loading, setLoading] = useState<boolean>(false)
 
-    const { data: response } = useQuery<LoadUserResponse>({
-        queryKey: ["user"]
-    })
+    const { user } = useUser()
 
     const { openFilePicker, clear, removeFileByIndex } = useImperativeFilePicker({
         multiple: true,
@@ -71,7 +68,7 @@ export function AddReplyForm({ post, onAddReply }: AddReplyFormProps) {
     return (
         <form onSubmit={handleSubmit} className="flex flex-col gap-5">
             <div className="flex gap-2">
-                <UserAvatar user={response?.user} className="size-12" />
+                <UserAvatar user={user} className="size-12" />
 
                 <div className="flex flex-col gap-2 w-full">
                     <Textarea
