@@ -3,7 +3,10 @@ import { User } from "./user"
 
 export type Notification = {
     id: string
-    type: "like_post" | "like_reply" | "follow" | "reply"
+    type: "LIKE_POST" | "LIKE_REPLY" | "FOLLOW" | "REPLY"
+    createdAt: Date
+
+    receiver: User
     sender?: User
     post?: Post
 }

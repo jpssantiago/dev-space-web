@@ -1,10 +1,9 @@
 "use client"
 
-import { ReactNode } from "react"
-import { useQuery } from "@tanstack/react-query"
+import { ReactNode, useEffect } from "react"
 
+import { useUser } from "@/contexts/user-context"
 import { NavBar } from "@/components/nav-bar/nav-bar"
-import { loadUser } from "@/services/user-service"
 import { LoadingContainer } from "@/components/loading-container"
 
 type AppLayoutProps = {
@@ -12,10 +11,15 @@ type AppLayoutProps = {
 }
 
 export default function AppLayout({ children }: AppLayoutProps) {
-    const { isLoading } = useQuery({
-        queryKey: ["user"],
-        queryFn: loadUser
-    })
+    const { user, loadUser } = useUser()
+
+    const isLoading = !user
+
+    useEffect(() => {
+        if (!user) {
+            loadUser()
+        }
+    }, [loadUser, user])
 
     return (
         <div className="flex flex-col w-full min-h-screen">

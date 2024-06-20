@@ -1,16 +1,15 @@
 "use client"
 
 import { Bell, Home, MessageCircle } from "lucide-react"
-import { useQuery } from "@tanstack/react-query"
 
-import { LoadUserResponse } from "@/responses/user-responses"
+import { useUser } from "@/contexts/user-context"
 import { NavBarLink } from "./nav-bar-link"
 import { NavBarAction } from "./nav-bar-action"
 import { UserAvatar } from "@/components/user-avatar"
 import { NavBarUserPopover } from "../popovers/navbar-user-popover"
 
 export function NavBar() {
-    const { data: response } = useQuery<LoadUserResponse>({ queryKey: ["user"] })
+    const { user } = useUser()
 
     return (
         <div className="flex justify-center items-center bg-white border-t border-b w-full h-14">
@@ -21,9 +20,9 @@ export function NavBar() {
 
                 <NavBarLink icon={Bell} href="/app/notifications" />
 
-                <NavBarUserPopover user={response && response.user}>
+                <NavBarUserPopover user={user}>
                     <NavBarAction>
-                        <UserAvatar user={response && response.user} className="size-8" />
+                        <UserAvatar user={user} className="size-8" />
                     </NavBarAction>
                 </NavBarUserPopover>
             </div>

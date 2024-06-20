@@ -1,9 +1,8 @@
 import { LoadFeedResponse } from "@/responses/feed-responses"
 
 export async function loadFeed(): Promise<LoadFeedResponse> {
-    await new Promise(resolve => setTimeout(resolve, 1500))
+    const response = await fetch("http://localhost:3333/feed")
 
-    return {
-        feed: []
-    }
+    const data = await response.json()
+    return { feed: data.feed, err: data.err }
 }

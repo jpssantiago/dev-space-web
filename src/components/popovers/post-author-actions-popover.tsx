@@ -1,11 +1,10 @@
 "use client"
 
 import { ReactNode } from "react"
-import { useQuery } from "@tanstack/react-query"
 import { Trash } from "lucide-react"
 
 import { Post } from "@/models/post"
-import { LoadUserResponse } from "@/responses/user-responses"
+import { useUser } from "@/contexts/user-context"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { PopoverItem } from "@/components/popover-item"
 import { DeletePostDialog } from "@/components/dialogs/delete-post-dialog"
@@ -16,9 +15,9 @@ type PostAuthorActionsPopoverProps = {
 }
 
 export function PostAuthorActionsPopover({ post, children }: PostAuthorActionsPopoverProps) {
-    const { data: response } = useQuery<LoadUserResponse>({ queryKey: ["user"] })
+    const { user } = useUser()
 
-    if (response?.user?.id != post.author.id) {
+    if (user?.id != post.author.id) {
         return <div />
     }
 

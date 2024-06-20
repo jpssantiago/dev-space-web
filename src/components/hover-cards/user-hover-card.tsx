@@ -1,10 +1,10 @@
 "use client"
 
 import { ReactNode, useState } from "react"
-import { useQuery } from "@tanstack/react-query"
 import Link from "next/link"
 
 import { User } from "@/models/user"
+import { useUser } from "@/contexts/user-context"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card"
 import { UserAvatar } from "@/components/user-avatar"
 import { Button } from "@/components/ui/button"
@@ -21,11 +21,11 @@ type UserHoverCardProps = {
 export function UserHoverCard({ user, children }: UserHoverCardProps) {
     const [loading, setLoading] = useState<boolean>(false)
 
-    const { data: response } = useQuery<LoadUserResponse>({ queryKey: ["user"] })
+    const { user: authenticatedUser } = useUser()
 
     function getFollowButtonMessage(): string {
-        const isFollowing = (response?.user?.following.filter(u => u.id == user.id) ?? []).length > 0
-        const isBeingFollowed = (response?.user?.followers.filter(u => u.id == user.id) ?? []).length > 0
+        const isFollowing = (authenticatedUser?.following.filter(u => u.id == user.id) ?? []).length > 0
+        const isBeingFollowed = (authenticatedUser?.followers.filter(u => u.id == user.id) ?? []).length > 0
 
         if (isFollowing) {
             return "Unfollow"
@@ -86,7 +86,7 @@ export function UserHoverCard({ user, children }: UserHoverCardProps) {
                     </div>
 
                     <div className="flex gap-2">
-                        {response && response.user?.id == user.id ? (
+                        {authenticatedUser?.id == user.id ? (
                             <Link href={`/app/profile/${user.username}`}>
                                 <IconTextButton icon={BookUser}>
                                     View your profile
@@ -99,7 +99,7 @@ export function UserHoverCard({ user, children }: UserHoverCardProps) {
                             >{getFollowButtonMessage()}</LoadingButton>
                         )}
 
-                        {response && response.user?.id != user.id && (
+                        {authenticatedUser?.id != user.id && (
                             <Link href={`/app/chat/${user.username}`}>
                                 <Button variant="outline">
                                     Send a message 👋

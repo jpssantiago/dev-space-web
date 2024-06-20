@@ -4,9 +4,9 @@ export type Post = {
     id: string
     text?: string
     files: string[]
-    author: User
     createdAt: Date
-    
+
+    author: User
     likes: User[]
     replies: Post[]
 }

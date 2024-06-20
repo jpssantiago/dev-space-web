@@ -1,6 +1,9 @@
+"use client"
+
 import { Heart, MessageCircle, Link } from "lucide-react"
 
 import { Post } from "@/models/post"
+import { useUser } from "@/contexts/user-context"
 import { PostCardAction } from "./post-card-action"
 import { AddReplyDialog } from "@/components/dialogs/add-reply-dialog/add-reply-dialog"
 import { SharePostDialog } from "@/components/dialogs/share-post-dialog"
@@ -10,12 +13,20 @@ type PostCardActionsProps = {
 }
 
 export function PostCardActions({ post }: PostCardActionsProps) {
+    const { user } = useUser()
+
+    const hasLiked = post.likes.map(u => u.id == user?.id).length > 0
+
+    function handleLike() {
+        //
+    }
+
     return (
         <div className="flex items-center gap-5 pl-12 w-full">
             <PostCardAction 
                 icon={Heart}
-                iconClassName=""
-                // text-blue-500 if the user has liked this post.
+                iconClassName={hasLiked ? "text-blue-500" : ""}
+                onClick={handleLike}
             >
                 {post.likes.length}
             </PostCardAction>

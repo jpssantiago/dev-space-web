@@ -1,32 +1,29 @@
 "use client"
 
-import { useQuery } from "@tanstack/react-query"
+import { useEffect } from "react"
 
-import { loadFeed } from "@/services/feed-service"
+import { useFeed } from "@/contexts/feed-context"
 import { LoadingContainer } from "@/components/loading-container"
 import { PostCard } from "@/components/post-card/post-card"
 
 export default function FeedPage() {
-    const { isLoading, data: response } = useQuery({
-        queryKey: ["feed"],
-        queryFn: loadFeed
-    })
+    const { feed, loadFeed } = useFeed()
 
-    if (response && response.feed) {
-        response.feed.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
-    }
+    useEffect(() => {
+        loadFeed()
+    }, [loadFeed])
 
     return (
         <div className="flex flex-col">
-            {isLoading && (
+            {!feed && (
                 <div className="h-screen">
                     <LoadingContainer size={32} />
                 </div>
             )}
 
-            {response && response.feed && (
+            {feed && (
                 <div className="flex flex-col h-full">
-                    {response.feed?.map((post, index) => (
+                    {feed.map((post, index) => (
                         <PostCard key={index} post={post} />
                     ))}
                 </div>
