@@ -1,5 +1,5 @@
 export default function ProfilePage() {
     return (
-        <div>Profile</div>
+        <div className="flex flex-col min-h-screen">Profile</div>
     )
 }

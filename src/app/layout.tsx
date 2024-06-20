@@ -1,7 +1,8 @@
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 
-import { QueryProvider } from "@/providers/query-provider"
+import { UserProvider } from "@/contexts/user-context"
+import { FeedProvider } from "@/contexts/feed-context"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { Toaster } from "@/components/ui/sonner"
 
@@ -22,12 +23,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <QueryProvider>
-          <TooltipProvider>
-            {children}
-            <Toaster richColors />
-          </TooltipProvider>
-        </QueryProvider>
+        <UserProvider>
+          <FeedProvider>
+            <TooltipProvider>
+              {children}
+              <Toaster richColors />
+            </TooltipProvider>
+          </FeedProvider>
+        </UserProvider>
       </body>
     </html>
   )

@@ -1,25 +1,14 @@
-"use client"
-
-import { useQuery } from "@tanstack/react-query"
+import Link from "next/link"
 import dayjs from "dayjs"
 import localizedFormat from "dayjs/plugin/localizedFormat"
 import relativeTime from "dayjs/plugin/relativeTime"
 import updateLocale from "dayjs/plugin/updateLocale"
-import { Ellipsis } from "lucide-react"
-import Link from "next/link"
 
 import { Post } from "@/models/post"
-import { UserAvatar } from "@/components/user-avatar"
+import { UserHoverCard } from "@/components/hover-cards/user-hover-card"
 import { TooltipItem } from "@/components/tooltip-item"
-import { GlobeIconSvg } from "@/assets/globe-icon-svg"
-import { PostAuthorActionsPopover } from "@/components/popovers/post-author-actions-popover"
-import { Button } from "@/components/ui/button"
-import { LoadUserResponse } from "@/responses/user-responses"
-import { UserHoverCard } from "../hover-cards/user-hover-card"
-
-type PostCardHeaderProps = {
-    post: Post
-}
+import { Ellipsis } from "lucide-react"
+import { PostAuthorActionsPopover } from "../popovers/post-author-actions-popover"
 
 dayjs.extend(localizedFormat)
 dayjs.extend(relativeTime)
@@ -43,55 +32,47 @@ dayjs.updateLocale('en', {
     }
 })
 
-export function PostCardHeader({ post }: PostCardHeaderProps) {
-    const { data: response } = useQuery<LoadUserResponse>({ queryKey: ["user"] })
+type PostCardHeaderProps = {
+    post: Post
+}
 
+export function PostCardHeader({ post }: PostCardHeaderProps) {
     return (
-        <div className="flex justify-between p-5">
-            <div className="flex items-center gap-3">
+        <div className="flex justify-between items-center w-full">
+            <div className="flex items-center gap-2">
                 <UserHoverCard user={post.author}>
-                    <Link href={`/app/profile/${post.author.username}`}>
-                        <UserAvatar user={post.author} />
+                    <Link
+                        href={`/app/profile/${post.author.username}`}
+                        className="font-semibold hover:text-blue-500 transition-all"
+                    >{post.author.name}
                     </Link>
                 </UserHoverCard>
 
-                <div className="flex flex-col">
+                <div className="flex items-center gap-1 h-6">
                     <UserHoverCard user={post.author}>
-                        <Link 
-                            href={`/app/profile/${post.author.username}`}
-                            className="font-semibold text-lg hover:text-blue-500 transition-all"
-                        >
-                            {post.author.name} {post.author.lastName}
-                        </Link>
+                        <Link
+                            href={`/app/profille/${post.author.username}`}
+                            className="border-b border-b-transparent hover:border-b-gray-600 h-5 text-gray-600 text-sm transition-all"
+                        >@{post.author.username}</Link>
                     </UserHoverCard>
 
-                    <div className="flex items-center gap-1 text-gray-600 text-sm">
-                        <TooltipItem tooltip={dayjs(post.createdAt).format("LLL")}>
-                            <span>{dayjs().to(post.createdAt)} ·</span>
-                        </TooltipItem>
+                    <span>·</span>
 
-                        <TooltipItem tooltip="Public">
-                            <GlobeIconSvg />
-                        </TooltipItem>
-
-                        {post.createdAt != post.updatedAt && ( 
-                            <TooltipItem tooltip={dayjs(post.updatedAt).format("LLL")}>
-                                · last edited {dayjs().to(post.updatedAt)} ago
-                            </TooltipItem>
-                        )}
-                    </div>
+                    <TooltipItem
+                        tooltip={dayjs(post.createdAt).format("LLL")}
+                    >
+                        <span className="border-b border-b-transparent hover:border-b-gray-600 h-full text-gray-600 text-sm transition-all">
+                            {dayjs().to(post.createdAt)}
+                        </span>
+                    </TooltipItem>
                 </div>
             </div>
 
-            {response?.user?.id == post.author.id && (
-                <PostAuthorActionsPopover post={post}>
-                    <span>
-                        <Button variant="ghost" size="icon">
-                            <Ellipsis />
-                        </Button>
-                    </span>
-                </PostAuthorActionsPopover>
-            )}
+            <PostAuthorActionsPopover post={post}>
+                <div className="pr-3">
+                    <Ellipsis size={20} className="text-gray-600 hover:text-blue-500 transition-all" />
+                </div>
+            </PostAuthorActionsPopover>
         </div>
     )
 }

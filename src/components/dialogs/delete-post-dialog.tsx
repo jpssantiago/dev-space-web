@@ -46,7 +46,7 @@ export function DeletePostDialog({ post, children }: DeletePostDialogProps) {
 
     return (
         <Dialog open={open} onOpenChange={handleOpenChange}>
-            <DialogTrigger className="size-full">{children}</DialogTrigger>
+            <DialogTrigger className="outline-none size-full">{children}</DialogTrigger>
 
             <DialogContent>
                 <DialogHeader>
