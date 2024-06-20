@@ -1,9 +1,12 @@
 "use client"
 
+import { useRouter } from "next/navigation"
 import { Heart, MessageCircle, Link } from "lucide-react"
+import { toast } from "sonner"
 
 import { Post } from "@/models/post"
 import { useUser } from "@/contexts/user-context"
+import { useFeed } from "@/contexts/feed-context"
 import { PostCardAction } from "./post-card-action"
 import { AddReplyDialog } from "@/components/dialogs/add-reply-dialog/add-reply-dialog"
 import { SharePostDialog } from "@/components/dialogs/share-post-dialog"
@@ -13,12 +16,33 @@ type PostCardActionsProps = {
 }
 
 export function PostCardActions({ post }: PostCardActionsProps) {
-    const { user } = useUser()
+    const { user, toggleLike } = useUser()
+    const { setFeed } = useFeed()
+    const { push } = useRouter()
 
     const hasLiked = post.likes.map(u => u.id == user?.id).length > 0
 
-    function handleLike() {
-        //
+    async function handleLike() {
+        const response = await toggleLike(post.id)
+        if (response.err) { 
+            if (response.err == "unauthorized" || response.err == "no-token") {
+                return push("/auth/sign-in")
+            }
+
+            return toast(response.err)
+        }
+
+        setFeed(previous => previous?.map(p => {
+            if (p.id == post.id) {
+                if (response.like) {
+                    p.likes.push(response.like.user)
+                } else {
+                    p.likes = p.likes.filter(u => u.id != user?.id)
+                }
+            }
+            
+            return p
+        }))
     }
 
     return (

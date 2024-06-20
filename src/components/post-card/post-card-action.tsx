@@ -14,7 +14,7 @@ export function PostCardAction({ icon: Icon, backgroundHover = "hover:bg-blue-10
     return (
         <div onClick={onClick} className={twMerge("flex items-center bg-transparent gap-2 px-2 py-1 rounded-full h-6 transition-all group", backgroundHover)}>
             <Icon size={16} className={twMerge("transition-all text-gray-600", textHover, iconClassName)} />
-            <span className={twMerge("text-sm transition-all text-gray-600", textHover)}>{children}</span>
+            <span className={twMerge("text-sm transition-all text-gray-600", textHover, iconClassName)}>{children}</span>
         </div>
     )
 }

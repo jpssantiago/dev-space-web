@@ -1,6 +1,6 @@
 "use client"
 
-import { ReactNode, createContext, useContext, useState } from "react"
+import { Dispatch, ReactNode, SetStateAction, createContext, useContext, useState } from "react"
 
 import { Post } from "@/models/post"
 import { LoadFeedResponse } from "@/responses/feed-responses"
@@ -8,6 +8,8 @@ import * as FeedService from "@/services/feed-service"
 
 type FeedContextType = {
     feed: Post[] | undefined
+    setFeed: Dispatch<SetStateAction<Post[] | undefined>>
+
     loadFeed: () => Promise<LoadFeedResponse>
 }
 
@@ -30,6 +32,7 @@ export function FeedProvider({ children }: { children: ReactNode }) {
 
     const value = {
         feed,
+        setFeed,
         loadFeed
     }
     
