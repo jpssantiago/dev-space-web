@@ -1,9 +1,12 @@
 "use client"
 
 import { ReactNode, useState } from "react"
+import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 
 import { Post } from "@/models/post"
+import { useUser } from "@/contexts/user-context"
+import { useFeed } from "@/contexts/feed-context"
 import {
     Dialog,
     DialogClose,
@@ -27,6 +30,10 @@ export function DeletePostDialog({ post, children }: DeletePostDialogProps) {
     const [open, setOpen] = useState<boolean>(false)
     const [loading, setLoading] = useState<boolean>(false)
 
+    const { deletePost } = useUser()
+    const { feed, setFeed } = useFeed()
+    const { push } = useRouter()
+
     function handleOpenChange(status: boolean) {
         if (loading) return
 
@@ -37,11 +44,21 @@ export function DeletePostDialog({ post, children }: DeletePostDialogProps) {
         if (loading) return
 
         setLoading(true)
-        await new Promise(resolve => setTimeout(resolve, 1500))
+        const response = await deletePost(post.id)
         setLoading(false)
+
+        if (response.err) {
+            if (response.err == "unauthorized" || response.err == "no-token") {
+                return push("/auth/sign-in")
+            }
+
+            return toast(response.err)
+        }
 
         setOpen(false)
         toast.success("Your post was deleted.")
+
+        setFeed(feed?.filter(p => p.id != post.id))
     }
 
     return (
