@@ -6,13 +6,17 @@ import { User } from "@/models/user"
 import { LoadUserResponse } from "@/responses/user-responses"
 import * as UserService from "@/services/user-service"
 import * as LikeService from "@/services/like-service"
+import * as PostService from "@/services/post-service"
 import { ToggleLikeResponse } from "@/responses/like-responses"
+import { AddReplyResponse } from "@/responses/post-responses"
 
 type UserContextType = {
     user: User | undefined
     loadUser: () => Promise<LoadUserResponse>
 
     toggleLike: (postId: string) => Promise<ToggleLikeResponse>
+
+    addReply: (postId: string, text?: string, files?: string[]) => Promise<AddReplyResponse>
 }
 
 export const UserContext = createContext({} as UserContextType)
@@ -37,10 +41,16 @@ export function UserProvider({ children }: { children: ReactNode }) {
         return response
     }
 
+    async function addReply(postId: string, text?: string, files?: string[]): Promise<AddReplyResponse> {
+        const response = await PostService.addReply(postId, text, files)
+        return response
+    }
+
     const value = {
         user,
         loadUser,
-        toggleLike
+        toggleLike,
+        addReply
     }
     
     return (

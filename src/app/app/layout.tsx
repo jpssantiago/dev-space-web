@@ -19,7 +19,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
         if (!user) {
             loadUser()
         }
-    }, [loadUser, user])
+    }, [])
 
     return (
         <div className="flex flex-col w-full min-h-screen">

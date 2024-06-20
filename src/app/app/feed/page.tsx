@@ -11,7 +11,7 @@ export default function FeedPage() {
 
     useEffect(() => {
         loadFeed()
-    }, [loadFeed])
+    }, [])
 
     return (
         <div className="flex flex-col">

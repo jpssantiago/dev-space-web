@@ -3,10 +3,12 @@
 import { FormEvent, useState } from "react"
 import { useImperativeFilePicker } from "use-file-picker"
 import { toast } from "sonner"
+import { useRouter } from "next/navigation"
 import { ImageUp, Laugh } from "lucide-react"
 
 import { Post } from "@/models/post"
 import { useUser } from "@/contexts/user-context"
+import { useFeed } from "@/contexts/feed-context"
 import { UserAvatar } from "@/components/user-avatar"
 import { Textarea } from "@/components/ui/textarea"
 import { LoadingButton } from "@/components/loading-button"
@@ -22,7 +24,9 @@ export function AddReplyForm({ post, onAddReply }: AddReplyFormProps) {
     const [files, setFiles] = useState<string[]>([])
     const [loading, setLoading] = useState<boolean>(false)
 
-    const { user } = useUser()
+    const { user, addReply } = useUser()
+    const { feed, setFeed } = useFeed()
+    const { push } = useRouter()
 
     const { openFilePicker, clear, removeFileByIndex } = useImperativeFilePicker({
         multiple: true,
@@ -58,11 +62,27 @@ export function AddReplyForm({ post, onAddReply }: AddReplyFormProps) {
         if (text.trim().length == 0 && files.length == 0) return
 
         setLoading(true)
-        await new Promise(resolve => setTimeout(resolve, 1500))
+        const response = await addReply(post.id, text, files)
         setLoading(false)
+
+        if (response.err) {
+            if (response.err == "unauthorized" || response.err == "no-token") {
+                return push("/auth/sign-in")
+            }
+
+            return toast(response.err)
+        }
 
         onAddReply()
         toast.success("Your reply is now public.")
+
+        setFeed(feed?.map(p => {
+            if (p.id == post.id) {
+                p.replies = [...p.replies, response.reply!]
+            }
+
+            return p
+        }))
     }
 
     return (

@@ -17,7 +17,7 @@ type PostCardActionsProps = {
 
 export function PostCardActions({ post }: PostCardActionsProps) {
     const { user, toggleLike } = useUser()
-    const { setFeed } = useFeed()
+    const { feed, setFeed } = useFeed()
     const { push } = useRouter()
 
     const hasLiked = post.likes.map(u => u.id == user?.id).length > 0
@@ -32,12 +32,14 @@ export function PostCardActions({ post }: PostCardActionsProps) {
             return toast(response.err)
         }
 
-        setFeed(previous => previous?.map(p => {
+        setFeed(feed?.map(p => {
             if (p.id == post.id) {
                 if (response.like) {
-                    p.likes.push(response.like.user)
-                } else {
-                    p.likes = p.likes.filter(u => u.id != user?.id)
+                    if (!hasLiked) {
+                        p.likes.push(response.like.user)
+                    } else {
+                        p.likes = p.likes.filter(u => u.id != user?.id)
+                    }
                 }
             }
             
