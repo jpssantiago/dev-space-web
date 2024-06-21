@@ -7,7 +7,7 @@ type PostCardContentProps = {
 export function PostCardContent({ post }: PostCardContentProps) {
     return (
         <div className="flex flex-col items-start gap-2 size-full">
-            <span className="text-[15px] text-gray-800">{post.text}</span>
+            <span className="text-[15px] text-gray-800 break-words whitespace-pre-line">{post.text}</span>
 
             {post.files.length > 0 && (
                 <img
