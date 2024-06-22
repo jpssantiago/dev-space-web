@@ -16,7 +16,7 @@ import { SelectedFilesDisplay } from "@/components/selected-files-display"
 
 type AddReplyFormProps = {
     post: Post
-    onAddReply: () => void
+    onAddReply?: (reply: Post) => void
 }
 
 export function AddReplyForm({ post, onAddReply }: AddReplyFormProps) {
@@ -73,7 +73,6 @@ export function AddReplyForm({ post, onAddReply }: AddReplyFormProps) {
             return toast(response.err)
         }
 
-        onAddReply()
         toast.success("Your reply is now public.")
 
         setFeed(feed?.map(p => {
@@ -83,6 +82,10 @@ export function AddReplyForm({ post, onAddReply }: AddReplyFormProps) {
 
             return p
         }))
+
+        if (onAddReply) {
+            onAddReply(response.reply!)
+        }
     }
 
     return (

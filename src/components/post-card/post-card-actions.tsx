@@ -10,6 +10,7 @@ import { useFeed } from "@/contexts/feed-context"
 import { PostCardAction } from "./post-card-action"
 import { AddReplyDialog } from "@/components/dialogs/add-reply-dialog/add-reply-dialog"
 import { SharePostDialog } from "@/components/dialogs/share-post-dialog"
+import { Like } from "@/models/like"
 
 type PostCardActionsProps = {
     post: Post

@@ -10,25 +10,22 @@ import { AddReplyForm } from "./add-reply-form"
 type AddReplyDialogProps = {
     post: Post
     children?: ReactNode
+    onAddReply?: (reply: Post) => void
 }
 
-export function AddReplyDialog({ post, children }: AddReplyDialogProps) {
+export function AddReplyDialog({ post, children, onAddReply }: AddReplyDialogProps) {
     const [open, setOpen] = useState<boolean>(false)
 
     function handleOpenChange(status: boolean) {
-        // if (loading) return
-
-        // if (!status) {
-        //     setText("")
-        //     setFiles([])
-        //     clear()
-        // }
-
         setOpen(status)
     }
 
-    function handleAddReply() {
+    function handleAddReply(reply: Post) {
         setOpen(false)
+
+        if (onAddReply) {
+            onAddReply(reply)
+        }
     }
 
     return (

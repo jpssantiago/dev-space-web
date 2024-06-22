@@ -9,6 +9,7 @@ import { UserAvatar } from "@/components/user-avatar"
 import { PostCardHeader } from "./post-card-header"
 import { PostCardContent } from "./post-card-content"
 import { PostCardActions } from "./post-card-actions"
+import { Like } from "@/models/like"
 
 type PostCardProps = {
     post: Post
@@ -30,7 +31,7 @@ export function PostCard({ post }: PostCardProps) {
                 <div className="flex items-start gap-2">
                     <UserHoverCard user={post.author}>
                         <Link href={`/app/profile/${post.author.username}`}>
-                            <UserAvatar user={post.author} className="size-12" />
+                            <UserAvatar user={post.author} />
                         </Link>
                     </UserHoverCard>
 
@@ -40,7 +41,9 @@ export function PostCard({ post }: PostCardProps) {
                     </div>    
                 </div>
 
-                <PostCardActions post={post} />
+                <PostCardActions 
+                    post={post}
+                />
             </div>
         </div>
     )
