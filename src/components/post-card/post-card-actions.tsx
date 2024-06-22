@@ -7,10 +7,10 @@ import { toast } from "sonner"
 import { Post } from "@/models/post"
 import { useUser } from "@/contexts/user-context"
 import { useFeed } from "@/contexts/feed-context"
+import { usePost } from "@/contexts/post-context"
 import { PostCardAction } from "./post-card-action"
 import { AddReplyDialog } from "@/components/dialogs/add-reply-dialog/add-reply-dialog"
 import { SharePostDialog } from "@/components/dialogs/share-post-dialog"
-import { Like } from "@/models/like"
 
 type PostCardActionsProps = {
     post: Post
@@ -19,6 +19,7 @@ type PostCardActionsProps = {
 export function PostCardActions({ post }: PostCardActionsProps) {
     const { user, toggleLike } = useUser()
     const { feed, setFeed } = useFeed()
+    const { post: selectedPost, setPost } = usePost()
     const { push } = useRouter()
 
     const hasLiked = post.likes.map(u => u.id == user?.id).length > 0
@@ -46,10 +47,27 @@ export function PostCardActions({ post }: PostCardActionsProps) {
             
             return p
         }))
+
+        if (selectedPost && response.like && user) {
+            setPost({
+                ...selectedPost,
+                replies: selectedPost.replies.map(reply => {
+                    if (reply.id == post.id) {
+                        if (hasLiked) {
+                            reply.likes = reply.likes.filter(u => u.id != user.id)
+                        } else {
+                            reply.likes.push(response.like!.user)
+                        }
+                    }
+
+                    return reply
+                })
+            })
+        }
     }
 
     return (
-        <div className="flex items-center gap-5 pl-12 w-full">
+        <div className="flex items-center gap-5 pl-10 w-full">
             <div onClick={e => e.stopPropagation()}>
                 <PostCardAction 
                     icon={Heart}

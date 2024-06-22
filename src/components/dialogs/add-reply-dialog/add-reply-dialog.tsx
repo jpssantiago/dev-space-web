@@ -10,10 +10,9 @@ import { AddReplyForm } from "./add-reply-form"
 type AddReplyDialogProps = {
     post: Post
     children?: ReactNode
-    onAddReply?: (reply: Post) => void
 }
 
-export function AddReplyDialog({ post, children, onAddReply }: AddReplyDialogProps) {
+export function AddReplyDialog({ post, children }: AddReplyDialogProps) {
     const [open, setOpen] = useState<boolean>(false)
 
     function handleOpenChange(status: boolean) {
@@ -22,10 +21,6 @@ export function AddReplyDialog({ post, children, onAddReply }: AddReplyDialogPro
 
     function handleAddReply(reply: Post) {
         setOpen(false)
-
-        if (onAddReply) {
-            onAddReply(reply)
-        }
     }
 
     return (

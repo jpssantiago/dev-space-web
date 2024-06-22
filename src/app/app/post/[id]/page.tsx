@@ -6,6 +6,7 @@ import { ArrowLeft } from "lucide-react"
 
 import { Post } from "@/models/post"
 import { Like } from "@/models/like"
+import { usePost } from "@/contexts/post-context"
 import { LoadingContainer } from "@/components/loading-container"
 import { SelectedPostCard } from "@/components/selected-post-card/selected-post-card"
 import { PostCard } from "@/components/post-card/post-card"
@@ -19,31 +20,20 @@ type PostIdPageProps = {
 }
 
 export default function PostIdPage({ params }: PostIdPageProps) {
-    const [post, setPost] = useState<Post | undefined>(undefined)
     const [loading, setLoading] = useState<boolean>(true)
 
+    const { post, loadPost } = usePost()
     const { user } = useUser()
-    const { push, back } = useRouter()
+    const { push } = useRouter()
 
-    async function loadPost() {
-        try {
-            const response = await fetch(`http://localhost:3333/post/${params.id}`)
-            const data = await response.json()
+    useEffect(() => {
+        loadPost(params.id).then(data => {
             setLoading(false)
 
             if (data.err) {
-                return push("/app/feed")
+                return handleBack()
             }
-
-            setPost(data.post)
-        } catch {
-            setLoading(false)
-            push("/app/feed")
-        }
-    }
-
-    useEffect(() => {
-        loadPost()
+        })
     }, [])
 
     function handleBack() {
@@ -52,32 +42,6 @@ export default function PostIdPage({ params }: PostIdPageProps) {
         } else {
             push("/app/feed")
         }
-    }
-
-    function handleToggleLike(like: Like) {
-        const hasLiked = (post?.likes.map(u => u.id == user?.id) ?? []).length > 0
-
-        if (hasLiked) {
-            setPost({
-                ...post!,
-                likes: post!.likes.filter(u => u.id != user?.id)
-            })
-        } else {
-            setPost({
-                ...post!,
-                likes: [...post!.likes, like.user]
-            })
-        }
-    }
-
-    function handleAddReply(reply: Post, parentPost?: Post) {
-        if (!parentPost) {
-            setPost({
-                ...post!,
-                replies: [reply, ...post!.replies]
-            })
-        }
-
     }
 
     return (
@@ -96,8 +60,6 @@ export default function PostIdPage({ params }: PostIdPageProps) {
 
                     <SelectedPostCard
                         post={post}
-                        onToggleLike={handleToggleLike}
-                        onAddReply={handleAddReply}
                     />
 
                     {post.replies.map(reply => (

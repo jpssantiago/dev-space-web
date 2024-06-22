@@ -5,20 +5,19 @@ import { Heart, Link, MessageCircle } from "lucide-react"
 import { toast } from "sonner"
 
 import { Post } from "@/models/post"
-import { Like } from "@/models/like"
 import { useUser } from "@/contexts/user-context"
+import { usePost } from "@/contexts/post-context"
 import { PostCardAction } from "@/components/post-card/post-card-action"
 import { AddReplyDialog } from "@/components/dialogs/add-reply-dialog/add-reply-dialog"
 import { SharePostDialog } from "@/components/dialogs/share-post-dialog"
 
 type SelectedPostCardActionsProps = {
     post: Post
-    onToggleLike: (like: Like) => void
-    onAddReply: (reply: Post) => void
 }
 
-export function SelectedPostCardActions({ post, onToggleLike, onAddReply }: SelectedPostCardActionsProps) {
+export function SelectedPostCardActions({ post }: SelectedPostCardActionsProps) {
     const { user, toggleLike } = useUser()
+    const { post: selectedPost, setPost } = usePost()
     const { push } = useRouter()
 
     const hasLiked = post.likes.map(u => u.id == user?.id).length > 0
@@ -33,13 +32,23 @@ export function SelectedPostCardActions({ post, onToggleLike, onAddReply }: Sele
             return toast(response.err)
         }
 
-        if (response.like) {
-            onToggleLike(response.like)
+        if (selectedPost && response.like && user) {
+            if (hasLiked) {
+                setPost({
+                    ...selectedPost,
+                    likes: selectedPost.likes.filter(u => u.id != user.id)
+                })
+            } else {
+                setPost({
+                    ...selectedPost,
+                    likes: [...selectedPost.likes, response.like.user]
+                })
+            }
         }
     }
 
     return (
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center -translate-x-2">
             <div className="cursor-pointer">
                 <PostCardAction
                     icon={Heart}
@@ -50,7 +59,7 @@ export function SelectedPostCardActions({ post, onToggleLike, onAddReply }: Sele
                 </PostCardAction>
             </div>
 
-            <AddReplyDialog post={post} onAddReply={onAddReply}>
+            <AddReplyDialog post={post}>
                 <PostCardAction
                     icon={MessageCircle}
                     backgroundHover="hover:bg-emerald-100"
