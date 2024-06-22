@@ -49,33 +49,39 @@ export function PostCardActions({ post }: PostCardActionsProps) {
 
     return (
         <div className="flex items-center gap-5 pl-12 w-full">
-            <PostCardAction 
-                icon={Heart}
-                iconClassName={hasLiked ? "text-blue-500" : ""}
-                onClick={handleLike}
-            >
-                {post.likes.length}
-            </PostCardAction>
-
-            <AddReplyDialog post={post}>
+            <div onClick={e => e.stopPropagation()}>
                 <PostCardAction 
-                    icon={MessageCircle} 
-                    backgroundHover="hover:bg-emerald-100"
-                    textHover="group-hover:text-emerald-600"
+                    icon={Heart}
+                    iconClassName={hasLiked ? "text-blue-500" : ""}
+                    onClick={handleLike}
                 >
-                    {post.replies.length}
+                    {post.likes.length}
                 </PostCardAction>
-            </AddReplyDialog>
+            </div>
 
-            <SharePostDialog post={post}>
-                <PostCardAction 
-                    icon={Link} 
-                    backgroundHover="hover:bg-purple-100"
-                    textHover="group-hover:text-purple-500"
-                >
-                    Share
-                </PostCardAction>
-            </SharePostDialog>
+            <div onClick={e => e.stopPropagation()}>
+                <AddReplyDialog post={post}>
+                    <PostCardAction 
+                        icon={MessageCircle} 
+                        backgroundHover="hover:bg-emerald-100"
+                        textHover="group-hover:text-emerald-600"
+                    >
+                        {post.replies.length}
+                    </PostCardAction>
+                </AddReplyDialog>
+            </div>
+
+            <div onClick={e => e.stopPropagation()}>
+                <SharePostDialog post={post}>
+                    <PostCardAction 
+                        icon={Link} 
+                        backgroundHover="hover:bg-purple-100"
+                        textHover="group-hover:text-purple-500"
+                    >
+                        Share
+                    </PostCardAction>
+                </SharePostDialog>
+            </div>
         </div>
     )
 }

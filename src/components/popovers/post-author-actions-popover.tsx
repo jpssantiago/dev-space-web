@@ -22,16 +22,18 @@ export function PostAuthorActionsPopover({ post, children }: PostAuthorActionsPo
     }
 
     return (
-        <Popover>
-            <PopoverTrigger asChild>
-                {children}
-            </PopoverTrigger>
+        <div onClick={e => e.stopPropagation()}>
+            <Popover>
+                <PopoverTrigger asChild>
+                    {children}
+                </PopoverTrigger>
 
-            <PopoverContent className="p-2">
-                <DeletePostDialog post={post}>
-                    <PopoverItem icon={Trash} variant="destructive">Delete post</PopoverItem>
-                </DeletePostDialog>
-            </PopoverContent>
-        </Popover>
+                <PopoverContent className="p-2">
+                    <DeletePostDialog post={post}>
+                        <PopoverItem icon={Trash} variant="destructive">Delete post</PopoverItem>
+                    </DeletePostDialog>
+                </PopoverContent>
+            </Popover>
+        </div>
     )
 }

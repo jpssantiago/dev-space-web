@@ -1,3 +1,5 @@
+"use client"
+
 import { ReactNode } from "react"
 
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
@@ -12,14 +14,16 @@ type TooltipItemProps = {
 
 export function TooltipItem({ tooltip, children, className, asChild = false }: TooltipItemProps) {
     return (
-        <Tooltip>
-            <TooltipTrigger className={twMerge("cursor-default", className)} asChild={asChild}>
-                {children}
-            </TooltipTrigger>
+        <div onClick={e => e.stopPropagation()}>
+            <Tooltip>
+                <TooltipTrigger className={twMerge("cursor-default", className)} asChild={asChild}>
+                    {children}
+                </TooltipTrigger>
 
-            <TooltipContent>
-                {tooltip}
-            </TooltipContent>
-        </Tooltip>
+                <TooltipContent>
+                    {tooltip}
+                </TooltipContent>
+            </Tooltip>
+        </div>
     )
 }

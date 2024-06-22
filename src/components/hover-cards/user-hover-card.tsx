@@ -33,7 +33,7 @@ export function UserHoverCard({ user, children }: UserHoverCardProps) {
         if (isBeingFollowed && !isFollowing) {
             return "Follow back"
         }
-        
+
         return "Follow"
     }
 
@@ -46,68 +46,70 @@ export function UserHoverCard({ user, children }: UserHoverCardProps) {
     }
 
     return (
-        <HoverCard>
-            <HoverCardTrigger asChild>
-                {children}
-            </HoverCardTrigger>
+        <div onClick={e => e.stopPropagation()}>
+            <HoverCard>
+                <HoverCardTrigger asChild>
+                    {children}
+                </HoverCardTrigger>
 
-            <HoverCardContent align="end" className="w-fit">
-                <div className="flex flex-col gap-5 cursor-default">
-                    <div className="flex items-center gap-3">
-                        <Link href={`/app/profile/${user.username}`}>
-                            <UserAvatar user={user} className="size-24" />
-                        </Link>
-
-                        <div className="flex flex-col gap-1">
-                            <Link
-                                href={`/app/profile/${user.username}`}
-                                className="font-semibold text-xl hover:text-blue-500 transition-all"
-                            >
-                                {user.name}
+                <HoverCardContent align="end" className="w-fit">
+                    <div className="flex flex-col gap-5 cursor-default">
+                        <div className="flex items-center gap-3">
+                            <Link href={`/app/profile/${user.username}`}>
+                                <UserAvatar user={user} className="size-24" />
                             </Link>
 
-                            <div className="flex flex-col text-gray-700">
-                                <span>
-                                    Following: <strong>{user.following.length}</strong>
-                                </span>
+                            <div className="flex flex-col gap-1">
+                                <Link
+                                    href={`/app/profile/${user.username}`}
+                                    className="font-semibold text-xl hover:text-blue-500 transition-all"
+                                >
+                                    {user.name}
+                                </Link>
 
-                                <span>
-                                    Followers: <strong>{user.followers.length}</strong>
-                                </span>
-
-                                {user.description && (
+                                <div className="flex flex-col text-gray-700">
                                     <span>
-                                        {user.description}
+                                        Following: <strong>{user.following.length}</strong>
                                     </span>
-                                )}
+
+                                    <span>
+                                        Followers: <strong>{user.followers.length}</strong>
+                                    </span>
+
+                                    {user.description && (
+                                        <span>
+                                            {user.description}
+                                        </span>
+                                    )}
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div className="flex gap-2">
-                        {authenticatedUser?.id == user.id ? (
-                            <Link href={`/app/profile/${user.username}`}>
-                                <IconTextButton icon={BookUser}>
-                                    View your profile
-                                </IconTextButton>
-                            </Link>
-                        ) : (
-                            <LoadingButton 
-                                loading={loading} 
-                                onClick={handleFollow}
-                            >{getFollowButtonMessage()}</LoadingButton>
-                        )}
+                        <div className="flex gap-2">
+                            {authenticatedUser?.id == user.id ? (
+                                <Link href={`/app/profile/${user.username}`}>
+                                    <IconTextButton icon={BookUser}>
+                                        View your profile
+                                    </IconTextButton>
+                                </Link>
+                            ) : (
+                                <LoadingButton
+                                    loading={loading}
+                                    onClick={handleFollow}
+                                >{getFollowButtonMessage()}</LoadingButton>
+                            )}
 
-                        {authenticatedUser?.id != user.id && (
-                            <Link href={`/app/chat/${user.username}`}>
-                                <Button variant="outline">
-                                    Send a message 👋
-                                </Button>
-                            </Link>
-                        )}
+                            {authenticatedUser?.id != user.id && (
+                                <Link href={`/app/chat/${user.username}`}>
+                                    <Button variant="outline">
+                                        Send a message 👋
+                                    </Button>
+                                </Link>
+                            )}
+                        </div>
                     </div>
-                </div>
-            </HoverCardContent>
-        </HoverCard>
+                </HoverCardContent>
+            </HoverCard>
+        </div>
     )
 }
