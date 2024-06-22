@@ -7,6 +7,7 @@ import { toast } from "sonner"
 import { Post } from "@/models/post"
 import { useUser } from "@/contexts/user-context"
 import { useFeed } from "@/contexts/feed-context"
+import { usePost } from "@/contexts/post-context"
 import {
     Dialog,
     DialogClose,
@@ -32,6 +33,7 @@ export function DeletePostDialog({ post, children }: DeletePostDialogProps) {
 
     const { deletePost } = useUser()
     const { feed, setFeed } = useFeed()
+    const { selectedPost, setSelectedPost } = usePost()
     const { push } = useRouter()
 
     function handleOpenChange(status: boolean) {
@@ -59,6 +61,25 @@ export function DeletePostDialog({ post, children }: DeletePostDialogProps) {
         toast.success("Your post was deleted.")
 
         setFeed(feed?.filter(p => p.id != post.id))
+
+        if (selectedPost) {
+            if (selectedPost.id == post.parentPostId) {
+                return setSelectedPost({
+                    ...selectedPost,
+                    replies: selectedPost.replies.filter(r => r.id != post.id)
+                })
+            }
+
+            if (selectedPost.id == post.id) {
+                if (selectedPost.parentPostId) {
+                    push(`/app/post/${selectedPost.parentPostId}`)
+                } else {
+                    push("/app/feed")
+                }
+
+                setSelectedPost(undefined)
+            }
+        }
     }
 
     return (

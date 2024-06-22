@@ -22,12 +22,12 @@ type PostIdPageProps = {
 export default function PostIdPage({ params }: PostIdPageProps) {
     const [loading, setLoading] = useState<boolean>(true)
 
-    const { post, loadPost } = usePost()
+    const { selectedPost, loadSelectedPost } = usePost()
     const { user } = useUser()
     const { push } = useRouter()
 
     useEffect(() => {
-        loadPost(params.id).then(data => {
+        loadSelectedPost(params.id).then(data => {
             setLoading(false)
 
             if (data.err) {
@@ -37,8 +37,8 @@ export default function PostIdPage({ params }: PostIdPageProps) {
     }, [])
 
     function handleBack() {
-        if (post?.parentPostId) {
-            push(`/app/post/${post.parentPostId}`)
+        if (selectedPost?.parentPostId) {
+            push(`/app/post/${selectedPost.parentPostId}`)
         } else {
             push("/app/feed")
         }
@@ -48,7 +48,7 @@ export default function PostIdPage({ params }: PostIdPageProps) {
         <div className="min-h-[calc(100vh-56px)]">
             {loading && <LoadingContainer />}
 
-            {post && (
+            {selectedPost && (
                 <div className="flex-flex-col">
                     <div className="flex items-center gap-2 px-3 py-2 border-b">
                         <Button onClick={handleBack} size="icon" variant="ghost">
@@ -59,10 +59,10 @@ export default function PostIdPage({ params }: PostIdPageProps) {
                     </div>
 
                     <SelectedPostCard
-                        post={post}
+                        post={selectedPost}
                     />
 
-                    {post.replies.map(reply => (
+                    {selectedPost.replies.map(reply => (
                         <PostCard
                             key={reply.id}
                             post={reply}

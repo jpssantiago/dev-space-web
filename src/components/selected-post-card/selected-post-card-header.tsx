@@ -1,25 +1,30 @@
 import { Ellipsis } from "lucide-react"
 
-import { User } from "@/models/user"
+import { Post } from "@/models/post"
 import { UserAvatar } from "@/components/user-avatar"
+import { PostAuthorActionsPopover } from "../popovers/post-author-actions-popover"
 
 type SelectedPostCardHeaderProps = {
-    author: User
+    post: Post
 }
 
-export function SelectedPostCardHeader({ author }: SelectedPostCardHeaderProps) {
+export function SelectedPostCardHeader({ post }: SelectedPostCardHeaderProps) {
     return (
         <div className="flex justify-between items-center">
             <div className="flex items-center gap-2">
-                <UserAvatar user={author} />
+                <UserAvatar user={post.author} />
 
                 <div className="flex flex-col">
-                    <span className="font-semibold">{author.name}</span>
-                    <span className="text-gray-600 text-sm">@{author.username}</span>
+                    <span className="font-semibold">{post.author.name}</span>
+                    <span className="text-gray-600 text-sm">@{post.author.username}</span>
                 </div>
             </div>
 
-            <Ellipsis className="text-gray-600" />
+            <PostAuthorActionsPopover post={post}>
+                <div className="pr-3 cursor-pointer">
+                    <Ellipsis size={20} className="text-gray-600 hover:text-blue-500 transition-all" />
+                </div>
+            </PostAuthorActionsPopover>
         </div>
     )
 }

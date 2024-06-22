@@ -7,9 +7,9 @@ import * as PostService from "@/services/post-service"
 import { GetPostResponse } from "@/responses/post-responses"
 
 type PostContextType = {
-    post?: Post
-    setPost: Dispatch<SetStateAction<Post | undefined>>
-    loadPost: (postId: string) => Promise<GetPostResponse>
+    selectedPost?: Post
+    setSelectedPost: Dispatch<SetStateAction<Post | undefined>>
+    loadSelectedPost: (postId: string) => Promise<GetPostResponse>
 }
 
 export const PostContext = createContext({} as PostContextType)
@@ -19,20 +19,20 @@ export function usePost() {
 }
 
 export function PostProvider({ children }: { children: ReactNode }) {
-    const [post, setPost] = useState<Post | undefined>(undefined)
+    const [selectedPost, setSelectedPost] = useState<Post | undefined>(undefined)
 
-    async function loadPost(postId: string): Promise<GetPostResponse> {
+    async function loadSelectedPost(postId: string): Promise<GetPostResponse> {
         const response = await PostService.getPost(postId)
 
-        setPost(response.post)
+        setSelectedPost(response.post)
 
         return response
     }
 
     const value = {
-        post,
-        setPost,
-        loadPost
+        selectedPost,
+        setSelectedPost,
+        loadSelectedPost
     }
     
     return (

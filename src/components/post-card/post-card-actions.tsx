@@ -19,7 +19,7 @@ type PostCardActionsProps = {
 export function PostCardActions({ post }: PostCardActionsProps) {
     const { user, toggleLike } = useUser()
     const { feed, setFeed } = useFeed()
-    const { post: selectedPost, setPost } = usePost()
+    const { selectedPost, setSelectedPost } = usePost()
     const { push } = useRouter()
 
     const hasLiked = post.likes.map(u => u.id == user?.id).length > 0
@@ -49,7 +49,7 @@ export function PostCardActions({ post }: PostCardActionsProps) {
         }))
 
         if (selectedPost && response.like && user) {
-            setPost({
+            setSelectedPost({
                 ...selectedPost,
                 replies: selectedPost.replies.map(reply => {
                     if (reply.id == post.id) {

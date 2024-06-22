@@ -17,7 +17,7 @@ type SelectedPostCardActionsProps = {
 
 export function SelectedPostCardActions({ post }: SelectedPostCardActionsProps) {
     const { user, toggleLike } = useUser()
-    const { post: selectedPost, setPost } = usePost()
+    const { selectedPost, setSelectedPost } = usePost()
     const { push } = useRouter()
 
     const hasLiked = post.likes.map(u => u.id == user?.id).length > 0
@@ -34,12 +34,12 @@ export function SelectedPostCardActions({ post }: SelectedPostCardActionsProps) 
 
         if (selectedPost && response.like && user) {
             if (hasLiked) {
-                setPost({
+                setSelectedPost({
                     ...selectedPost,
                     likes: selectedPost.likes.filter(u => u.id != user.id)
                 })
             } else {
-                setPost({
+                setSelectedPost({
                     ...selectedPost,
                     likes: [...selectedPost.likes, response.like.user]
                 })
