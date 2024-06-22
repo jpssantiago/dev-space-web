@@ -4,6 +4,7 @@ import { useEffect } from "react"
 
 import { useFeed } from "@/contexts/feed-context"
 import { LoadingContainer } from "@/components/loading-container"
+import { AddPostCard } from "@/components/add-post-card"
 import { PostCard } from "@/components/post-card/post-card"
 
 export default function FeedPage() {
@@ -23,6 +24,8 @@ export default function FeedPage() {
 
             {feed && (
                 <div className="flex flex-col h-full">
+                    <AddPostCard />
+
                     {feed.map((post, index) => (
                         <PostCard key={index} post={post} />
                     ))}

@@ -2,6 +2,7 @@
 
 import { ReactNode, useState } from "react"
 import Link from "next/link"
+import { BookUser } from "lucide-react"
 
 import { User } from "@/models/user"
 import { useUser } from "@/contexts/user-context"
@@ -9,9 +10,7 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/h
 import { UserAvatar } from "@/components/user-avatar"
 import { Button } from "@/components/ui/button"
 import { LoadingButton } from "@/components/loading-button"
-import { LoadUserResponse } from "@/responses/user-responses"
-import { IconTextButton } from "../icon-text-button"
-import { BookUser } from "lucide-react"
+import { IconTextButton } from "@/components/icon-text-button"
 
 type UserHoverCardProps = {
     user: User
@@ -53,7 +52,7 @@ export function UserHoverCard({ user, children }: UserHoverCardProps) {
             </HoverCardTrigger>
 
             <HoverCardContent align="end" className="w-fit">
-                <div className="flex flex-col gap-5">
+                <div className="flex flex-col gap-5 cursor-default">
                     <div className="flex items-center gap-3">
                         <Link href={`/app/profile/${user.username}`}>
                             <UserAvatar user={user} className="size-24" />
