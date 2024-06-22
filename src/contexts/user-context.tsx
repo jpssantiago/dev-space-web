@@ -8,7 +8,7 @@ import * as UserService from "@/services/user-service"
 import * as LikeService from "@/services/like-service"
 import * as PostService from "@/services/post-service"
 import { ToggleLikeResponse } from "@/responses/like-responses"
-import { AddReplyResponse, DeletePostResponse } from "@/responses/post-responses"
+import { AddPostResponse, AddReplyResponse, DeletePostResponse } from "@/responses/post-responses"
 
 type UserContextType = {
     user: User | undefined
@@ -16,6 +16,7 @@ type UserContextType = {
 
     toggleLike: (postId: string) => Promise<ToggleLikeResponse>
 
+    addPost: (text?: string, files?: string[]) => Promise<AddPostResponse>
     deletePost: (postId: string) => Promise<DeletePostResponse>
     addReply: (postId: string, text?: string, files?: string[]) => Promise<AddReplyResponse>
 }
@@ -42,6 +43,11 @@ export function UserProvider({ children }: { children: ReactNode }) {
         return response
     }
 
+    async function addPost(text?: string, files?: string[]): Promise<AddPostResponse> {
+        const response = await PostService.addPost(text, files)
+        return response
+    }
+
     async function deletePost(postId: string): Promise<DeletePostResponse> {
         const response = await PostService.deletePost(postId)
         return response
@@ -56,6 +62,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
         user,
         loadUser,
         toggleLike,
+        addPost,
         deletePost,
         addReply
     }
