@@ -2,13 +2,14 @@
 
 import { ReactNode, createContext, useContext } from "react"
 
-import { SignInResponse } from "@/responses/auth-responses"
+import { SignInResponse, SignUpResponse } from "@/responses/auth-responses"
 import * as AuthService from "@/services/auth-service"
 import * as TokenService from "@/services/token-service"
 import { useUser } from "@/contexts/user-context"
 
 type AuthContextType = {
     signIn: (emailOrUsername: string, password: string) => Promise<SignInResponse>
+    signUp: (email: string, username: string, name: string, password: string) => Promise<SignUpResponse>
     signOut: () => void
 }
 
@@ -31,6 +32,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return response
     }
 
+    async function signUp(email: string, username: string, name: string, password: string): Promise<SignUpResponse> {
+        const response = await AuthService.signUp(email, username, name, password)
+
+        if (response.token) {
+            TokenService.setToken(response.token)
+        }
+
+        return response
+    }
+
     async function signOut() {
         TokenService.deleteToken()
         userContext.clearUser()
@@ -38,6 +49,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     
     const value = {
         signIn,
+        signUp,
         signOut
     }
     

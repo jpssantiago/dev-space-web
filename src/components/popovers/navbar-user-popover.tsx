@@ -3,6 +3,7 @@
 import { ReactNode } from "react"
 import Link from "next/link"
 import { BookUser, LogIn, LogOut, UserPlus } from "lucide-react"
+import { toast } from "sonner"
 
 import { User } from "@/models/user"
 import { useAuth } from "@/contexts/auth-context"
@@ -20,6 +21,7 @@ export function NavBarUserPopover({ user, children }: NavBarUserPopoverProps) {
 
     function handleSignOut() {
         signOut()
+        toast.success("You are no longer authenticated.")
     }
 
     return (

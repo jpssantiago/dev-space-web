@@ -38,6 +38,8 @@ export default function SignInPage() {
     const hasErrors = formState.errors.emailOrUsername?.message || formState.errors.password?.message
 
     async function onSubmit({ emailOrUsername, password }: SignInType) {
+        if (loading) return
+
         setLoading(true)
         const response = await signIn(emailOrUsername, password)
         setLoading(false)
