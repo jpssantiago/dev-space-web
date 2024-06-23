@@ -65,7 +65,6 @@ export async function getPost(postId: string): Promise<GetPostResponse> {
         const response = await fetch(`http://localhost:3333/post/${postId}`)
 
         const data = await response.json()
-        console.log(data)
         return { post: data.post, err: data.err }
     } catch {
         return { err: "server-not-responding" }
