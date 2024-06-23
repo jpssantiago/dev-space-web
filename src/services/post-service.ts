@@ -1,13 +1,12 @@
 import { AddPostResponse, AddReplyResponse, DeletePostResponse, GetPostResponse } from "@/responses/post-responses"
-
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNseG5pZmRlODAwMDBnd3FqMG15a2hvMzkiLCJpYXQiOjE3MTg5MDQzNTMsImV4cCI6MTcxOTUwOTE1M30.eQ3Zbxd0_2UCdM_pbT__I9GDAyM9eurkCGhWntlUe-g"
+import { getToken } from "@/services/token-service"
 
 export async function addPost(text?: string, files?: string[]): Promise<AddPostResponse> {
     try {
         const response = await fetch("http://localhost:3333/post", {
             method: "POST",
             headers: {
-                "Authorization": `Bearer ${token}`,
+                "Authorization": `Bearer ${getToken()}`,
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
@@ -28,7 +27,7 @@ export async function deletePost(postId: string): Promise<DeletePostResponse> {
         const response = await fetch(`http://localhost:3333/post/${postId}`, {
             method: "DELETE",
             headers: {
-                "Authorization": `Bearer ${token}`
+                "Authorization": `Bearer ${getToken()}`
             }
         })
 
@@ -44,7 +43,7 @@ export async function addReply(postId: string, text?: string, files?: string[]):
         const response = await fetch(`http://localhost:3333/post/${postId}`, {
             method: "POST",
             headers: {
-                "Authorization": `Bearer ${token}`,
+                "Authorization": `Bearer ${getToken()}`,
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({

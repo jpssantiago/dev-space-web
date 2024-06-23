@@ -3,9 +3,11 @@
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useRouter } from "next/navigation"
 import { z } from "zod"
 
 import { emailOrUsernameSchema, passwordSchema } from "@/schemas/auth-schemas"
+import { useAuth } from "@/contexts/auth-context"
 import { AuthForm } from "@/components/auth-form/auth-form"
 import { AuthFormHeader } from "@/components/auth-form/auth-form-header"
 import { AuthFormTitle } from "@/components/auth-form/auth-form-title"
@@ -15,6 +17,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Input } from "@/components/ui/input"
 import { UnderlineLink } from "@/components/underline-link"
 import { LoadingButton } from "@/components/loading-button"
+import { toast } from "sonner"
 
 const signInSchema = z.object({
     emailOrUsername: emailOrUsernameSchema,
@@ -29,13 +32,21 @@ export default function SignInPage() {
     const { handleSubmit, register, formState } = useForm<SignInType>({
         resolver: zodResolver(signInSchema)
     })
+    const { signIn } = useAuth()
+    const { push } = useRouter()
 
     const hasErrors = formState.errors.emailOrUsername?.message || formState.errors.password?.message
 
     async function onSubmit({ emailOrUsername, password }: SignInType) {
         setLoading(true)
-        await new Promise(resolve => setTimeout(resolve, 1500))
+        const response = await signIn(emailOrUsername, password)
         setLoading(false)
+
+        if (response.err) {
+            return toast.error(response.err) // translate this :)
+        }
+
+        push("/app/feed")
     }
 
     return (
