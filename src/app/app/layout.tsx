@@ -1,6 +1,6 @@
 "use client"
 
-import { ReactNode, useEffect } from "react"
+import { useState, ReactNode, useEffect } from "react"
 
 import { useUser } from "@/contexts/user-context"
 import { NavBar } from "@/components/nav-bar/nav-bar"
@@ -11,25 +11,25 @@ type AppLayoutProps = {
 }
 
 export default function AppLayout({ children }: AppLayoutProps) {
-    const { user, loadUser } = useUser()
+    const [loading, setLoading] = useState<boolean>(true)
 
-    const isLoading = !user
+    const { user, loadUser } = useUser()
 
     useEffect(() => {
         if (!user) {
-            loadUser()
+            loadUser().then(() => setLoading(false))
         }
     }, [])
 
     return (
         <div className="flex flex-col w-full min-h-screen">
-            {isLoading && (
+            {loading && (
                 <div className="h-screen">
                     <LoadingContainer />
                 </div>
             )}
 
-            {!isLoading && (
+            {!loading && (
                 <div className="flex flex-col mx-auto border-r border-l w-full max-w-[598px] h-full">
                     <NavBar />
                     {children}

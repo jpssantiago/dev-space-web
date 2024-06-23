@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 
+import { AuthProvider } from "@/contexts/auth-context"
 import { UserProvider } from "@/contexts/user-context"
 import { FeedProvider } from "@/contexts/feed-context"
 import { PostProvider } from "@/contexts/post-context"
@@ -25,14 +26,16 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <UserProvider>
-          <FeedProvider>
-            <PostProvider>
-              <TooltipProvider>
-                {children}
-                <Toaster richColors />
-              </TooltipProvider>
-            </PostProvider>
-          </FeedProvider>
+          <AuthProvider>
+            <FeedProvider>
+              <PostProvider>
+                <TooltipProvider>
+                  {children}
+                  <Toaster richColors />
+                </TooltipProvider>
+              </PostProvider>
+            </FeedProvider>
+          </AuthProvider>
         </UserProvider>
       </body>
     </html>

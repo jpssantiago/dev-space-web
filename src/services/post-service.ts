@@ -1,13 +1,13 @@
+import { api } from "@/services/api-service"
 import { AddPostResponse, AddReplyResponse, DeletePostResponse, GetPostResponse } from "@/responses/post-responses"
-
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNseG5pZmRlODAwMDBnd3FqMG15a2hvMzkiLCJpYXQiOjE3MTg5MDQzNTMsImV4cCI6MTcxOTUwOTE1M30.eQ3Zbxd0_2UCdM_pbT__I9GDAyM9eurkCGhWntlUe-g"
+import { getToken } from "@/services/token-service"
 
 export async function addPost(text?: string, files?: string[]): Promise<AddPostResponse> {
     try {
-        const response = await fetch("http://localhost:3333/post", {
+        const response = await fetch(`${api}/post`, {
             method: "POST",
             headers: {
-                "Authorization": `Bearer ${token}`,
+                "Authorization": `Bearer ${getToken()}`,
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
@@ -25,10 +25,10 @@ export async function addPost(text?: string, files?: string[]): Promise<AddPostR
 
 export async function deletePost(postId: string): Promise<DeletePostResponse> {
     try {
-        const response = await fetch(`http://localhost:3333/post/${postId}`, {
+        const response = await fetch(`${api}/post/${postId}`, {
             method: "DELETE",
             headers: {
-                "Authorization": `Bearer ${token}`
+                "Authorization": `Bearer ${getToken()}`
             }
         })
 
@@ -41,10 +41,10 @@ export async function deletePost(postId: string): Promise<DeletePostResponse> {
 
 export async function addReply(postId: string, text?: string, files?: string[]): Promise<AddReplyResponse> {
     try {
-        const response = await fetch(`http://localhost:3333/post/${postId}`, {
+        const response = await fetch(`${api}/${postId}`, {
             method: "POST",
             headers: {
-                "Authorization": `Bearer ${token}`,
+                "Authorization": `Bearer ${getToken()}`,
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
@@ -62,7 +62,7 @@ export async function addReply(postId: string, text?: string, files?: string[]):
 
 export async function getPost(postId: string): Promise<GetPostResponse> {
     try {
-        const response = await fetch(`http://localhost:3333/post/${postId}`)
+        const response = await fetch(`${api}/post/${postId}`)
 
         const data = await response.json()
         return { post: data.post, err: data.err }

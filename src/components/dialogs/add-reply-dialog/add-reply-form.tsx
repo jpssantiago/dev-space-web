@@ -69,7 +69,7 @@ export function AddReplyForm({ post, onAddReply }: AddReplyFormProps) {
 
         if (response.err) {
             if (response.err == "unauthorized" || response.err == "no-token") {
-                return push("/auth/sign-in")
+                return push("/auth/signin")
             }
 
             return toast(response.err)

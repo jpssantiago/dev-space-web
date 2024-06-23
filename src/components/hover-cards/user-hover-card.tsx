@@ -39,6 +39,7 @@ export function UserHoverCard({ user, children }: UserHoverCardProps) {
 
     async function handleFollow() {
         if (loading) return
+        if (!authenticatedUser) return
 
         setLoading(true)
         await new Promise(resolve => setTimeout(resolve, 1500))
