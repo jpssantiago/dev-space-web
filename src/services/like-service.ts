@@ -1,9 +1,10 @@
+import { api } from "@/services/api-service"
 import { ToggleLikeResponse } from "@/responses/like-responses"
 import { getToken } from "@/services/token-service"
 
 export async function toggleLike(postId: string): Promise<ToggleLikeResponse> {
     try {
-        const response = await fetch(`http://localhost:3333/like/${postId}`, {
+        const response = await fetch(`${api}/like/${postId}`, {
             method: "POST",
             headers: {
                 "Authorization": `Bearer ${getToken()}`,

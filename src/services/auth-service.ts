@@ -1,8 +1,9 @@
+import { api } from "@/services/api-service"
 import { SignInResponse } from "@/responses/auth-responses"
 
 export async function signIn(emailOrUsername: string, password: string): Promise<SignInResponse> {
     try {
-        const response = await fetch("http://localhost:3333/signin", {
+        const response = await fetch(`${api}/signin`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
