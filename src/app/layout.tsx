@@ -25,8 +25,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <AuthProvider>
-          <UserProvider>
+        <UserProvider>
+          <AuthProvider>
             <FeedProvider>
               <PostProvider>
                 <TooltipProvider>
@@ -35,8 +35,8 @@ export default function RootLayout({
                 </TooltipProvider>
               </PostProvider>
             </FeedProvider>
-          </UserProvider>
-        </AuthProvider>
+          </AuthProvider>
+        </UserProvider>
       </body>
     </html>
   )

@@ -12,6 +12,7 @@ import { AddPostResponse, AddReplyResponse, DeletePostResponse } from "@/respons
 
 type UserContextType = {
     user: User | undefined
+    clearUser: () => void
     loadUser: () => Promise<LoadUserResponse>
 
     toggleLike: (postId: string) => Promise<ToggleLikeResponse>
@@ -38,6 +39,10 @@ export function UserProvider({ children }: { children: ReactNode }) {
         return response
     }
 
+    async function clearUser() {
+        setUser(undefined)
+    }
+
     async function toggleLike(postId: string): Promise<ToggleLikeResponse> {
         const response = await LikeService.toggleLike(postId)
         return response
@@ -61,6 +66,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
     const value = {
         user,
         loadUser,
+        clearUser,
         toggleLike,
         addPost,
         deletePost,
