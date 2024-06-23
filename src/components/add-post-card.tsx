@@ -67,7 +67,7 @@ export function AddPostCard() {
 
         if (response.err) {
             if (response.err == "unauthorized" || response.err == "no-token") {
-                return push("/auth/sign-in")
+                return push("/auth/signin")
             }
 
             return toast.error(response.err)

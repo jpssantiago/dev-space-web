@@ -28,7 +28,7 @@ export function PostCardActions({ post }: PostCardActionsProps) {
         const response = await toggleLike(post.id)
         if (response.err) { 
             if (response.err == "unauthorized" || response.err == "no-token") {
-                return push("/auth/sign-in")
+                return push("/auth/signin")
             }
 
             return toast(response.err)
