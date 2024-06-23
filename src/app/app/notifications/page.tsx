@@ -17,7 +17,7 @@ export default function NotificationsPage() {
     }, [])
 
     return (
-        <div className="h-screen">
+        <div className="h-[calc(100vh-56px)]">
             {!notifications && <h1>Loading...</h1>}
 
             {notifications && notifications.map(notification => (

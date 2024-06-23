@@ -14,3 +14,8 @@ export type AddReplyResponse = {
     reply?: Post
     err?: string
 }
+
+export type GetPostResponse = {
+    post?: Post
+    err?: string
+}

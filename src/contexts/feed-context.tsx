@@ -9,7 +9,6 @@ import * as FeedService from "@/services/feed-service"
 type FeedContextType = {
     feed: Post[] | undefined
     setFeed: Dispatch<SetStateAction<Post[] | undefined>>
-
     loadFeed: () => Promise<LoadFeedResponse>
 }
 

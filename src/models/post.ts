@@ -9,4 +9,6 @@ export type Post = {
     author: User
     likes: User[]
     replies: Post[]
+
+    parentPostId?: string
 }

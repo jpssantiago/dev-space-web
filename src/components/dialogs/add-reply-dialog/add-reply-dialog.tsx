@@ -16,18 +16,10 @@ export function AddReplyDialog({ post, children }: AddReplyDialogProps) {
     const [open, setOpen] = useState<boolean>(false)
 
     function handleOpenChange(status: boolean) {
-        // if (loading) return
-
-        // if (!status) {
-        //     setText("")
-        //     setFiles([])
-        //     clear()
-        // }
-
         setOpen(status)
     }
 
-    function handleAddReply() {
+    function handleAddReply(reply: Post) {
         setOpen(false)
     }
 

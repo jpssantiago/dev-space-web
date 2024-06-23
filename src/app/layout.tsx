@@ -3,6 +3,7 @@ import { Inter } from "next/font/google"
 
 import { UserProvider } from "@/contexts/user-context"
 import { FeedProvider } from "@/contexts/feed-context"
+import { PostProvider } from "@/contexts/post-context"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { Toaster } from "@/components/ui/sonner"
 
@@ -25,10 +26,12 @@ export default function RootLayout({
       <body className={inter.className}>
         <UserProvider>
           <FeedProvider>
-            <TooltipProvider>
-              {children}
-              <Toaster richColors />
-            </TooltipProvider>
+            <PostProvider>
+              <TooltipProvider>
+                {children}
+                <Toaster richColors />
+              </TooltipProvider>
+            </PostProvider>
           </FeedProvider>
         </UserProvider>
       </body>

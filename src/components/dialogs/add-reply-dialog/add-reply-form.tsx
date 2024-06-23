@@ -9,6 +9,7 @@ import { ImageUp, Laugh } from "lucide-react"
 import { Post } from "@/models/post"
 import { useUser } from "@/contexts/user-context"
 import { useFeed } from "@/contexts/feed-context"
+import { usePost } from "@/contexts/post-context"
 import { UserAvatar } from "@/components/user-avatar"
 import { Textarea } from "@/components/ui/textarea"
 import { LoadingButton } from "@/components/loading-button"
@@ -16,7 +17,7 @@ import { SelectedFilesDisplay } from "@/components/selected-files-display"
 
 type AddReplyFormProps = {
     post: Post
-    onAddReply: () => void
+    onAddReply?: (reply: Post) => void
 }
 
 export function AddReplyForm({ post, onAddReply }: AddReplyFormProps) {
@@ -26,6 +27,7 @@ export function AddReplyForm({ post, onAddReply }: AddReplyFormProps) {
 
     const { user, addReply } = useUser()
     const { feed, setFeed } = useFeed()
+    const { selectedPost, setSelectedPost } = usePost()
     const { push } = useRouter()
 
     const { openFilePicker, clear, removeFileByIndex } = useImperativeFilePicker({
@@ -73,7 +75,6 @@ export function AddReplyForm({ post, onAddReply }: AddReplyFormProps) {
             return toast(response.err)
         }
 
-        onAddReply()
         toast.success("Your reply is now public.")
 
         setFeed(feed?.map(p => {
@@ -83,6 +84,30 @@ export function AddReplyForm({ post, onAddReply }: AddReplyFormProps) {
 
             return p
         }))
+
+        if (onAddReply) {
+            onAddReply(response.reply!)
+        }
+
+        if (selectedPost) {
+            if (selectedPost.id == post.id) {
+                setSelectedPost({
+                    ...selectedPost,
+                    replies: [response.reply!, ...selectedPost.replies]
+                })
+            } else if (selectedPost.id == post.parentPostId) {
+                setSelectedPost({
+                    ...selectedPost,
+                    replies: selectedPost.replies.map(reply => {
+                        if (reply.id == post.id) {
+                            reply.replies = [response.reply!, ...reply.replies]
+                        }
+
+                        return reply
+                    })
+                })
+            }
+        }
     }
 
     return (

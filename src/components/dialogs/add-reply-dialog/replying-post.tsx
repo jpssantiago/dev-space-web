@@ -25,7 +25,7 @@ export function ReplyingPost({ post }: ReplyingPostProps) {
                     <span>·</span>
 
                     <span className="text-gray-600 text-sm">
-                        {dayjs().to(post.createdAt)}
+                        {/* {dayjs().to(post.createdAt)} */}
                     </span>
                 </div>
 
