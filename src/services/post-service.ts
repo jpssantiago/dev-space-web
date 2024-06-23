@@ -41,7 +41,7 @@ export async function deletePost(postId: string): Promise<DeletePostResponse> {
 
 export async function addReply(postId: string, text?: string, files?: string[]): Promise<AddReplyResponse> {
     try {
-        const response = await fetch(`${api}/${postId}`, {
+        const response = await fetch(`${api}/post/${postId}`, {
             method: "POST",
             headers: {
                 "Authorization": `Bearer ${getToken()}`,

@@ -22,7 +22,7 @@ export function PostCardActions({ post }: PostCardActionsProps) {
     const { selectedPost, setSelectedPost } = usePost()
     const { push } = useRouter()
 
-    const hasLiked = post.likes.map(u => u.id == user?.id).length > 0
+    const hasLiked = post.likes.filter(u => u.id == user?.id).length > 0
 
     async function handleLike() {
         const response = await toggleLike(post.id)
