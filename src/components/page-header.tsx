@@ -10,7 +10,7 @@ export function PageHeader() {
     const username = pathname.split("/profile/")[1]
 
     return (
-        <div className="flex justify-center items-center w-full h-12">
+        <div className="top-0 sticky flex justify-center items-center bg-gray-50 w-full h-12">
             <span className="font-semibold text-base">
                 {pathname == "/app/feed" && "Feed"}
                 {pathname == "/app/activity" && "Activity"}
