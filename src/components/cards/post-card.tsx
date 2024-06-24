@@ -1,3 +1,8 @@
+"use client"
+
+import { useState } from "react"
+import { useRouter } from "next/navigation"
+import { toast } from "sonner"
 import { Ellipsis, Heart, Link, MessageCircle } from "lucide-react"
 import dayjs from "dayjs"
 import localizedFormat from "dayjs/plugin/localizedFormat"
@@ -6,6 +11,7 @@ import updateLocale from "dayjs/plugin/updateLocale"
 
 import { Post } from "@/models/post"
 import { useUser } from "@/contexts/user-context"
+import { useFeed } from "@/contexts/feed-context"
 import { UserAvatar } from "@/components/user-avatar"
 import { PostImagesDisplay } from "@/components/post-images-display"
 import { PostCardAction } from "@/components/post-card-action"
@@ -42,7 +48,41 @@ type PostCardProps = {
 }
 
 export function PostCard({ post }: PostCardProps) {
-    const { user } = useUser()
+    const [loading, setLoading] = useState<boolean>(false)
+
+    const { user, toggleLike } = useUser()
+    const { feed, setFeed } = useFeed()
+    const { push } = useRouter()
+
+    const hasLiked = post.likes.filter(u => u.id == user?.id).length > 0
+
+    async function handleLike() {
+        if (loading) return
+
+        setLoading(true)
+        const response = await toggleLike(post.id)
+        setLoading(false)
+
+        if (response.err) {
+            if (response.err == "unauthorized" || response.err == "no-token") {
+                push("/auth/signin")
+            }
+
+            return toast.error(response.err)
+        }
+
+        setFeed(feed?.map(p => {
+            if (p.id == post.id) {
+                if (hasLiked) {
+                    p.likes = p.likes.filter(u => u.id != user?.id)
+                } else {
+                    p.likes.push(response.like!.user)
+                }
+            }
+
+            return p
+        }))
+    }
 
     return (
         <div className="flex gap-2 px-5 py-3 border-b">
@@ -54,7 +94,7 @@ export function PostCard({ post }: PostCardProps) {
                         <span className="font-medium">@{post.author.username}</span>
 
                         <span>·</span>
-                        
+
                         <TooltipItem tooltip={dayjs(post.createdAt).format("LLL")}>
                             <span className="border-b border-b-transparent hover:border-b-gray-600 text-gray-600 text-sm transition-all cursor-default">
                                 {dayjs().to(post.createdAt)}
@@ -75,18 +115,18 @@ export function PostCard({ post }: PostCardProps) {
                     {post.text}
                 </span>
 
-                <PostImagesDisplay 
+                <PostImagesDisplay
                     files={post.files}
                 />
 
                 <div className="flex gap-2 mt-2 -translate-x-2">
-                    <PostCardAction icon={Heart} onClick={() => alert("like")}>
-                        1,1K
+                    <PostCardAction icon={Heart} onClick={handleLike} className={hasLiked ? "text-blue-500" : ""}>
+                        {post.likes.length}
                     </PostCardAction>
 
                     <AddReplyDialog post={post}>
                         <PostCardAction icon={MessageCircle} className="hover:bg-emerald-100 hover:text-emerald-600">
-                            72
+                            {post.replies.length}
                         </PostCardAction>
                     </AddReplyDialog>
 
