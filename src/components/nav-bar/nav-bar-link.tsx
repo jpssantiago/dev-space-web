@@ -1,9 +1,10 @@
 "use client"
 
 import { ElementType } from "react"
-import Link from "next/link"
 import { usePathname } from "next/navigation"
+import Link from "next/link"
 import { twMerge } from "tailwind-merge"
+import { NavBarItem } from "./nav-bar-item"
 
 type NavBarLinkProps = {
     href: string
@@ -13,22 +14,15 @@ type NavBarLinkProps = {
 export function NavBarLink({ href, icon: Icon }: NavBarLinkProps) {
     const pathname = usePathname()
 
-    const isActive = href == pathname
+    const isActive = pathname == href
 
     return (
-        <Link href={href} className="size-full">
-            <div className="relative flex justify-center items-center bg-transparent hover:bg-gray-100 transition-all size-full">
-                <Icon className={isActive ? "text-blue-500" : "text-gray-600"} />
-
-                <div 
-                    className={
-                        twMerge(
-                            "bottom-0 left-1/2 absolute bg-transparent w-0 h-[2px] transition-all duration-300",
-                            isActive && "bg-blue-500 w-full left-0"
-                        )
-                    }
-                />
-            </div>
+        <Link href={href} className="flex justify-center items-center size-16">
+            <NavBarItem
+                icon={Icon}
+                className={isActive ? "bg-gray-200" : ""}
+                iconClassName={isActive ? "text-primary" : ""}
+            />
         </Link>
     )
 }

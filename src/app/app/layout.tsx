@@ -22,7 +22,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
     }, [])
 
     return (
-        <div className="flex flex-col w-full min-h-screen">
+        <div className="flex flex-col bg-gray-50 w-full min-h-screen">
             {loading && (
                 <div className="h-screen">
                     <LoadingContainer />
@@ -30,8 +30,9 @@ export default function AppLayout({ children }: AppLayoutProps) {
             )}
 
             {!loading && (
-                <div className="flex flex-col mx-auto border-r border-l w-full max-w-[598px] h-full">
+                <div className="flex size-full">
                     <NavBar />
+                    
                     {children}
                 </div>
             )}
