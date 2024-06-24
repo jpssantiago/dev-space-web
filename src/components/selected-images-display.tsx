@@ -23,7 +23,7 @@ export function SelectedImagesDisplay({ files, onRemove }: SelectedImagesDisplay
                 <img
                     src={files[0]}
                     alt=""
-                    className="rounded-lg size-[516px]"
+                    className="border rounded-lg size-[516px]"
                 />
 
                 <Button
@@ -45,7 +45,7 @@ export function SelectedImagesDisplay({ files, onRemove }: SelectedImagesDisplay
                         <div className="relative h-[290px]">
                             <img
                                 src={file}
-                                className="rounded-lg object-cover size-full"
+                                className="border rounded-lg object-cover size-full"
                                 alt=""
                             />
 
