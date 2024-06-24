@@ -6,6 +6,6 @@ type PopoverItemTailProps = {
 
 export function PopoverItemTail({ icon: Icon }: PopoverItemTailProps) {
     return (
-        <Icon className="text-black" />
+        <Icon size={20} className="text-black" />
     )
 }

@@ -37,7 +37,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
             <div className="flex flex-col mx-auto w-full max-w-[638px] -translate-x-8">
                 <PageHeader />
 
-                <div className="flex flex-col bg-white border rounded-tl-3xl rounded-tr-3xl h-[calc(100vh-48px)]">
+                <div className="flex flex-col bg-white border rounded-tl-3xl rounded-tr-3xl min-h-[calc(100vh-48px)]">
                     {children}
                 </div>
             </div>

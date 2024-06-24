@@ -7,6 +7,7 @@ import { useUser } from "@/contexts/user-context"
 import { useFeed } from "@/contexts/feed-context"
 import { AddPostCard } from "@/components/cards/add-post-card"
 import { LoadingContainer } from "@/components/loading-container"
+import { PostCard } from "@/components/cards/post-card"
 
 export default function FeedPage() {
     const [loading, setLoading] = useState<boolean>(true)
@@ -24,6 +25,7 @@ export default function FeedPage() {
         })
     }, [])
 
+
     return (
         <div className="flex flex-col size-full">
             {loading && <LoadingContainer size={32} />}
@@ -32,9 +34,12 @@ export default function FeedPage() {
                 <>
                     {user && <AddPostCard />}
 
-                    {feed && (
-                        <span>Feed has {feed.length} posts</span>
-                    )}
+                    {feed && feed.map(post => (
+                        <PostCard 
+                            key={post.id}
+                            post={post}
+                        />
+                    ))}
                 </>
             )}
         </div>

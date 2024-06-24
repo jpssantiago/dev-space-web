@@ -1,11 +1,13 @@
 import { ReactNode } from "react"
+import { twMerge } from "tailwind-merge"
 
 type PopoverItemTextProps = {
     children?: ReactNode
+    className?: string
 }
 
-export function PopoverItemText({ children }: PopoverItemTextProps) {
+export function PopoverItemText({ children, className }: PopoverItemTextProps) {
     return (
-        <span className="font-medium text-black">{children}</span>
+        <span className={twMerge("font-medium text-black", className)}>{children}</span>
     )
 }
