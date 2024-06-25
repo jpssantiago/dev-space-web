@@ -3,7 +3,8 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
-import { Ellipsis, Heart, Link, MessageCircle } from "lucide-react"
+import Link from "next/link"
+import { Ellipsis, Heart, Link as LinkIcon, MessageCircle } from "lucide-react"
 import dayjs from "dayjs"
 import localizedFormat from "dayjs/plugin/localizedFormat"
 import relativeTime from "dayjs/plugin/relativeTime"
@@ -20,6 +21,7 @@ import { AddReplyDialog } from "@/components/dialogs/add-reply-dialog"
 import { TooltipItem } from "@/components/tooltip-item"
 import { Button } from "@/components/ui/button"
 import { PostAuthorPopover } from "../popovers/post-author-popover"
+import { UserHoverCard } from "../hover-cards/user-hover-card"
 
 dayjs.extend(localizedFormat)
 dayjs.extend(relativeTime)
@@ -85,13 +87,23 @@ export function PostCard({ post }: PostCardProps) {
     }
 
     return (
-        <div className="flex gap-2 px-5 py-3 border-b">
-            <UserAvatar user={post.author} />
+        <div className="flex items-start gap-2 px-5 py-3 border-b">
+            <UserHoverCard user={post.author} className="h-fit cursor-pointer">
+                <Link href={`/app/profile/${post.author.username}`}>
+                    <UserAvatar user={post.author} />
+                </Link>
+            </UserHoverCard>
 
             <div className="flex flex-col gap-1 w-full">
-                <div className="flex justify-between items-center">
+                <div className="flex justify-between items-start">
                     <div className="flex items-center gap-1">
-                        <span className="font-medium">@{post.author.username}</span>
+                        <UserHoverCard user={post.author} className="h-fit">
+                            <Link href={`/app/profile/${post.author.username}`}>
+                                <span className="border-b border-b-transparent hover:border-b-primary font-medium transition-all cursor-pointer">
+                                    @{post.author.username}
+                                </span>
+                            </Link>
+                        </UserHoverCard>
 
                         <span>·</span>
 
@@ -131,7 +143,7 @@ export function PostCard({ post }: PostCardProps) {
                     </AddReplyDialog>
 
                     <SharePostDialog post={post}>
-                        <PostCardAction icon={Link} className="hover:bg-purple-100 hover:text-purple-600">
+                        <PostCardAction icon={LinkIcon} className="hover:bg-purple-100 hover:text-purple-600">
                             Share
                         </PostCardAction>
                     </SharePostDialog>
