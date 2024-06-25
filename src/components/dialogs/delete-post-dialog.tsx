@@ -7,6 +7,7 @@ import { toast } from "sonner"
 import { Post } from "@/models/post"
 import { useUser } from "@/contexts/user-context"
 import { useFeed } from "@/contexts/feed-context"
+import { usePost } from "@/contexts/post-context"
 import {
     Dialog,
     DialogClose,
@@ -32,6 +33,7 @@ export function DeletePostDialog({ post, children }: DeletePostDialogProps) {
 
     const { user, deletePost } = useUser()
     const { feed, setFeed } = useFeed()
+    const { selectedPost, setSelectedPost } = usePost()
     const { push } = useRouter()
 
     function handleOpenChange(status: boolean) {
@@ -56,10 +58,20 @@ export function DeletePostDialog({ post, children }: DeletePostDialogProps) {
             return toast.error(response.err)
         }
 
-        toast.success("The post was deleted.")
+        setFeed(feed?.filter(p => p.id != post.id))
+
+        if (selectedPost) {
+            if (selectedPost.id == post.parentPostId) {
+                setSelectedPost({
+                    ...selectedPost,
+                    replies: selectedPost.replies.filter(r => r.id != post.id)
+                })
+            }
+        }
+
+        toast.success(`The ${post.parentPostId ? "reply" : "post"} was deleted.`)
         setOpen(false)
 
-        setFeed(feed?.filter(p => p.id != post.id))
         // TODO: Find a way to close the popover 🙏
     }
 

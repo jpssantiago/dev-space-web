@@ -11,6 +11,7 @@ import { ImageUp } from "lucide-react"
 import { Post } from "@/models/post"
 import { useUser } from "@/contexts/user-context"
 import { useFeed } from "@/contexts/feed-context"
+import { usePost } from "@/contexts/post-context"
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 import { UserAvatar } from "@/components/user-avatar"
 import { Textarea } from "@/components/ui/textarea"
@@ -32,6 +33,7 @@ export function AddReplyDialog({ post, children }: AddReplyDialogProps) {
 
     const { user, addReply } = useUser()
     const { feed, setFeed } = useFeed()
+    const { selectedPost, setSelectedPost } = usePost()
     const { push } = useRouter()
     const { openFilePicker, clear, removeFileByIndex } = useImperativeFilePicker({
         multiple: true,
@@ -60,7 +62,7 @@ export function AddReplyDialog({ post, children }: AddReplyDialogProps) {
             setFiles([])
             clear()
         }
-        
+
         setOpen(status)
     }
 
@@ -89,6 +91,26 @@ export function AddReplyDialog({ post, children }: AddReplyDialogProps) {
 
             return p
         }))
+
+        if (selectedPost) {
+            if (selectedPost.id == post.id) {
+                setSelectedPost({
+                    ...selectedPost,
+                    replies: [response.reply!, ...selectedPost.replies]
+                })
+            } else if (selectedPost.id == post.parentPostId) {
+                setSelectedPost({
+                    ...selectedPost,
+                    replies: selectedPost.replies.map(reply => {
+                        if (reply.id == post.id) {
+                            reply.replies.push(response.reply!)
+                        }
+                        
+                        return reply
+                    })
+                })
+            }
+        }
 
         setOpen(false)
         setText("")

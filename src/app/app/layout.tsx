@@ -31,13 +31,13 @@ export default function AppLayout({ children }: AppLayoutProps) {
     }
 
     return (
-        <div className="flex bg-gray-50">
+        <div className="flex bg-gray-50 size-full">
             <NavBar />
 
-            <div className="flex flex-col mx-auto w-full max-w-[638px] -translate-x-8">
+            <div className="flex flex-col mx-auto max-w-[638px] -translate-x-8 size-full">
                 <PageHeader />
 
-                <div className="flex flex-col bg-white border rounded-tl-3xl rounded-tr-3xl min-h-[calc(100vh-48px)]">
+                <div className="flex flex-col bg-white border rounded-tl-3xl rounded-tr-3xl w-full min-h-[calc(100vh-48px)]">
                     {children}
                 </div>
             </div>

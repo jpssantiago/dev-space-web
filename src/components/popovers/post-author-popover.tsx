@@ -24,7 +24,7 @@ export function PostAuthorPopover({ post, children }: PostAuthorPopoverProps) {
                 <DeletePostDialog post={post}>
                     <PopoverItem>
                         <PopoverItemText className="text-destructive">
-                            Delete post
+                            Delete {post.parentPostId ? "reply" : "post"}
                         </PopoverItemText>
                     </PopoverItem>
                 </DeletePostDialog>

@@ -31,7 +31,7 @@ export default function FeedPage() {
             {loading && <LoadingContainer size={32} />}
 
             {!loading && (
-                <>
+                <div className="flex flex-col size-full">
                     {user && <AddPostCard />}
 
                     {feed && feed.map(post => (
@@ -40,7 +40,7 @@ export default function FeedPage() {
                             post={post}
                         />
                     ))}
-                </>
+                </div>
             )}
         </div>
     )
