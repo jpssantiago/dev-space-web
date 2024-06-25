@@ -9,24 +9,24 @@ import {
     DialogDescription,
     DialogHeader,
     DialogTitle,
-    DialogTrigger
+    DialogTrigger 
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { IconTextButton } from "@/components/icon-text-button"
 
 type SharePostDialogProps = {
     post: Post
-    children?: ReactNode
+    children: ReactNode
 }
 
 export function SharePostDialog({ post, children }: SharePostDialogProps) {
-    const link = `http://localhost:3000/app/post/${post.id}`
+    const link = `${window.origin}/app/post/${post.id}`
 
     function handleCopyLink() {
         navigator.clipboard.writeText(link)
         toast.success("The link was copied to your clipboard.")
     }
-
+    
     return (
         <Dialog>
             <DialogTrigger>{children}</DialogTrigger>

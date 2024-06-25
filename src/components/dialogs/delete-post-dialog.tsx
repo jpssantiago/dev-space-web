@@ -31,19 +31,20 @@ export function DeletePostDialog({ post, children }: DeletePostDialogProps) {
     const [open, setOpen] = useState<boolean>(false)
     const [loading, setLoading] = useState<boolean>(false)
 
-    const { deletePost } = useUser()
+    const { user, deletePost } = useUser()
     const { feed, setFeed } = useFeed()
     const { selectedPost, setSelectedPost } = usePost()
     const { push } = useRouter()
 
     function handleOpenChange(status: boolean) {
         if (loading) return
-
+        
         setOpen(status)
     }
 
     async function handleDelete() {
         if (loading) return
+        if (!user || user.id != post.author.id) return setOpen(false)
 
         setLoading(true)
         const response = await deletePost(post.id)
@@ -51,40 +52,32 @@ export function DeletePostDialog({ post, children }: DeletePostDialogProps) {
 
         if (response.err) {
             if (response.err == "unauthorized" || response.err == "no-token") {
-                return push("/auth/signin")
+                return push("/auth/sign-in")
             }
 
-            return toast(response.err)
+            return toast.error(response.err)
         }
-
-        setOpen(false)
-        toast.success("Your post was deleted.")
 
         setFeed(feed?.filter(p => p.id != post.id))
 
         if (selectedPost) {
             if (selectedPost.id == post.parentPostId) {
-                return setSelectedPost({
+                setSelectedPost({
                     ...selectedPost,
                     replies: selectedPost.replies.filter(r => r.id != post.id)
                 })
             }
-
-            if (selectedPost.id == post.id) {
-                if (selectedPost.parentPostId) {
-                    push(`/app/post/${selectedPost.parentPostId}`)
-                } else {
-                    push("/app/feed")
-                }
-
-                setSelectedPost(undefined)
-            }
         }
+
+        toast.success(`The ${post.parentPostId ? "reply" : "post"} was deleted.`)
+        setOpen(false)
+
+        // TODO: Find a way to close the popover 🙏
     }
 
     return (
         <Dialog open={open} onOpenChange={handleOpenChange}>
-            <DialogTrigger className="outline-none size-full">{children}</DialogTrigger>
+            <DialogTrigger className="w-full">{children}</DialogTrigger>
 
             <DialogContent>
                 <DialogHeader>

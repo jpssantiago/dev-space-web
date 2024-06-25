@@ -2,16 +2,11 @@
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { ArrowLeft } from "lucide-react"
 
-import { Post } from "@/models/post"
-import { Like } from "@/models/like"
 import { usePost } from "@/contexts/post-context"
+import { SelectedPostCard } from "@/components/cards/selected-post-card"
 import { LoadingContainer } from "@/components/loading-container"
-import { SelectedPostCard } from "@/components/selected-post-card/selected-post-card"
-import { PostCard } from "@/components/post-card/post-card"
-import { Button } from "@/components/ui/button"
-import { useUser } from "@/contexts/user-context"
+import { PostCard } from "@/components/cards/post-card"
 
 type PostIdPageProps = {
     params: {
@@ -23,52 +18,42 @@ export default function PostIdPage({ params }: PostIdPageProps) {
     const [loading, setLoading] = useState<boolean>(true)
 
     const { selectedPost, loadSelectedPost } = usePost()
-    const { user } = useUser()
     const { push } = useRouter()
 
     useEffect(() => {
         loadSelectedPost(params.id).then(data => {
-            setLoading(false)
-
-            if (data.err) {
-                return handleBack()
+            if (data.err || !data.post) {
+                return push("/app/feed")
             }
+
+            setLoading(false)
         })
     }, [])
 
-    function handleBack() {
-        if (selectedPost?.parentPostId) {
-            push(`/app/post/${selectedPost.parentPostId}`)
-        } else {
-            push("/app/feed")
-        }
-    }
-
     return (
-        <div className="min-h-[calc(100vh-56px)]">
-            {loading && <LoadingContainer />}
-
-            {selectedPost && (
-                <div className="flex-flex-col">
-                    <div className="flex items-center gap-2 px-3 py-2 border-b">
-                        <Button onClick={handleBack} size="icon" variant="ghost">
-                            <ArrowLeft />
-                        </Button>
-
-                        <span className="font-semibold text-lg">Post</span>
-                    </div>
-
-                    <SelectedPostCard
-                        post={selectedPost}
-                    />
-
-                    {selectedPost.replies.map(reply => (
-                        <PostCard
-                            key={reply.id}
-                            post={reply}
-                        />
-                    ))}
+        <div className="flex flex-col size-full">
+            {loading && (
+                <div className="flex items-center h-full">
+                    <LoadingContainer size={32} />
                 </div>
+            )}
+
+            {!loading && selectedPost && (
+                <>
+                    <SelectedPostCard post={selectedPost} />
+
+                    {selectedPost.replies.length > 0 && (
+                        <>
+                            <div className="p-5 border-b">
+                                <span>Replies</span>
+                            </div>
+
+                            {selectedPost.replies.map(reply => (
+                                <PostCard key={reply.id} post={reply} />
+                            ))}
+                        </>
+                    )}
+                </>
             )}
         </div>
     )

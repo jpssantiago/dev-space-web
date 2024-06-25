@@ -1,33 +1,44 @@
 "use client"
 
-import { useEffect } from "react"
+import { useState, useEffect } from "react"
+import { toast } from "sonner"
 
+import { useUser } from "@/contexts/user-context"
 import { useFeed } from "@/contexts/feed-context"
+import { AddPostCard } from "@/components/cards/add-post-card"
 import { LoadingContainer } from "@/components/loading-container"
-import { AddPostCard } from "@/components/add-post-card"
-import { PostCard } from "@/components/post-card/post-card"
+import { PostCard } from "@/components/cards/post-card"
 
 export default function FeedPage() {
+    const [loading, setLoading] = useState<boolean>(true)
+
+    const { user } = useUser()
     const { feed, loadFeed } = useFeed()
 
     useEffect(() => {
-        loadFeed()
+        loadFeed().then(response => {
+            setLoading(false)
+
+            if (response.err) {
+                return toast.error(response.err)
+            }
+        })
     }, [])
 
+
     return (
-        <div className="flex flex-col">
-            {!feed && (
-                <div className="h-screen">
-                    <LoadingContainer size={32} />
-                </div>
-            )}
+        <div className="flex flex-col size-full">
+            {loading && <LoadingContainer size={32} />}
 
-            {feed && (
-                <div className="flex flex-col h-full">
-                    <AddPostCard />
+            {!loading && (
+                <div className="flex flex-col size-full">
+                    {user && <AddPostCard />}
 
-                    {feed.map((post, index) => (
-                        <PostCard key={index} post={post} />
+                    {feed && feed.map(post => (
+                        <PostCard 
+                            key={post.id}
+                            post={post}
+                        />
                     ))}
                 </div>
             )}

@@ -1,29 +1,21 @@
-"use client"
-
 import { ReactNode } from "react"
 
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
-import { twMerge } from "tailwind-merge"
 
-type TooltipItemProps = {
+type TooltipitemProps = {
     tooltip: string
+    asChild?: boolean
     children?: ReactNode
     className?: string
-    asChild?: boolean
+    align?: "center" | "end" | "start" | undefined
 }
 
-export function TooltipItem({ tooltip, children, className, asChild = false }: TooltipItemProps) {
+export function TooltipItem({ tooltip, asChild, children, className, align }: TooltipitemProps) {
     return (
-        <div onClick={e => e.stopPropagation()}>
-            <Tooltip>
-                <TooltipTrigger className={twMerge("cursor-default", className)} asChild={asChild}>
-                    {children}
-                </TooltipTrigger>
+        <Tooltip>
+            <TooltipTrigger asChild={asChild} className={className}>{children}</TooltipTrigger>
 
-                <TooltipContent>
-                    {tooltip}
-                </TooltipContent>
-            </Tooltip>
-        </div>
+            <TooltipContent align={align}>{tooltip}</TooltipContent>
+        </Tooltip>
     )
 }

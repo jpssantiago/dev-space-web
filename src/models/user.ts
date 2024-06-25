@@ -1,5 +1,6 @@
 import { Post } from "./post"
 import { Notification } from "./notification"
+import { Chat } from "./chat"
 
 export type User = {
     id: string
@@ -7,8 +8,13 @@ export type User = {
     name: string
     avatar: string
     description?: string
+
     posts: Post[]
+
     following: User[]
     followers: User[]
+
     notifications: Notification[]
+    
+    chats: Chat[]
 }
