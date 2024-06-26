@@ -7,8 +7,10 @@ import { LoadUserResponse } from "@/responses/user-responses"
 import * as UserService from "@/services/user-service"
 import * as LikeService from "@/services/like-service"
 import * as PostService from "@/services/post-service"
+import * as FollowService from "@/services/follow-service"
 import { ToggleLikeResponse } from "@/responses/like-responses"
 import { AddPostResponse, AddReplyResponse, DeletePostResponse } from "@/responses/post-responses"
+import { ToggleFollowResponse } from "@/responses/follow-responses"
 
 type UserContextType = {
     user: User | undefined
@@ -20,6 +22,8 @@ type UserContextType = {
     addPost: (text?: string, files?: string[]) => Promise<AddPostResponse>
     deletePost: (postId: string) => Promise<DeletePostResponse>
     addReply: (postId: string, text?: string, files?: string[]) => Promise<AddReplyResponse>
+
+    toggleFollow: (followedId: string) => Promise<ToggleFollowResponse>
 }
 
 export const UserContext = createContext({} as UserContextType)
@@ -63,6 +67,27 @@ export function UserProvider({ children }: { children: ReactNode }) {
         return response
     }
 
+    async function toggleFollow(followedId: string): Promise<ToggleFollowResponse> {
+        const response = await FollowService.toggleFollow(followedId)
+
+        if (user && response.follow) {
+            const isFollowing = user?.following.filter(u => u.id == followedId).length > 0
+            if (isFollowing) {
+                setUser({
+                    ...user,
+                    following: user.following.filter(u => u.id != followedId)
+                })
+            } else {
+                setUser({
+                    ...user,
+                    following: [...user.following, response.follow.followed]
+                })
+            }
+        }
+
+        return response
+    }
+
     const value = {
         user,
         loadUser,
@@ -70,7 +95,8 @@ export function UserProvider({ children }: { children: ReactNode }) {
         toggleLike,
         addPost,
         deletePost,
-        addReply
+        addReply,
+        toggleFollow
     }
     
     return (

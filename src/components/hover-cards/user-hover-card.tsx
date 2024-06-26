@@ -1,10 +1,13 @@
 "use client"
 
 import { ReactNode } from "react"
+import { toast } from "sonner"
+import { useRouter } from "next/navigation"
 import Link from "next/link"
 
 import { User } from "@/models/user"
 import { useUser } from "@/contexts/user-context"
+import { useFeed } from "@/contexts/feed-context"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card"
 import { UserAvatar } from "@/components/user-avatar"
 import { Button } from "@/components/ui/button"
@@ -16,13 +19,38 @@ type UserHoverCardProps = {
 }
 
 export function UserHoverCard({ user, children, className }: UserHoverCardProps) {
-    const { user: authenticatedUser } = useUser()
+    const { user: authenticatedUser, toggleFollow } = useUser()
+    const { feed, setFeed } = useFeed()
+    const { push } = useRouter()
 
     const isFollowing = authenticatedUser?.following.filter(u => u.id == user.id)[0]
-    const isBeingFollowed = authenticatedUser?.followers.filter(u => u.id == user.id)[0] 
+    const isBeingFollowed = authenticatedUser?.followers.filter(u => u.id == user.id)[0]
 
     async function handleToggleFollow() {
-        //
+        if (user.id == authenticatedUser?.id) return
+
+        const response = await toggleFollow(user.id)
+        if (response.err) {
+            if (response.err == "unauthorized" || response.err == "no-token") {
+                push("/auth/signin")
+            }
+
+            return toast.error(response.err)
+        }
+
+        if (response.follow) {
+            setFeed(feed?.map(p => {
+                if (p.author.id == user.id) {
+                    if (isFollowing) {
+                        p.author.followers = p.author.followers.filter(u => u.id != authenticatedUser.id)
+                    } else {
+                        p.author.followers.push(authenticatedUser!)
+                    }
+                }
+
+                return p
+            }))
+        }
     }
 
     return (
@@ -33,7 +61,7 @@ export function UserHoverCard({ user, children, className }: UserHoverCardProps)
                 </span>
             </HoverCardTrigger>
 
-            <HoverCardContent align="end" className="flex flex-col">
+            <HoverCardContent align="end" className="flex flex-col cursor-default">
                 <div className="flex justify-between items-center">
                     <div className="flex flex-col">
                         <Link href={`/app/profile/${user.username}`}>
@@ -64,9 +92,9 @@ export function UserHoverCard({ user, children, className }: UserHoverCardProps)
                     {user.followers.length} followers
                 </span>
 
-                <Button 
+                <Button
                     onClick={handleToggleFollow}
-                    disabled={authenticatedUser?.id == user.id} 
+                    disabled={authenticatedUser?.id == user.id}
                     className="mt-2"
                 >
                     {!isFollowing && isBeingFollowed && "Follow back"}
