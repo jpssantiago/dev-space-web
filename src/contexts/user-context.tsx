@@ -104,6 +104,10 @@ export function UserProvider({ children }: { children: ReactNode }) {
 
         return response
     }
+    
+    async function getActivities() {
+        
+    }
 
     const value = {
         user,

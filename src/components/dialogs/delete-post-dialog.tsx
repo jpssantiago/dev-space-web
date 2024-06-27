@@ -69,6 +69,14 @@ export function DeletePostDialog({ post, children }: DeletePostDialogProps) {
                     replies: selectedPost.replies.filter(r => r.id != post.id)
                 })
             }
+
+            if (selectedPost.id == post.id) {
+                if (selectedPost.parentPostId) {
+                    push(`/app/post/${selectedPost.parentPostId}`)
+                } else {
+                    push("/app/feed")
+                }
+            }
         }
 
         if (profile) {
