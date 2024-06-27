@@ -76,6 +76,10 @@
   }
 }
 
+html {
+  background: #F9FAFB;
+}
+
 /* width */
 .custom-scroll::-webkit-scrollbar {
   width: 8px;

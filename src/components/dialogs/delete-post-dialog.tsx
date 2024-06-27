@@ -8,6 +8,7 @@ import { Post } from "@/models/post"
 import { useUser } from "@/contexts/user-context"
 import { useFeed } from "@/contexts/feed-context"
 import { usePost } from "@/contexts/post-context"
+import { useProfile } from "@/contexts/profile-context"
 import {
     Dialog,
     DialogClose,
@@ -34,6 +35,7 @@ export function DeletePostDialog({ post, children }: DeletePostDialogProps) {
     const { user, deletePost } = useUser()
     const { feed, setFeed } = useFeed()
     const { selectedPost, setSelectedPost } = usePost()
+    const { profile, setProfile } = useProfile()
     const { push } = useRouter()
 
     function handleOpenChange(status: boolean) {
@@ -67,6 +69,13 @@ export function DeletePostDialog({ post, children }: DeletePostDialogProps) {
                     replies: selectedPost.replies.filter(r => r.id != post.id)
                 })
             }
+        }
+
+        if (profile) {
+            setProfile({
+                ...profile,
+                posts: profile.posts.filter(p => p.id != post.id)
+            })
         }
 
         toast.success(`The ${post.parentPostId ? "reply" : "post"} was deleted.`)

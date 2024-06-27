@@ -4,3 +4,8 @@ export type LoadUserResponse = {
     user?: User
     err?: string
 }
+
+export type EditUserResponse = {
+    user?: User
+    err?: string
+}

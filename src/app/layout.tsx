@@ -9,6 +9,7 @@ import { TooltipProvider } from "@/components/ui/tooltip"
 import { Toaster } from "@/components/ui/sonner"
 
 import "./globals.css"
+import { ProfileProvider } from "@/contexts/profile-context"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -29,10 +30,12 @@ export default function RootLayout({
           <AuthProvider>
             <FeedProvider>
               <PostProvider>
-                <TooltipProvider>
-                  {children}
-                  <Toaster richColors />
-                </TooltipProvider>
+                <ProfileProvider>
+                  <TooltipProvider>
+                    {children}
+                    <Toaster richColors />
+                  </TooltipProvider>
+                </ProfileProvider>
               </PostProvider>
             </FeedProvider>
           </AuthProvider>

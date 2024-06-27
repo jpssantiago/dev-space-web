@@ -1,5 +1,5 @@
 import { api } from "@/services/api-service"
-import { LoadUserResponse } from "@/responses/user-responses"
+import { EditUserResponse, LoadUserResponse } from "@/responses/user-responses"
 import { getToken } from "@/services/token-service"
 
 export async function loadUser(): Promise<LoadUserResponse> {
@@ -9,6 +9,29 @@ export async function loadUser(): Promise<LoadUserResponse> {
             headers: {
                 "Authorization": `Bearer ${getToken()}`
             }
+        })
+
+        const data = await response.json()
+        return { user: data.user, err: data.err }
+    } catch {
+        return { err: "server-not-responding" }
+    }
+}
+
+export async function editUser(username: string, name: string, description?: string, avatar?: string): Promise<EditUserResponse> {
+    try {
+        const response = await fetch(`${api}/user`, {
+            method: "PUT",
+            headers: {
+                "Authorization": `Bearer ${getToken()}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                username,
+                name,
+                description,
+                avatar
+            })
         })
 
         const data = await response.json()
