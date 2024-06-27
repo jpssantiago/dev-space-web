@@ -16,16 +16,13 @@ export function PostImagesDisplay({ files }: PostImagesDisplayProps) {
 
     if (files.length == 1) {
         return (
-            <StopPropagationItem className="w-full">
-                <div className="w-full">
-                    <img
-                        src={files[0]}
-                        alt=""
-                        className="border rounded max-w-[596px] max-h-[596px] cursor-pointer object-cover size-full"
-                        onClick={() => alert("big image")}
-                    />
-                </div>
-            </StopPropagationItem>
+            <div className="w-full">
+                <img
+                    src={files[0]}
+                    alt=""
+                    className="border rounded max-w-[596px] max-h-[596px] object-cover size-full"
+                />
+            </div>
         )
     }
 
@@ -34,16 +31,13 @@ export function PostImagesDisplay({ files }: PostImagesDisplayProps) {
             <CarouselContent>
                 {files.map((file, index) => (
                     <CarouselItem key={index} className="basis-1/2">
-                        <StopPropagationItem>
-                            <div className="h-[290px]">
-                                <img
-                                    src={file}
-                                    className="border rounded-lg cursor-pointer object-cover size-full"
-                                    alt=""
-                                    onClick={() => alert("big image")}
-                                />
-                            </div>
-                        </StopPropagationItem>
+                        <div className="h-[290px]">
+                            <img
+                                src={file}
+                                className="border rounded-lg object-cover size-full"
+                                alt=""
+                            />
+                        </div>
                     </CarouselItem>
                 ))}
             </CarouselContent>

@@ -14,6 +14,7 @@ import { Post } from "@/models/post"
 import { useUser } from "@/contexts/user-context"
 import { useFeed } from "@/contexts/feed-context"
 import { usePost } from "@/contexts/post-context"
+import { useProfile } from "@/contexts/profile-context"
 import { UserAvatar } from "@/components/user-avatar"
 import { PostImagesDisplay } from "@/components/post-images-display"
 import { PostCardAction } from "@/components/post-card-action"
@@ -56,6 +57,7 @@ export function PostCard({ post }: PostCardProps) {
     const { user, toggleLike } = useUser()
     const { feed, setFeed } = useFeed()
     const { selectedPost, setSelectedPost } = usePost()
+    const { profile, setProfile } = useProfile()
     const { push } = useRouter()
 
     const hasLiked = post.likes.filter(u => u.id == user?.id).length > 0
@@ -102,6 +104,23 @@ export function PostCard({ post }: PostCardProps) {
                     return reply
                 })
                 
+            })
+        }
+
+        if (profile) {
+            setProfile({
+                ...profile,
+                posts: profile.posts.map(p => {
+                    if (p.id == post.id) {
+                        if (hasLiked) {
+                            p.likes = p.likes.filter(u => u.id != user?.id)
+                        } else {
+                            p.likes.push(user!)
+                        }
+                    }
+                    
+                    return p
+                })
             })
         }
     }

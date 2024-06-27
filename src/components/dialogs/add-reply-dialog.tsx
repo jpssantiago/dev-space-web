@@ -12,6 +12,7 @@ import { Post } from "@/models/post"
 import { useUser } from "@/contexts/user-context"
 import { useFeed } from "@/contexts/feed-context"
 import { usePost } from "@/contexts/post-context"
+import { useProfile } from "@/contexts/profile-context"
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 import { UserAvatar } from "@/components/user-avatar"
 import { Textarea } from "@/components/ui/textarea"
@@ -34,6 +35,7 @@ export function AddReplyDialog({ post, children }: AddReplyDialogProps) {
     const { user, addReply } = useUser()
     const { feed, setFeed } = useFeed()
     const { selectedPost, setSelectedPost } = usePost()
+    const { profile, setProfile } = useProfile()
     const { push } = useRouter()
     const { openFilePicker, clear, removeFileByIndex } = useImperativeFilePicker({
         multiple: true,
@@ -110,6 +112,19 @@ export function AddReplyDialog({ post, children }: AddReplyDialogProps) {
                     })
                 })
             }
+        }
+
+        if (profile) {
+            setProfile({
+                ...profile,
+                posts: profile.posts.map(p => {
+                    if (p.id == post.id) {
+                        p.replies = [response.reply!, ...p.replies]
+                    }
+                    
+                    return p
+                })
+            })
         }
 
         setOpen(false)

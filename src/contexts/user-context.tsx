@@ -3,7 +3,7 @@
 import { ReactNode, createContext, useContext, useState } from "react"
 
 import { User } from "@/models/user"
-import { LoadUserResponse } from "@/responses/user-responses"
+import { EditUserResponse, LoadUserResponse } from "@/responses/user-responses"
 import * as UserService from "@/services/user-service"
 import * as LikeService from "@/services/like-service"
 import * as PostService from "@/services/post-service"
@@ -16,6 +16,7 @@ type UserContextType = {
     user: User | undefined
     clearUser: () => void
     loadUser: () => Promise<LoadUserResponse>
+    editUser: (username: string, name: string, description?: string, avatar?: string) => Promise<EditUserResponse>
 
     toggleLike: (postId: string) => Promise<ToggleLikeResponse>
 
@@ -39,6 +40,22 @@ export function UserProvider({ children }: { children: ReactNode }) {
         const response = await UserService.loadUser()
 
         setUser(response.user)
+
+        return response
+    }
+
+    async function editUser(username: string, name: string, description?: string, avatar?: string): Promise<EditUserResponse> {
+        const response = await UserService.editUser(username, name, description, avatar)
+
+        if (response.user && user) {
+            setUser({
+                ...user,
+                username,
+                name,
+                description,
+                avatar
+            })
+        }
 
         return response
     }
@@ -91,6 +108,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
     const value = {
         user,
         loadUser,
+        editUser,
         clearUser,
         toggleLike,
         addPost,
