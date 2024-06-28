@@ -3,7 +3,7 @@
 import { ElementType } from "react"
 import { usePathname } from "next/navigation"
 import Link from "next/link"
-import { twMerge } from "tailwind-merge"
+
 import { NavBarItem } from "./nav-bar-item"
 
 type NavBarLinkProps = {

@@ -98,8 +98,8 @@ export function UserHoverCard({ user, children, className }: UserHoverCardProps)
                     className="mt-2"
                 >
                     {!isFollowing && isBeingFollowed && "Follow back"}
-                    {isFollowing && !isBeingFollowed && "Unfollow"}
                     {!isFollowing && !isBeingFollowed && "Follow"}
+                    {isFollowing && "Unfollow"}
                 </Button>
             </HoverCardContent>
         </HoverCard>

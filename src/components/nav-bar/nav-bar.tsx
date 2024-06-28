@@ -26,10 +26,16 @@ export function NavBar() {
                 </TooltipItem>
 
                 <TooltipItem tooltip="Activity" align="end" className="w-fit">
-                    <NavBarLink
-                        href="/app/activity"
-                        icon={Heart}
-                    />
+                    <div className="relative">
+                        <NavBarLink
+                            href="/app/activity"
+                            icon={Heart}
+                        />
+
+                        {(user?.activities.filter(activity => !activity.hasBeenRead) ?? []).length > 0 && (
+                            <div className="top-5 right-5 absolute bg-destructive rounded-full size-2" />
+                        )}
+                    </div>
                 </TooltipItem>
 
                 <TooltipItem tooltip="Profile" align="end" className="w-fit">

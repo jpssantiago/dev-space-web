@@ -54,7 +54,7 @@ export function DeletePostDialog({ post, children }: DeletePostDialogProps) {
 
         if (response.err) {
             if (response.err == "unauthorized" || response.err == "no-token") {
-                return push("/auth/sign-in")
+                return push("/auth/signin")
             }
 
             return toast.error(response.err)
@@ -68,6 +68,14 @@ export function DeletePostDialog({ post, children }: DeletePostDialogProps) {
                     ...selectedPost,
                     replies: selectedPost.replies.filter(r => r.id != post.id)
                 })
+            }
+
+            if (selectedPost.id == post.id) {
+                if (selectedPost.parentPostId) {
+                    push(`/app/post/${selectedPost.parentPostId}`)
+                } else {
+                    push("/app/feed")
+                }
             }
         }
 
