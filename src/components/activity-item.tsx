@@ -89,7 +89,7 @@ export function ActivityItem({ activity }: ActivityItemProps) {
                         {activity.type == "FOLLOW" && "followed you"}
                         {activity.type == "LIKE_POST" && "liked your post"}
                         {activity.type == "LIKE_REPLY" && "liked your reply"}
-                        {activity.type == "REPLY" && "replied you"}
+                        {activity.type == "REPLY" && (activity.post?.parentPostId ? "replied your comment" : "replied your post")}
                     </span>
                 </div>
             </div>
@@ -107,6 +107,12 @@ export function ActivityItem({ activity }: ActivityItemProps) {
                     <Button variant="outline">
                         View {activity.type == "LIKE_POST" ? "post" : "reply"}
                     </Button>
+                </Link>
+            )}
+
+            {activity.type == "REPLY" && (
+                <Link href={`/app/post/${activity.post?.id}`}>
+                    <Button variant="outline">View reply</Button>
                 </Link>
             )}
         </div>

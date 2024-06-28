@@ -3,6 +3,7 @@
 import { ReactNode, useState } from "react"
 import { toast } from "sonner"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { ArrowLeft, ChevronRight, Languages, Moon, Sun } from "lucide-react"
 
 import { useAuth } from "@/contexts/auth-context"
@@ -25,6 +26,7 @@ export function NavBarUserPopover({ children }: NavBarUserPopoverProps) {
 
     const { user } = useUser()
     const { signOut } = useAuth()
+    const { push } = useRouter()
 
     function handleOpenChange(status: boolean) {
         if (!status) setPopover("main")
@@ -33,6 +35,7 @@ export function NavBarUserPopover({ children }: NavBarUserPopoverProps) {
     function handleSignOut() {
         signOut()
         toast.success("You are no longer authenticated.")
+        push("/auth/signin")
     }
 
     return (

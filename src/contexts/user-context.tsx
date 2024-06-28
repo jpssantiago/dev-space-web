@@ -25,6 +25,8 @@ type UserContextType = {
     addReply: (postId: string, text?: string, files?: string[]) => Promise<AddReplyResponse>
 
     toggleFollow: (followedId: string) => Promise<ToggleFollowResponse>
+
+    markActivitiesAsRead: () => void
 }
 
 export const UserContext = createContext({} as UserContextType)
@@ -105,8 +107,16 @@ export function UserProvider({ children }: { children: ReactNode }) {
         return response
     }
     
-    async function getActivities() {
-        
+    function markActivitiesAsRead() {
+        setUser({
+            ...user!,
+            activities: user!.activities.map(activity => {
+                return {
+                    ...activity,
+                    hasBeenRead: true
+                }
+            })
+        })
     }
 
     const value = {
@@ -118,7 +128,8 @@ export function UserProvider({ children }: { children: ReactNode }) {
         addPost,
         deletePost,
         addReply,
-        toggleFollow
+        toggleFollow,
+        markActivitiesAsRead
     }
     
     return (
