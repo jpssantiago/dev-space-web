@@ -67,7 +67,7 @@ export default function SignUpPage() {
 
                 <AuthFormContent onSubmit={handleSubmit(onSubmit)}>
                     {hasErrors && (
-                        <Alert variant="destructive">
+                        <Alert variant="destructive" className="dark:border-red-600 dark:text-red-600">
                             <AlertDescription>
                                 {formState.errors.email?.message}
                             </AlertDescription>

@@ -61,7 +61,7 @@ export default function SignInPage() {
 
                 <AuthFormContent onSubmit={handleSubmit(onSubmit)}>
                     {hasErrors && (
-                        <Alert variant="destructive">
+                        <Alert variant="destructive" className="dark:border-red-600 dark:text-red-600">
                             <AlertDescription>
                                 {formState.errors.emailOrUsername?.message}
                             </AlertDescription>

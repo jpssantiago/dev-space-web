@@ -116,7 +116,7 @@ export function EditProfileDialog({ children }: EditProfileDialogProps) {
                 </DialogHeader>
 
                 {hasErrors && (
-                    <Alert variant="destructive">
+                    <Alert variant="destructive" className="dark:border-red-600 dark:text-red-600">
                         <AlertDescription>
                             {error}
                         </AlertDescription>

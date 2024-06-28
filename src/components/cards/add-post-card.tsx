@@ -14,7 +14,7 @@ export function AddPostCard() {
                 <div className="flex items-center gap-2">
                     <UserAvatar user={user} />
 
-                    <span className="group-hover:text-primary w-full font-light text-gray-500 text-sm transition-all">
+                    <span className="group-hover:text-primary w-full font-light text-gray-500 text-sm dark:text-zinc-400 transition-all">
                         What&apos;s on your mind, {user?.name}?
                     </span>
                 </div>

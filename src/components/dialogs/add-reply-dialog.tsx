@@ -153,12 +153,12 @@ export function AddReplyDialog({ post, children }: AddReplyDialogProps) {
 
                                 <span>·</span>
 
-                                <span className="text-gray-600 text-sm">
+                                <span className="text-gray-600 text-sm dark:text-zinc-400 cursor-default">
                                     {dayjs().to(post.createdAt)}
                                 </span>
                             </div>
 
-                            <span className="text-[15px] text-gray-800 break-words whitespace-pre-line">
+                            <span className="text-[15px] text-gray-800 dark:text-zinc-200 break-words whitespace-pre-line">
                                 {post.text}
                             </span>
                         </div>

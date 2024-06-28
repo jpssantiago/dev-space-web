@@ -97,7 +97,7 @@ export function SelectedPostCard({ post }: SelectedPostCardProps) {
                         <span>·</span>
 
                         <TooltipItem className="cursor-default" tooltip={dayjs(post.createdAt).format("LLL")}>
-                            <span className="border-b border-b-transparent hover:border-b-gray-600 text-gray-600 text-sm transition-all cursor-default">
+                            <span className="border-b border-b-transparent dark:hover:border-b-zinc-400 hover:border-b-gray-600 text-gray-600 text-sm dark:text-zinc-400 transition-all cursor-default">
                                 {dayjs().to(post.createdAt)}
                             </span>
                         </TooltipItem>
@@ -107,13 +107,13 @@ export function SelectedPostCard({ post }: SelectedPostCardProps) {
                 {user && user.id == post.author.id && (
                     <PostAuthorPopover post={post}>
                         <Button size="icon" variant="ghost">
-                            <Ellipsis size={20} className="text-gray-600" />
+                            <Ellipsis size={20} className="text-gray-600 dark:text-zinc-400" />
                         </Button>
                     </PostAuthorPopover>
                 )}
             </div>
 
-            <span className="text-[15px] text-gray-800 break-words whitespace-pre-line">
+            <span className="text-[15px] text-gray-800 dark:text-zinc-200 break-words whitespace-pre-line">
                 {post.text}
             </span>
 
@@ -122,18 +122,28 @@ export function SelectedPostCard({ post }: SelectedPostCardProps) {
             />
 
             <div className="flex gap-2 mt-2 -translate-x-2">
-                <PostCardAction icon={Heart} onClick={handleLike} className={hasLiked ? "text-blue-500" : ""}>
+                <PostCardAction
+                    icon={Heart}
+                    onClick={handleLike}
+                    className={hasLiked ? "text-blue-500 dark:text-blue-500 dark:hover:bg-zinc-950" : "dark:hover:bg-zinc-950"}
+                >
                     {post.likes.length}
                 </PostCardAction>
 
                 <AddReplyDialog post={post}>
-                    <PostCardAction icon={MessageCircle} className="hover:bg-emerald-100 hover:text-emerald-600">
+                    <PostCardAction
+                        icon={MessageCircle}
+                        className="hover:bg-emerald-100 dark:hover:bg-zinc-950 hover:text-emerald-600 dark:hover:text-emerald-600"
+                    >
                         {post.replies.length}
                     </PostCardAction>
                 </AddReplyDialog>
 
                 <SharePostDialog post={post}>
-                    <PostCardAction icon={LinkIcon} className="hover:bg-purple-100 hover:text-purple-600">
+                    <PostCardAction
+                        icon={LinkIcon}
+                        className="hover:bg-emerald-100 dark:hover:bg-zinc-950 hover:text-emerald-600 dark:hover:text-emerald-600"
+                    >
                         Share
                     </PostCardAction>
                 </SharePostDialog>

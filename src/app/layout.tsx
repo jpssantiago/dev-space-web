@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
+import { ThemeProvider } from "next-themes"
 
 import { AuthProvider } from "@/contexts/auth-context"
 import { UserProvider } from "@/contexts/user-context"
@@ -24,22 +25,24 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning={true}>
       <body className={inter.className}>
-        <UserProvider>
-          <AuthProvider>
-            <FeedProvider>
-              <PostProvider>
-                <ProfileProvider>
-                  <TooltipProvider>
-                    {children}
-                    <Toaster richColors />
-                  </TooltipProvider>
-                </ProfileProvider>
-              </PostProvider>
-            </FeedProvider>
-          </AuthProvider>
-        </UserProvider>
+        <ThemeProvider attribute="class">
+          <UserProvider>
+            <AuthProvider>
+              <FeedProvider>
+                <PostProvider>
+                  <ProfileProvider>
+                    <TooltipProvider>
+                      {children}
+                      <Toaster richColors />
+                    </TooltipProvider>
+                  </ProfileProvider>
+                </PostProvider>
+              </FeedProvider>
+            </AuthProvider>
+          </UserProvider>
+        </ThemeProvider>
       </body>
     </html>
   )

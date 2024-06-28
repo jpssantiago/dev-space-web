@@ -128,7 +128,7 @@ export function PostCard({ post }: PostCardProps) {
     return (
         <div 
             onClick={() => push(`/app/post/${post.id}`)} 
-            className="flex items-start gap-2 hover:bg-gray-50 px-5 py-3 border-b w-full transition-all cursor-pointer"
+            className="flex items-start gap-2 hover:bg-gray-50 dark:hover:bg-neutral-800 px-5 py-3 border-b w-full transition-all cursor-pointer"
         >
             <StopPropagationItem>
                 <UserHoverCard user={post.author} className="h-fit cursor-pointer">
@@ -155,7 +155,7 @@ export function PostCard({ post }: PostCardProps) {
 
                         <StopPropagationItem>
                             <TooltipItem className="cursor-default" tooltip={dayjs(post.createdAt).format("LLL")}>
-                                <span className="border-b border-b-transparent hover:border-b-gray-600 text-gray-600 text-sm transition-all cursor-default">
+                                <span className="border-b border-b-transparent dark:hover:border-b-zinc-400 hover:border-b-gray-600 text-gray-600 text-sm dark:text-zinc-400 transition-all cursor-default">
                                     {dayjs().to(post.createdAt)}
                                 </span>
                             </TooltipItem>
@@ -165,13 +165,16 @@ export function PostCard({ post }: PostCardProps) {
                     {user && user.id == post.author.id && (
                         <StopPropagationItem>
                             <PostAuthorPopover post={post}>
-                                <Ellipsis size={20} className="text-gray-600 hover:text-blue-500 transition-all" />
+                                <Ellipsis
+                                    size={20}
+                                    className="text-gray-600 hover:text-blue-500 dark:hover:text-blue-500 dark:text-zinc-400 transition-all" 
+                                />
                             </PostAuthorPopover>
                         </StopPropagationItem>
                     )}
                 </div>
 
-                <span className="text-[15px] text-gray-800 break-words whitespace-pre-line">
+                <span className="text-[15px] text-gray-800 dark:text-zinc-200 break-words whitespace-pre-line">
                     {post.text}
                 </span>
 
@@ -181,14 +184,21 @@ export function PostCard({ post }: PostCardProps) {
 
                 <div className="flex gap-2 mt-2 -translate-x-2">
                     <StopPropagationItem>
-                        <PostCardAction icon={Heart} onClick={handleLike} className={hasLiked ? "text-blue-500" : ""}>
+                        <PostCardAction
+                            icon={Heart}
+                            onClick={handleLike}
+                            className={hasLiked ? "text-blue-500 dark:text-blue-500" : ""}
+                        >
                             {post.likes.length}
                         </PostCardAction>
                     </StopPropagationItem>
 
                     <StopPropagationItem>
                         <AddReplyDialog post={post}>
-                            <PostCardAction icon={MessageCircle} className="hover:bg-emerald-100 hover:text-emerald-600">
+                            <PostCardAction
+                                icon={MessageCircle}
+                                className="hover:bg-emerald-100 dark:hover:bg-background hover:text-emerald-600 dark:hover:text-emerald-600"
+                            >
                                 {post.replies.length}
                             </PostCardAction>
                         </AddReplyDialog>
@@ -196,7 +206,10 @@ export function PostCard({ post }: PostCardProps) {
 
                     <StopPropagationItem>
                         <SharePostDialog post={post}>
-                            <PostCardAction icon={LinkIcon} className="hover:bg-purple-100 hover:text-purple-600">
+                            <PostCardAction
+                                icon={LinkIcon}
+                                className="hover:bg-emerald-100 dark:hover:bg-background hover:text-emerald-600 dark:hover:text-emerald-600"
+                            >
                                 Share
                             </PostCardAction>
                         </SharePostDialog>

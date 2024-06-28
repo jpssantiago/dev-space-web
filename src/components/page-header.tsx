@@ -16,7 +16,7 @@ export function PageHeader() {
     const username = pathname.split("/profile/")[1]
 
     return (
-        <div className="top-0 z-50 sticky flex justify-center items-center bg-gray-50 w-full h-12">
+        <div className="top-0 z-50 sticky flex justify-center items-center bg-gray-50 dark:bg-[#0A0A0A] w-full h-12">
             <div className="flex justify-center items-center w-full">
                 {pathname == "/app/feed" && "Feed"}
 
@@ -38,7 +38,7 @@ export function PageHeader() {
 
                                 push("/app/feed")
                             }}
-                            className="bg-white hover:bg-gray-200 border rounded-full text-primary hover:text-gray-600 size-8" 
+                            className="bg-white hover:bg-gray-200 dark:bg-background border rounded-full text-primary dark:hover:text-gray-400 hover:text-gray-600 size-8" 
                             size="icon"
                         >
                             <ArrowLeft size={16} />

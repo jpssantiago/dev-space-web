@@ -85,7 +85,7 @@ export default function UserProfilePage({ params }: UserProfilePageProps) {
             <div className="flex justify-between items-center px-5">
                 <div className="flex flex-col">
                     <span className="font-semibold text-2xl">{profile?.name}</span>
-                    <span className="text-gray-600 text-sm">@{profile?.username}</span>
+                    <span className="text-gray-800 text-sm dark:text-zinc-200">@{profile?.username}</span>
                 </div>
 
                 <UserAvatar user={profile} className="size-24" />
@@ -94,12 +94,12 @@ export default function UserProfilePage({ params }: UserProfilePageProps) {
             <div className="flex justify-between items-center px-5">
                 <div className="flex flex-col">
                     {profile?.description && (
-                        <span className="text-gray-800">
+                        <span className="text-gray-600 dark:text-zinc-400">
                             {profile.description}
                         </span>
                     )}
 
-                    <span className="text-gray-500">
+                    <span className="text-gray-600 dark:text-zinc-400">
                         {profile?.followers.length} followers
                     </span>
                 </div>
@@ -107,7 +107,7 @@ export default function UserProfilePage({ params }: UserProfilePageProps) {
                 {user?.id != profile?.id && (
                     <CircleEllipsisIcon
                         size={22}
-                        className="hover:text-blue-500 transition-all cursor-pointer"
+                        className="hover:text-blue-500 dark:hover:text-blue-500 dark:text-zinc-400 transition-all cursor-pointer"
                     />
                 )}
             </div>
