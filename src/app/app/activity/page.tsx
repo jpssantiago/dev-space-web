@@ -3,21 +3,20 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 
-import { Activity } from "@/models/activity"
-import { getActivities } from "@/services/activity-response"
 import { useUser } from "@/contexts/user-context"
+import { useActivity } from "@/contexts/activity-context"
 import { LoadingContainer } from "@/components/loading-container"
 import { ActivityItem } from "@/components/activity-item"
 
 export default function ActivityPage() {
     const [loading, setLoading] = useState<boolean>(true)
-    const [activities, setActivities] = useState<Activity[] | undefined>(undefined)
 
     const { markActivitiesAsRead } = useUser()
+    const { activities, loadActivities } = useActivity()
     const { push } = useRouter()
 
     useEffect(() => {
-        getActivities().then(data => {
+        loadActivities().then(data => {
             setLoading(false)
 
             if (data.err) {
@@ -29,7 +28,6 @@ export default function ActivityPage() {
             }
 
             markActivitiesAsRead()
-            setActivities(data.activities)
         })
     }, [])
 
@@ -42,7 +40,7 @@ export default function ActivityPage() {
             )}
 
             {activities && activities.map(activity => (
-                <ActivityItem 
+                <ActivityItem
                     key={activity.id}
                     activity={activity}
                 />

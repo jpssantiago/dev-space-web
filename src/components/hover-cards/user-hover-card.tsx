@@ -8,6 +8,8 @@ import Link from "next/link"
 import { User } from "@/models/user"
 import { useUser } from "@/contexts/user-context"
 import { useFeed } from "@/contexts/feed-context"
+import { usePost } from "@/contexts/post-context"
+import { useActivity } from "@/contexts/activity-context"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card"
 import { UserAvatar } from "@/components/user-avatar"
 import { Button } from "@/components/ui/button"
@@ -21,6 +23,8 @@ type UserHoverCardProps = {
 export function UserHoverCard({ user, children, className }: UserHoverCardProps) {
     const { user: authenticatedUser, toggleFollow } = useUser()
     const { feed, setFeed } = useFeed()
+    const { selectedPost, setSelectedPost } = usePost()
+    const { activities, setActivities } = useActivity()
     const { push } = useRouter()
 
     const isFollowing = authenticatedUser?.following.filter(u => u.id == user.id)[0]
@@ -38,7 +42,7 @@ export function UserHoverCard({ user, children, className }: UserHoverCardProps)
             return toast.error(response.err)
         }
 
-        if (response.follow) {
+        if (feed) {
             setFeed(feed?.map(p => {
                 if (p.author.id == user.id) {
                     if (isFollowing) {
@@ -49,6 +53,57 @@ export function UserHoverCard({ user, children, className }: UserHoverCardProps)
                 }
 
                 return p
+            }))
+        }
+
+        if (selectedPost) {
+            if (selectedPost.author.id == user.id) {
+                if (isFollowing) {
+                    setSelectedPost({
+                        ...selectedPost,
+                        author: {
+                            ...selectedPost.author,
+                            followers: selectedPost.author.followers.filter(u => u.id != authenticatedUser.id)
+                        }
+                    })
+                } else {
+                    setSelectedPost({
+                        ...selectedPost,
+                        author: {
+                            ...selectedPost.author,
+                            followers: [...selectedPost.author.followers, authenticatedUser!]
+                        }
+                    })
+                }
+            } else {
+                setSelectedPost({
+                    ...selectedPost,
+                    replies: selectedPost.replies.map(reply => {
+                        if (reply.author.id == user.id) {
+                            if (isFollowing) {
+                                reply.author.followers = reply.author.followers.filter(u => u.id != authenticatedUser.id)
+                            } else {
+                                reply.author.followers.push(authenticatedUser!)
+                            }
+                        }
+
+                        return reply
+                    })
+                })
+            }
+        }
+
+        if (activities) {
+            setActivities(activities.map(activity => {
+                if (activity.sender && activity.sender.id == user.id) {
+                    if (isFollowing) {
+                        activity.sender.followers = activity.sender.followers.filter(u => u.id != authenticatedUser.id)
+                    } else {
+                        activity.sender.followers.push(authenticatedUser!)
+                    }
+                }
+
+                return activity
             }))
         }
     }
