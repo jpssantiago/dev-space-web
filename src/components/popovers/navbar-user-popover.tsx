@@ -4,7 +4,7 @@ import { ReactNode, useState } from "react"
 import { toast } from "sonner"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { ArrowLeft, ChevronRight, Computer, Languages, Moon, Sun } from "lucide-react"
+import { ArrowLeft, ChevronRight, Computer, Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
 
 import { useAuth } from "@/contexts/auth-context"
@@ -56,11 +56,6 @@ export function NavBarUserPopover({ children }: NavBarUserPopoverProps) {
                                         <PopoverItemTail icon={ChevronRight} />
                                     </PopoverItem>
                                 </ThemeSelectorPopover>
-
-                                <PopoverItem>
-                                    <PopoverItemText>Language</PopoverItemText>
-                                    <PopoverItemTail icon={Languages} />
-                                </PopoverItem>
 
                                 <PopoverClose className="w-full">
                                     <PopoverItem onClick={handleSignOut}>
