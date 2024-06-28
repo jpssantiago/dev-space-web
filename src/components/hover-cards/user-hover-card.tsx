@@ -65,37 +65,40 @@ export function UserHoverCard({ user, children, className }: UserHoverCardProps)
                 <div className="flex justify-between items-center">
                     <div className="flex flex-col">
                         <Link href={`/app/profile/${user.username}`}>
-                            <span className="border-b border-b-transparent hover:border-b-black font-medium text-lg transition-all">
+                            <span className="dark:hover:border-primary border-b border-b-transparent hover:border-b-black font-medium text-lg transition-all">
                                 {user.name}
                             </span>
                         </Link>
 
                         <Link href={`/app/profile/${user.username}`}>
-                            <span className="border-b border-b-transparent hover:border-b-gray-600 text-gray-600 text-sm transition-all">
+                            <span className="border-b border-b-transparent dark:hover:border-b-zinc-200 hover:border-b-gray-600 text-gray-600 text-sm dark:text-zinc-200 transition-all">
                                 @{user.username}
                             </span>
                         </Link>
                     </div>
 
                     <Link href={`/app/profile/${user.username}`}>
-                        <UserAvatar user={user} className="size-12" />
+                        <UserAvatar user={user} className="size-20" />
                     </Link>
                 </div>
 
-                {user.description && (
-                    <span className="mt-5 text-gray-800 text-sm">
-                        {user.description}
-                    </span>
-                )}
+                <div className="flex flex-col gap-1">
+                    {user.description && (
+                        <span className="mt-3 text-gray-800 text-sm dark:text-zinc-400">
+                            {user.description}
+                        </span>
+                    )}
 
-                <span className="mt-2 font-light text-gray-500 text-sm">
-                    {user.followers.length} followers
-                </span>
+                    <span className="text-gray-800 text-sm dark:text-zinc-400">
+                        {user.followers.length} followers
+                    </span>
+                </div>
+
 
                 <Button
                     onClick={handleToggleFollow}
                     disabled={authenticatedUser?.id == user.id}
-                    className="mt-2"
+                    className="mt-3"
                 >
                     {!isFollowing && isBeingFollowed && "Follow back"}
                     {!isFollowing && !isBeingFollowed && "Follow"}

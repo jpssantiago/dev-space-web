@@ -20,7 +20,7 @@ export function NavBarLink({ href, icon: Icon }: NavBarLinkProps) {
         <Link href={href} className="flex justify-center items-center size-16">
             <NavBarItem
                 icon={Icon}
-                className={isActive ? "bg-gray-200" : ""}
+                className={isActive ? "bg-gray-200 dark:bg-background" : ""}
                 iconClassName={isActive ? "text-primary" : ""}
             />
         </Link>

@@ -8,6 +8,6 @@ type PopoverItemTextProps = {
 
 export function PopoverItemText({ children, className }: PopoverItemTextProps) {
     return (
-        <span className={twMerge("font-medium text-black", className)}>{children}</span>
+        <span className={twMerge("font-medium text-black dark:text-primary", className)}>{children}</span>
     )
 }

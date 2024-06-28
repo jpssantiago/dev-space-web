@@ -33,7 +33,7 @@ export function NavBar() {
                         />
 
                         {(user?.activities.filter(activity => !activity.hasBeenRead) ?? []).length > 0 && (
-                            <div className="top-5 right-5 absolute bg-destructive rounded-full size-2" />
+                            <div className="top-5 right-5 absolute bg-destructive dark:bg-red-600 rounded-full size-2" />
                         )}
                     </div>
                 </TooltipItem>

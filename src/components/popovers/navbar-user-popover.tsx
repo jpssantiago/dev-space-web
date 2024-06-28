@@ -4,7 +4,8 @@ import { ReactNode, useState } from "react"
 import { toast } from "sonner"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { ArrowLeft, ChevronRight, Languages, Moon, Sun } from "lucide-react"
+import { ArrowLeft, ChevronRight, Computer, Languages, Moon, Sun } from "lucide-react"
+import { useTheme } from "next-themes"
 
 import { useAuth } from "@/contexts/auth-context"
 import { useUser } from "@/contexts/user-context"
@@ -22,11 +23,11 @@ type NavBarUserPopoverProps = {
 
 export function NavBarUserPopover({ children }: NavBarUserPopoverProps) {
     const [popover, setPopover] = useState<"main" | "theme">("main")
-    const [theme, setTheme] = useState<"light" | "dark">("light")
 
     const { user } = useUser()
     const { signOut } = useAuth()
     const { push } = useRouter()
+    const { theme, setTheme } = useTheme()
 
     function handleOpenChange(status: boolean) {
         if (!status) setPopover("main")
@@ -95,7 +96,7 @@ export function NavBarUserPopover({ children }: NavBarUserPopoverProps) {
                             <span className="justify-self-center font-medium">Appearance</span>
                         </div>
 
-                        <div className="flex bg-gray-50 rounded-xl w-full h-12">
+                        <div className="flex bg-gray-50 dark:bg-zinc-950 rounded-xl w-full h-12">
                             <SelectThemeItem
                                 icon={Sun}
                                 isSelected={theme == "light"}
@@ -106,6 +107,12 @@ export function NavBarUserPopover({ children }: NavBarUserPopoverProps) {
                                 icon={Moon}
                                 isSelected={theme == "dark"}
                                 onSelect={() => setTheme("dark")}
+                            />
+
+                            <SelectThemeItem
+                                icon={Computer}
+                                isSelected={theme == "system"}
+                                onSelect={() => setTheme("system")}
                             />
                         </div>
                     </div>

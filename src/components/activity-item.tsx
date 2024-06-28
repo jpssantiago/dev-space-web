@@ -71,7 +71,7 @@ export function ActivityItem({ activity }: ActivityItemProps) {
                 <div className="flex flex-col">
                     <div className="flex items-center gap-1">
                         {activity.sender && (
-                            <UnderlineLink className="hover:border-b-black font-medium text-base text-black" href={`/app/profile/${activity.sender?.username}`}>
+                            <UnderlineLink className="dark:hover:border-b-primary hover:border-b-black font-medium text-base text-black dark:text-primary" href={`/app/profile/${activity.sender?.username}`}>
                                 {activity.sender?.username}
                             </UnderlineLink>
                         )}
@@ -79,13 +79,13 @@ export function ActivityItem({ activity }: ActivityItemProps) {
                         <span>·</span>
 
                         <TooltipItem className="cursor-default" tooltip={dayjs(activity.createdAt).format("LLL")}>
-                            <span className="border-b border-b-transparent hover:border-b-gray-600 text-gray-600 text-sm transition-all cursor-default">
+                            <span className="border-b border-b-transparent dark:hover:border-b-zinc-400 hover:border-b-gray-600 text-gray-600 text-sm dark:text-zinc-400 transition-all cursor-default">
                                 {dayjs().to(activity.createdAt)}
                             </span>
                         </TooltipItem>
                     </div>
 
-                    <span className="text-[15px] text-gray-400">
+                    <span className="text-[15px] text-gray-400 dark:text-zinc-400">
                         {activity.type == "FOLLOW" && "followed you"}
                         {activity.type == "LIKE_POST" && "liked your post"}
                         {activity.type == "LIKE_REPLY" && "liked your reply"}
