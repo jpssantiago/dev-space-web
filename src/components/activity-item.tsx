@@ -8,6 +8,7 @@ import updateLocale from "dayjs/plugin/updateLocale"
 
 import { Activity } from "@/models/activity"
 import { useUser } from "@/contexts/user-context"
+import { UserHoverCard } from "@/components/hover-cards/user-hover-card"
 import { Button } from "@/components/ui/button"
 import { UserAvatar } from "@/components/user-avatar"
 import { TooltipItem } from "@/components/tooltip-item"
@@ -63,17 +64,21 @@ export function ActivityItem({ activity }: ActivityItemProps) {
         <div className="flex justify-between items-center p-5 border-b w-full">
             <div className="flex items-center gap-2">
                 {activity.sender && (
-                    <Link href={`/app/profile/${activity.sender.username}`}>
-                        <UserAvatar user={activity.sender} />
-                    </Link>
+                    <UserHoverCard user={activity.sender}>
+                        <Link href={`/app/profile/${activity.sender.username}`}>
+                            <UserAvatar user={activity.sender} />
+                        </Link>
+                    </UserHoverCard>
                 )}
 
                 <div className="flex flex-col">
                     <div className="flex items-center gap-1">
                         {activity.sender && (
-                            <UnderlineLink className="dark:hover:border-b-primary hover:border-b-black font-medium text-base text-black dark:text-primary" href={`/app/profile/${activity.sender?.username}`}>
-                                {activity.sender?.username}
-                            </UnderlineLink>
+                            <UserHoverCard user={activity.sender}>
+                                <UnderlineLink className="dark:hover:border-b-primary hover:border-b-black font-medium text-base text-black dark:text-primary" href={`/app/profile/${activity.sender?.username}`}>
+                                    {activity.sender?.username}
+                                </UnderlineLink>
+                            </UserHoverCard>
                         )}
 
                         <span>·</span>

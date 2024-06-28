@@ -90,7 +90,7 @@ export function UserHoverCard({ user, children, className }: UserHoverCardProps)
                     )}
 
                     <span className="text-gray-800 text-sm dark:text-zinc-400">
-                        {user.followers.length} followers
+                        {user.followers.length} {user.followers.length == 1 ? "follower" : "followers"}
                     </span>
                 </div>
 

@@ -100,7 +100,7 @@ export default function UserProfilePage({ params }: UserProfilePageProps) {
                     )}
 
                     <span className="text-gray-600 dark:text-zinc-400">
-                        {profile?.followers.length} followers
+                        {profile?.followers.length} {profile?.followers.length == 1 ? "follower" : "followers"}
                     </span>
                 </div>
 
