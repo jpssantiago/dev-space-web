@@ -95,7 +95,7 @@ export function PostCard({ post }: PostCardProps) {
                 replies: selectedPost.replies.map(reply => {
                     if (reply.id == post.id) {
                         if (hasLiked) {
-                            reply.likes = selectedPost.likes.filter(u => u.id != user?.id)
+                            reply.likes = reply.likes.filter(u => u.id != user?.id)
                         } else {
                             reply.likes.push(response.like!.user)
                         }
