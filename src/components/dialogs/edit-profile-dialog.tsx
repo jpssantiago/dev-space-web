@@ -77,7 +77,7 @@ export function EditProfileDialog({ children }: EditProfileDialogProps) {
 
     async function onSubmit({ username, name, description }: EditProfileType) {
         setLoading(true)
-        const response = await editUser(username, name, description ?? undefined, avatar)
+        const response = await editUser(username, name, description, avatar ?? null)
         setLoading(false)
 
         if (response.err) {

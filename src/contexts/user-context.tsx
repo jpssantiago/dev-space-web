@@ -16,7 +16,7 @@ type UserContextType = {
     user: User | undefined
     clearUser: () => void
     loadUser: () => Promise<LoadUserResponse>
-    editUser: (username: string, name: string, description?: string, avatar?: string) => Promise<EditUserResponse>
+    editUser: (username: string, name: string, description: string | null, avatar: string | null) => Promise<EditUserResponse>
 
     toggleLike: (postId: string) => Promise<ToggleLikeResponse>
 
@@ -46,7 +46,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
         return response
     }
 
-    async function editUser(username: string, name: string, description?: string, avatar?: string): Promise<EditUserResponse> {
+    async function editUser(username: string, name: string, description: string | null, avatar: string | null): Promise<EditUserResponse> {
         const response = await UserService.editUser(username, name, description, avatar)
 
         if (response.user && user) {
@@ -54,8 +54,8 @@ export function UserProvider({ children }: { children: ReactNode }) {
                 ...user,
                 username,
                 name,
-                description,
-                avatar
+                description: description ?? undefined,
+                avatar: avatar ?? undefined
             })
         }
 

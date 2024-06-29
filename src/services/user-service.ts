@@ -18,7 +18,7 @@ export async function loadUser(): Promise<LoadUserResponse> {
     }
 }
 
-export async function editUser(username: string, name: string, description?: string, avatar?: string): Promise<EditUserResponse> {
+export async function editUser(username: string, name: string, description: string | null, avatar: string | null): Promise<EditUserResponse> {
     try {
         const response = await fetch(`${api}/user`, {
             method: "PUT",
@@ -29,8 +29,8 @@ export async function editUser(username: string, name: string, description?: str
             body: JSON.stringify({
                 username,
                 name,
-                description,
-                avatar
+                description: description,
+                avatar: avatar
             })
         })
 
