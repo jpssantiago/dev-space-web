@@ -48,21 +48,19 @@ export function NavBarUserPopover({ children }: NavBarUserPopoverProps) {
             <PopoverContent align="start" className="rounded-3xl">
                 {popover == "main" ? (
                     <>
-                        {user ? (
-                            <>
-                                <ThemeSelectorPopover onOpen={() => setPopover("theme")}>
-                                    <PopoverItem>
-                                        <PopoverItemText>Appearance</PopoverItemText>
-                                        <PopoverItemTail icon={ChevronRight} />
-                                    </PopoverItem>
-                                </ThemeSelectorPopover>
+                        <ThemeSelectorPopover onOpen={() => setPopover("theme")}>
+                            <PopoverItem>
+                                <PopoverItemText>Appearance</PopoverItemText>
+                                <PopoverItemTail icon={ChevronRight} />
+                            </PopoverItem>
+                        </ThemeSelectorPopover>
 
-                                <PopoverClose className="w-full">
-                                    <PopoverItem onClick={handleSignOut}>
-                                        <PopoverItemText>Sign out</PopoverItemText>
-                                    </PopoverItem>
-                                </PopoverClose>
-                            </>
+                        {user ? (
+                            <PopoverClose className="w-full">
+                                <PopoverItem onClick={handleSignOut}>
+                                    <PopoverItemText>Sign out</PopoverItemText>
+                                </PopoverItem>
+                            </PopoverClose>
                         ) : (
                             <>
                                 <Link href="/auth/signin">

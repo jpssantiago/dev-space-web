@@ -108,9 +108,11 @@ export function UserProvider({ children }: { children: ReactNode }) {
     }
     
     function markActivitiesAsRead() {
+        if (!user) return
+
         setUser({
             ...user!,
-            activities: user!.activities.map(activity => {
+            activities: user.activities.map(activity => {
                 return {
                     ...activity,
                     hasBeenRead: true

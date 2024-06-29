@@ -10,6 +10,7 @@ import { toast } from "sonner"
 import { usernameSchema } from "@/schemas/auth-schemas"
 import { useUser } from "@/contexts/user-context"
 import { useProfile } from "@/contexts/profile-context"
+import { useAuth } from "@/contexts/auth-context"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Input } from "@/components/ui/input"
@@ -20,7 +21,7 @@ import { LoadingButton } from "@/components/loading-button"
 const editProfileSchema = z.object({
     username: usernameSchema,
     name: z.string().trim().min(1, { message: "The name does not appear to be valid" }).max(50),
-    description: z.string().trim().min(1).max(150).nullable()
+    description: z.string().max(150).nullable()
 })
 
 type EditProfileType = z.infer<typeof editProfileSchema>
@@ -37,6 +38,7 @@ export function EditProfileDialog({ children }: EditProfileDialogProps) {
 
     const { user, editUser } = useUser()
     const { profile, setProfile } = useProfile()
+    const { signOut } = useAuth()
     const { push } = useRouter()
     const { handleSubmit, register, formState, reset } = useForm<EditProfileType>({
         resolver: zodResolver(editProfileSchema),
@@ -80,6 +82,7 @@ export function EditProfileDialog({ children }: EditProfileDialogProps) {
 
         if (response.err) {
             if (response.err == "unauthorized" || response.err == "no-token") {
+                signOut()
                 push("/auth/signin")
             }
 

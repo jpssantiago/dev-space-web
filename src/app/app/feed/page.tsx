@@ -28,7 +28,11 @@ export default function FeedPage() {
 
     return (
         <div className="flex flex-col size-full">
-            {loading && <LoadingContainer size={32} />}
+            {loading && (
+                <div className="h-[calc(100vh-56px)]">
+                    <LoadingContainer size={32} />
+                </div>
+            )}
 
             {!loading && (
                 <div className="flex flex-col size-full">

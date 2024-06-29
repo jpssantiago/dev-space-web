@@ -12,6 +12,7 @@ import updateLocale from "dayjs/plugin/updateLocale"
 import { Post } from "@/models/post"
 import { useUser } from "@/contexts/user-context"
 import { usePost } from "@/contexts/post-context"
+import { useAuth } from "@/contexts/auth-context"
 import { PostAuthorPopover } from "@/components/popovers/post-author-popover"
 import { Button } from "@/components/ui/button"
 import { UserAvatar } from "@/components/user-avatar"
@@ -51,6 +52,7 @@ type SelectedPostCardProps = {
 export function SelectedPostCard({ post }: SelectedPostCardProps) {
     const { user, toggleLike } = useUser()
     const { selectedPost, setSelectedPost } = usePost()
+    const { signOut } = useAuth()
     const { push } = useRouter()
 
     const hasLiked = post.likes.filter(u => u.id == user?.id).length > 0
@@ -59,6 +61,7 @@ export function SelectedPostCard({ post }: SelectedPostCardProps) {
         const response = await toggleLike(post.id)
         if (response.err) {
             if (response.err == "unauthorized" || response.err == "no-token") {
+                signOut()
                 push("/auth/signin")
             }
 

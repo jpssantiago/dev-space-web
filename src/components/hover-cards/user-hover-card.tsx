@@ -10,6 +10,7 @@ import { useUser } from "@/contexts/user-context"
 import { useFeed } from "@/contexts/feed-context"
 import { usePost } from "@/contexts/post-context"
 import { useActivity } from "@/contexts/activity-context"
+import { useAuth } from "@/contexts/auth-context"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card"
 import { UserAvatar } from "@/components/user-avatar"
 import { Button } from "@/components/ui/button"
@@ -25,6 +26,7 @@ export function UserHoverCard({ user, children, className }: UserHoverCardProps)
     const { feed, setFeed } = useFeed()
     const { selectedPost, setSelectedPost } = usePost()
     const { activities, setActivities } = useActivity()
+    const { signOut } = useAuth()
     const { push } = useRouter()
 
     const isFollowing = authenticatedUser?.following.filter(u => u.id == user.id)[0]
@@ -36,6 +38,7 @@ export function UserHoverCard({ user, children, className }: UserHoverCardProps)
         const response = await toggleFollow(user.id)
         if (response.err) {
             if (response.err == "unauthorized" || response.err == "no-token") {
+                signOut()
                 push("/auth/signin")
             }
 

@@ -8,6 +8,7 @@ import updateLocale from "dayjs/plugin/updateLocale"
 
 import { Activity } from "@/models/activity"
 import { useUser } from "@/contexts/user-context"
+import { useAuth } from "@/contexts/auth-context"
 import { UserHoverCard } from "@/components/hover-cards/user-hover-card"
 import { Button } from "@/components/ui/button"
 import { UserAvatar } from "@/components/user-avatar"
@@ -42,6 +43,7 @@ type ActivityItemProps = {
 
 export function ActivityItem({ activity }: ActivityItemProps) {
     const { user, toggleFollow } = useUser()
+    const { signOut } = useAuth()
     const { push } = useRouter()
 
     const isFollowing = user?.following.filter(u => u.id == activity.sender?.id)[0]
@@ -53,6 +55,7 @@ export function ActivityItem({ activity }: ActivityItemProps) {
         const response = await toggleFollow(activity.sender?.id)
         if (response.err) {
             if (response.err == "unauthorized" || response.err == "no-token") {
+                signOut()
                 return push("/auth/signin")
             }
 

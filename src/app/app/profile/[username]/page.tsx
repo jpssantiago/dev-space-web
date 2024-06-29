@@ -3,14 +3,15 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
+import { CircleEllipsisIcon } from "lucide-react"
 
 import { useUser } from "@/contexts/user-context"
 import { useProfile } from "@/contexts/profile-context"
+import { useAuth } from "@/contexts/auth-context"
 import { LoadingContainer } from "@/components/loading-container"
 import { UserAvatar } from "@/components/user-avatar"
 import { Button } from "@/components/ui/button"
 import { EditProfileDialog } from "@/components/dialogs/edit-profile-dialog"
-import { CircleEllipsisIcon } from "lucide-react"
 import { ProfilePageTabs } from "@/components/profile-page-tabs"
 import { ProfilePageTab } from "@/components/profile-page-tab"
 import { PostCard } from "@/components/cards/post-card"
@@ -27,6 +28,7 @@ export default function UserProfilePage({ params }: UserProfilePageProps) {
 
     const { user, toggleFollow } = useUser()
     const { profile, setProfile, loadProfile } = useProfile()
+    const { signOut } = useAuth()
     const { push } = useRouter()
 
     const posts = profile?.posts.filter(p => !p.parentPostId)
@@ -61,6 +63,7 @@ export default function UserProfilePage({ params }: UserProfilePageProps) {
         const response = await toggleFollow(profile.id)
         if (response.err) {
             if (response.err == "unauthorized" || response.err == "no-token") {
+                signOut()
                 push("/auth/signin")
             }
 

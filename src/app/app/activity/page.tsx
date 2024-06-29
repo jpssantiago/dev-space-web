@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 
 import { useUser } from "@/contexts/user-context"
+import { useAuth } from "@/contexts/auth-context"
 import { useActivity } from "@/contexts/activity-context"
 import { LoadingContainer } from "@/components/loading-container"
 import { ActivityItem } from "@/components/activity-item"
@@ -13,6 +14,7 @@ export default function ActivityPage() {
 
     const { markActivitiesAsRead } = useUser()
     const { activities, loadActivities } = useActivity()
+    const { signOut } = useAuth()
     const { push } = useRouter()
 
     useEffect(() => {
@@ -21,6 +23,7 @@ export default function ActivityPage() {
 
             if (data.err) {
                 if (data.err == "unauthorized" || data.err == "no-token") {
+                    signOut()
                     return push("/auth/signin")
                 }
 
@@ -45,6 +48,14 @@ export default function ActivityPage() {
                     activity={activity}
                 />
             ))}
+
+            {activities && activities.length == 0 && (
+                <div className="flex justify-center items-center h-[calc(100vh-56px)]">
+                    <span className="text-gray-800 text-sm dark:text-gray-400">
+                        No activities yet.
+                    </span>
+                </div>
+            )}
         </div>
     )
 }

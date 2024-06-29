@@ -14,6 +14,7 @@ import { Post } from "@/models/post"
 import { useUser } from "@/contexts/user-context"
 import { useFeed } from "@/contexts/feed-context"
 import { usePost } from "@/contexts/post-context"
+import { useAuth } from "@/contexts/auth-context"
 import { useProfile } from "@/contexts/profile-context"
 import { UserAvatar } from "@/components/user-avatar"
 import { PostImagesDisplay } from "@/components/post-images-display"
@@ -58,6 +59,7 @@ export function PostCard({ post }: PostCardProps) {
     const { feed, setFeed } = useFeed()
     const { selectedPost, setSelectedPost } = usePost()
     const { profile, setProfile } = useProfile()
+    const { signOut } = useAuth()
     const { push } = useRouter()
 
     const hasLiked = post.likes.filter(u => u.id == user?.id).length > 0
@@ -71,6 +73,7 @@ export function PostCard({ post }: PostCardProps) {
 
         if (response.err) {
             if (response.err == "unauthorized" || response.err == "no-token") {
+                signOut()
                 push("/auth/signin")
             }
 

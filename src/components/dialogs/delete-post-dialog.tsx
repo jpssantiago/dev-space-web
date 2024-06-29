@@ -9,6 +9,7 @@ import { useUser } from "@/contexts/user-context"
 import { useFeed } from "@/contexts/feed-context"
 import { usePost } from "@/contexts/post-context"
 import { useProfile } from "@/contexts/profile-context"
+import { useAuth } from "@/contexts/auth-context"
 import {
     Dialog,
     DialogClose,
@@ -36,6 +37,7 @@ export function DeletePostDialog({ post, children }: DeletePostDialogProps) {
     const { feed, setFeed } = useFeed()
     const { selectedPost, setSelectedPost } = usePost()
     const { profile, setProfile } = useProfile()
+    const { signOut } = useAuth()
     const { push } = useRouter()
 
     function handleOpenChange(status: boolean) {
@@ -54,6 +56,7 @@ export function DeletePostDialog({ post, children }: DeletePostDialogProps) {
 
         if (response.err) {
             if (response.err == "unauthorized" || response.err == "no-token") {
+                signOut()
                 return push("/auth/signin")
             }
 

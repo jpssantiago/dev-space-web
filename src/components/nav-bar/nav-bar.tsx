@@ -25,25 +25,30 @@ export function NavBar() {
                     />
                 </TooltipItem>
 
-                <TooltipItem tooltip="Activity" align="center" className="medium:flex phone:flex medium:justify-center phone:justify-center medium:items-center phone:items-center w-fit medium:w-full phone:w-full">
-                    <div className="relative">
-                        <NavBarLink
-                            href="/app/activity"
-                            icon={Heart}
-                        />
+                {user && (
+                    <>
+                        <TooltipItem tooltip="Activity" align="center" className="medium:flex phone:flex medium:justify-center phone:justify-center medium:items-center phone:items-center w-fit medium:w-full phone:w-full">
+                            <div className="relative">
+                                <NavBarLink
+                                    href="/app/activity"
+                                    icon={Heart}
+                                />
 
-                        {(user?.activities.filter(activity => !activity.hasBeenRead) ?? []).length > 0 && (
-                            <div className="top-5 right-5 absolute bg-destructive dark:bg-red-600 rounded-full size-2" />
-                        )}
-                    </div>
-                </TooltipItem>
+                                {(user?.activities.filter(activity => !activity.hasBeenRead) ?? []).length > 0 && (
+                                    <div className="top-5 right-5 absolute bg-destructive dark:bg-red-600 rounded-full size-2" />
+                                )}
+                            </div>
+                        </TooltipItem>
 
-                <TooltipItem tooltip="Profile" align="center" className="medium:flex phone:flex medium:justify-center phone:justify-center medium:items-center phone:items-center w-fit medium:w-full phone:w-full">
-                    <NavBarLink
-                        href={`/app/profile/${user?.username}`}
-                        icon={User}
-                    />
-                </TooltipItem>
+                        <TooltipItem tooltip="Profile" align="center" className="medium:flex phone:flex medium:justify-center phone:justify-center medium:items-center phone:items-center w-fit medium:w-full phone:w-full">
+                            <NavBarLink
+                                href={`/app/profile/${user?.username}`}
+                                icon={User}
+                            />
+                        </TooltipItem>
+                    </>
+                )}
+
 
                 <div className="medium:flex phone:flex justify-center items-center hidden medium:w-full phone:w-full">
                     <NavBarUserPopover>

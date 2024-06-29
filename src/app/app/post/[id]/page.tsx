@@ -22,18 +22,18 @@ export default function PostIdPage({ params }: PostIdPageProps) {
 
     useEffect(() => {
         loadSelectedPost(params.id).then(data => {
+            setLoading(false)
+            
             if (data.err || !data.post) {
                 return push("/app/feed")
             }
-
-            setLoading(false)
         })
     }, [])
 
     return (
-        <div className="flex flex-col size-full">
+        <div className="flex flex-col">
             {loading && (
-                <div className="flex items-center h-full">
+                <div className="h-[calc(100vh-56px)]">
                     <LoadingContainer size={32} />
                 </div>
             )}

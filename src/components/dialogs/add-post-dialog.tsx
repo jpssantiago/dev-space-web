@@ -8,6 +8,7 @@ import { ImageUp } from "lucide-react"
 
 import { useUser } from "@/contexts/user-context"
 import { useFeed } from "@/contexts/feed-context"
+import { useAuth } from "@/contexts/auth-context"
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 import { UserAvatar } from "@/components/user-avatar"
 import { Textarea } from "@/components/ui/textarea"
@@ -26,6 +27,7 @@ export function AddPostDialog({ children }: AddPostDialogProps) {
 
     const { user, addPost } = useUser()
     const { feed, setFeed } = useFeed()
+    const { signOut } = useAuth()
     const { push } = useRouter()
     const { openFilePicker, clear, removeFileByIndex } = useImperativeFilePicker({
         multiple: true,
@@ -71,6 +73,7 @@ export function AddPostDialog({ children }: AddPostDialogProps) {
 
         if (response.err) {
             if (response.err == "unauthorized" || response.err == "no-token") {
+                signOut()
                 return push("/auth/signin")
             }
 
