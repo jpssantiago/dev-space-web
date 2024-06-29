@@ -105,7 +105,7 @@ export function DeletePostDialog({ post, children }: DeletePostDialogProps) {
                     </DialogDescription>
                 </DialogHeader>
 
-                <DialogFooter>
+                <DialogFooter className="phone:gap-3">
                     <PopoverClose asChild>
                         <DialogClose asChild>
                             <Button

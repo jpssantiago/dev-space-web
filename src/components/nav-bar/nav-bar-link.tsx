@@ -17,7 +17,7 @@ export function NavBarLink({ href, icon: Icon }: NavBarLinkProps) {
     const isActive = pathname == href
 
     return (
-        <Link href={href} className="flex justify-center items-center size-16">
+        <Link href={href} className="flex medium:flex-1 justify-center items-center size-16">
             <NavBarItem
                 icon={Icon}
                 className={isActive ? "bg-gray-200 dark:bg-background" : ""}

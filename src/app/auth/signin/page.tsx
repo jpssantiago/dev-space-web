@@ -52,7 +52,7 @@ export default function SignInPage() {
     }
 
     return (
-        <div className="flex justify-center items-center w-full h-screen">
+        <div className="flex justify-center items-center px-5 w-full h-screen">
             <AuthForm>
                 <AuthFormHeader>
                     <AuthFormTitle>Welcome back 👋</AuthFormTitle>
