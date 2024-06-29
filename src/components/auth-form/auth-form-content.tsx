@@ -1,5 +1,4 @@
 import { ReactNode } from "react"
-import { UseFormHandleSubmit } from "react-hook-form"
 
 type AuthFormContentProps = {
     onSubmit: () => void
