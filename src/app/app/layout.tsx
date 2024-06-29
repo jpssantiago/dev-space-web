@@ -24,7 +24,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
 
     if (loading) {
         return (
-            <div className="flex bg-gray-50 w-full h-screen">
+            <div className="flex bg-gray-50 dark:bg-[#0A0A0A] w-full h-screen">
                 <LoadingContainer />
             </div>
         )
