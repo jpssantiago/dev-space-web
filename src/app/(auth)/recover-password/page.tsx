@@ -2,12 +2,11 @@ import Link from "next/link"
 
 import { Button } from "@/components/ui/button"
 
-export default function NotFoundPage() {
+export default function RecoverPasswordPage() {
     return (
         <div className="flex flex-col justify-center items-center gap-5 h-screen">
             <div className="flex flex-col gap-2">
-                <span className="font-bold text-9xl">404</span>
-                <span>Ooooops, this page does not exist.</span>
+                <span>Work in progress!</span>
             </div>
 
             <Link href="/feed">

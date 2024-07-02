@@ -24,10 +24,10 @@ export default function ActivityPage() {
             if (data.err) {
                 if (data.err == "unauthorized" || data.err == "no-token") {
                     signOut()
-                    return push("/auth/signin")
+                    return push("/signin")
                 }
 
-                return push("/app/feed")
+                return push("/feed")
             }
 
             markActivitiesAsRead()

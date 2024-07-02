@@ -54,7 +54,7 @@ export default function SignUpPage() {
             return toast.error(response.err)
         }
 
-        push("/app/feed")
+        push("/feed")
     }
 
     return (
@@ -111,7 +111,7 @@ export default function SignUpPage() {
 
                     <span className="text-center text-sm">
                         Already have an account?
-                        <UnderlineLink href="/auth/signin"> Sign in</UnderlineLink>
+                        <UnderlineLink href="/signin"> Sign in</UnderlineLink>
                     </span>
                 </AuthFormContent>
             </AuthForm>

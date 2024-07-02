@@ -25,7 +25,7 @@ export default function PostIdPage({ params }: PostIdPageProps) {
             setLoading(false)
             
             if (data.err || !data.post) {
-                return push("/app/feed")
+                return push("/feed")
             }
         })
     }, [])

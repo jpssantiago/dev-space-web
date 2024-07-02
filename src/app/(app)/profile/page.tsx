@@ -11,9 +11,9 @@ export default function ProfilePage() {
 
     useEffect(() => {
         if (user) {
-            return push(`/app/profile/${user.username}`)
+            return push(`/profile/${user.username}`)
         }
 
-        push("/app/feed")
+        push("/feed")
     }, [])
 }

@@ -18,25 +18,25 @@ export function PageHeader() {
     return (
         <div className="top-0 z-50 sticky flex justify-center items-center bg-gray-50 dark:bg-[#0A0A0A] phone:px-5 w-full h-12">
             <div className="flex justify-center items-center w-full">
-                {pathname == "/app/feed" && "Feed"}
+                {pathname == "/feed" && "Feed"}
 
-                {pathname == "/app/activity" && "Activity"}
+                {pathname == "/activity" && "Activity"}
 
-                {pathname.includes("/app/profile") && (
+                {pathname.includes("/profile") && (
                     <span>
                         {username == user?.username ? "Your profile" : `@${username}`}
                     </span>
                 )}
                 
-                {pathname.includes("/app/post") && (
+                {pathname.includes("/post") && (
                     <div className="flex justify-between items-center w-full">
                         <Button 
                             onClick={() => {
                                 if (selectedPost?.parentPostId) {
-                                    return push(`/app/post/${selectedPost.parentPostId}`)
+                                    return push(`/post/${selectedPost.parentPostId}`)
                                 }
 
-                                push("/app/feed")
+                                push("/feed")
                             }}
                             className="bg-white hover:bg-gray-200 dark:bg-background border rounded-full text-primary dark:hover:text-gray-400 hover:text-gray-600 size-8" 
                             size="icon"

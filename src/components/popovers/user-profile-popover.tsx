@@ -16,7 +16,7 @@ type UserProfilePopoverProps = {
 
 export function UserProfilePopover({ user, children }: UserProfilePopoverProps) {
     function handleCopyProfileLink() {
-        navigator.clipboard.writeText(`${window.origin}/app/profile/${user.username}`)
+        navigator.clipboard.writeText(`${window.origin}/profile/${user.username}`)
         toast.success("The link was copied to your clipboard.")
     }
     

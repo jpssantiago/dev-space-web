@@ -74,7 +74,7 @@ export function AddPostDialog({ children }: AddPostDialogProps) {
         if (response.err) {
             if (response.err == "unauthorized" || response.err == "no-token") {
                 signOut()
-                return push("/auth/signin")
+                return push("/signin")
             }
 
             return toast.error(response.err)

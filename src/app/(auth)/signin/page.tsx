@@ -48,7 +48,7 @@ export default function SignInPage() {
             return toast.error(response.err) // translate this :)
         }
 
-        push("/app/feed")
+        push("/feed")
     }
 
     return (
@@ -83,13 +83,13 @@ export default function SignInPage() {
                         {...register("password")}
                     />
 
-                    <UnderlineLink href="/auth/recover-password">Forgot your password?</UnderlineLink>
+                    <UnderlineLink href="/recover-password">Forgot your password?</UnderlineLink>
 
                     <LoadingButton loading={loading}>Sign in</LoadingButton>
 
                     <span className="text-center text-sm">
                         Don&apos;t have an account?
-                        <UnderlineLink href="/auth/signup"> Create one</UnderlineLink>
+                        <UnderlineLink href="/signup"> Create one</UnderlineLink>
                     </span>
                 </AuthFormContent>
             </AuthForm>

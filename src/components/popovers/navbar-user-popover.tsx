@@ -36,7 +36,7 @@ export function NavBarUserPopover({ children }: NavBarUserPopoverProps) {
     function handleSignOut() {
         signOut()
         toast.success("You are no longer authenticated.")
-        push("/auth/signin")
+        push("/signin")
     }
 
     return (
@@ -63,13 +63,13 @@ export function NavBarUserPopover({ children }: NavBarUserPopoverProps) {
                             </PopoverClose>
                         ) : (
                             <>
-                                <Link href="/auth/signin">
+                                <Link href="/signin">
                                     <PopoverItem>
                                         <PopoverItemText>Sign in</PopoverItemText>
                                     </PopoverItem>
                                 </Link>
 
-                                <Link href="/auth/signup">
+                                <Link href="/signup">
                                     <PopoverItem>
                                         <PopoverItemText>Create an account</PopoverItemText>
                                     </PopoverItem>

@@ -74,7 +74,7 @@ export function PostCard({ post }: PostCardProps) {
         if (response.err) {
             if (response.err == "unauthorized" || response.err == "no-token") {
                 signOut()
-                push("/auth/signin")
+                push("/signin")
             }
 
             return toast.error(response.err)
@@ -130,12 +130,12 @@ export function PostCard({ post }: PostCardProps) {
 
     return (
         <div 
-            onClick={() => push(`/app/post/${post.id}`)} 
+            onClick={() => push(`/post/${post.id}`)} 
             className="flex items-start gap-2 hover:bg-gray-50 dark:hover:bg-neutral-800 px-5 py-3 border-b w-full transition-all cursor-pointer"
         >
             <StopPropagationItem>
                 <UserHoverCard user={post.author} className="h-fit cursor-pointer">
-                    <Link href={`/app/profile/${post.author.username}`}>
+                    <Link href={`/profile/${post.author.username}`}>
                         <UserAvatar user={post.author} />
                     </Link>
                 </UserHoverCard>
@@ -146,7 +146,7 @@ export function PostCard({ post }: PostCardProps) {
                     <div className="flex items-center gap-1">
                         <StopPropagationItem>
                             <UserHoverCard user={post.author} className="h-fit">
-                                <Link href={`/app/profile/${post.author.username}`}>
+                                <Link href={`/profile/${post.author.username}`}>
                                     <span className="border-b border-b-transparent hover:border-b-primary font-medium transition-all cursor-pointer">
                                         @{post.author.username}
                                     </span>

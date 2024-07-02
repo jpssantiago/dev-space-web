@@ -43,7 +43,7 @@ export default function UserProfilePage({ params }: UserProfilePageProps) {
             setLoading(false)
 
             if (response.err) {
-                return push("/app/feed")
+                return push("/feed")
             }
         })
     }, [])
@@ -65,7 +65,7 @@ export default function UserProfilePage({ params }: UserProfilePageProps) {
         if (response.err) {
             if (response.err == "unauthorized" || response.err == "no-token") {
                 signOut()
-                push("/auth/signin")
+                push("/signin")
             }
 
             return toast.error(response.err)

@@ -83,7 +83,7 @@ export function EditProfileDialog({ children }: EditProfileDialogProps) {
         if (response.err) {
             if (response.err == "unauthorized" || response.err == "no-token") {
                 signOut()
-                push("/auth/signin")
+                push("/signin")
             }
 
             return toast.error(response.err)

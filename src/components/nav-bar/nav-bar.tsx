@@ -20,7 +20,7 @@ export function NavBar() {
             <nav className="flex medium:flex-row phone:flex-row flex-col gap-1 medium:w-full phone:w-full">
                 <TooltipItem tooltip="Feed" align="center" className="medium:flex phone:flex medium:justify-center phone:justify-center medium:items-center phone:items-center w-fit medium:w-full phone:w-full">
                     <NavBarLink
-                        href="/app/feed"
+                        href="/feed"
                         icon={Home}
                     />
                 </TooltipItem>
@@ -30,7 +30,7 @@ export function NavBar() {
                         <TooltipItem tooltip="Activity" align="center" className="medium:flex phone:flex medium:justify-center phone:justify-center medium:items-center phone:items-center w-fit medium:w-full phone:w-full">
                             <div className="relative">
                                 <NavBarLink
-                                    href="/app/activity"
+                                    href="/activity"
                                     icon={Heart}
                                 />
 
@@ -42,7 +42,7 @@ export function NavBar() {
 
                         <TooltipItem tooltip="Profile" align="center" className="medium:flex phone:flex medium:justify-center phone:justify-center medium:items-center phone:items-center w-fit medium:w-full phone:w-full">
                             <NavBarLink
-                                href={`/app/profile/${user?.username}`}
+                                href={`/profile/${user?.username}`}
                                 icon={User}
                             />
                         </TooltipItem>

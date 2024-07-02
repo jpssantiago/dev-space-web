@@ -39,7 +39,7 @@ export function UserHoverCard({ user, children, className }: UserHoverCardProps)
         if (response.err) {
             if (response.err == "unauthorized" || response.err == "no-token") {
                 signOut()
-                push("/auth/signin")
+                push("/signin")
             }
 
             return toast.error(response.err)
@@ -122,20 +122,20 @@ export function UserHoverCard({ user, children, className }: UserHoverCardProps)
             <HoverCardContent align="end" className="flex flex-col cursor-default">
                 <div className="flex justify-between items-center">
                     <div className="flex flex-col">
-                        <Link href={`/app/profile/${user.username}`}>
+                        <Link href={`/profile/${user.username}`}>
                             <span className="dark:hover:border-primary border-b border-b-transparent hover:border-b-black font-medium text-lg transition-all">
                                 {user.name}
                             </span>
                         </Link>
 
-                        <Link href={`/app/profile/${user.username}`}>
+                        <Link href={`/profile/${user.username}`}>
                             <span className="border-b border-b-transparent dark:hover:border-b-zinc-200 hover:border-b-gray-600 text-gray-600 text-sm dark:text-zinc-200 transition-all">
                                 @{user.username}
                             </span>
                         </Link>
                     </div>
 
-                    <Link href={`/app/profile/${user.username}`}>
+                    <Link href={`/profile/${user.username}`}>
                         <UserAvatar user={user} className="size-20" />
                     </Link>
                 </div>

@@ -20,7 +20,7 @@ type SharePostDialogProps = {
 }
 
 export function SharePostDialog({ post, children }: SharePostDialogProps) {
-    const link = `${window.origin}/app/post/${post.id}`
+    const link = `${window.origin}/post/${post.id}`
 
     function handleCopyLink() {
         navigator.clipboard.writeText(link)

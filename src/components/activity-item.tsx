@@ -56,7 +56,7 @@ export function ActivityItem({ activity }: ActivityItemProps) {
         if (response.err) {
             if (response.err == "unauthorized" || response.err == "no-token") {
                 signOut()
-                return push("/auth/signin")
+                return push("/signin")
             }
 
             return toast.error(response.err)
@@ -68,7 +68,7 @@ export function ActivityItem({ activity }: ActivityItemProps) {
             <div className="flex items-center gap-2">
                 {activity.sender && (
                     <UserHoverCard user={activity.sender}>
-                        <Link href={`/app/profile/${activity.sender.username}`}>
+                        <Link href={`/profile/${activity.sender.username}`}>
                             <UserAvatar user={activity.sender} />
                         </Link>
                     </UserHoverCard>
@@ -78,7 +78,7 @@ export function ActivityItem({ activity }: ActivityItemProps) {
                     <div className="flex items-center gap-1">
                         {activity.sender && (
                             <UserHoverCard user={activity.sender}>
-                                <UnderlineLink className="dark:hover:border-b-primary hover:border-b-black font-medium text-base text-black dark:text-primary" href={`/app/profile/${activity.sender?.username}`}>
+                                <UnderlineLink className="dark:hover:border-b-primary hover:border-b-black font-medium text-base text-black dark:text-primary" href={`/profile/${activity.sender?.username}`}>
                                     {activity.sender?.username}
                                 </UnderlineLink>
                             </UserHoverCard>
@@ -111,7 +111,7 @@ export function ActivityItem({ activity }: ActivityItemProps) {
             )}
 
             {(activity.type == "LIKE_POST" || activity.type == "LIKE_REPLY") && (
-                <Link href={`/app/post/${activity.post?.id}`}>
+                <Link href={`/post/${activity.post?.id}`}>
                     <Button variant="outline">
                         View {activity.type == "LIKE_POST" ? "post" : "reply"}
                     </Button>
@@ -119,7 +119,7 @@ export function ActivityItem({ activity }: ActivityItemProps) {
             )}
 
             {activity.type == "REPLY" && (
-                <Link href={`/app/post/${activity.post?.id}`}>
+                <Link href={`/post/${activity.post?.id}`}>
                     <Button variant="outline">View reply</Button>
                 </Link>
             )}

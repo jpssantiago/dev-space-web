@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation"
 
 export default function PostPage() {
-    redirect("/app/feed")
+    redirect("/feed")
 }
