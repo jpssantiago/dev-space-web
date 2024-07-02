@@ -15,6 +15,7 @@ import { EditProfileDialog } from "@/components/dialogs/edit-profile-dialog"
 import { ProfilePageTabs } from "@/components/profile-page-tabs"
 import { ProfilePageTab } from "@/components/profile-page-tab"
 import { PostCard } from "@/components/cards/post-card"
+import { UserProfilePopover } from "@/components/popovers/user-profile-popover"
 
 type UserProfilePageProps = {
     params: {
@@ -73,12 +74,12 @@ export default function UserProfilePage({ params }: UserProfilePageProps) {
         if (isFollowing) {
             setProfile({
                 ...profile,
-                followers: profile.followers.filter(u => u.id != user?.id)  
+                followers: profile.followers.filter(u => u.id != user?.id)
             })
         } else {
             setProfile({
                 ...profile,
-                followers: [...profile.followers, user]  
+                followers: [...profile.followers, user]
             })
         }
     }
@@ -107,11 +108,13 @@ export default function UserProfilePage({ params }: UserProfilePageProps) {
                     </span>
                 </div>
 
-                {user?.id != profile?.id && (
-                    <CircleEllipsisIcon
-                        size={22}
-                        className="hover:text-blue-500 dark:hover:text-blue-500 dark:text-zinc-400 transition-all cursor-pointer"
-                    />
+                {profile && (
+                    <UserProfilePopover user={profile}>
+                        <CircleEllipsisIcon
+                            size={22}
+                            className="hover:text-blue-500 dark:hover:text-blue-500 dark:text-zinc-400 transition-all cursor-pointer"
+                        />
+                    </UserProfilePopover>
                 )}
             </div>
 
